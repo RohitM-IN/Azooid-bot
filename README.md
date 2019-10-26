@@ -1,2 +1,2 @@
 # discordbotethyt
-having some issues on createguild.js in events
+having some issues on guildCreate.js in events
