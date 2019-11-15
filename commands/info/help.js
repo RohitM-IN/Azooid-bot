@@ -27,10 +27,18 @@ module.exports = {
 }
 
 function getAll(client, message) {
-    let prefix = prefixes[message.guild.id].prefixes ;
+    // let prefix = prefixes[message.guild.id].prefixes ;
     const embed = new RichEmbed()
         .setColor("RANDOM")
-        .setDescription(`Server prefix is**\ \ \ \        . **\n**INFO**\n- help\n- ping\n- whois\n**FUN**\n- write\n- read\n- invite\n**MODERATION**\n- kick\n- ban\n- report\n**NSFW**\n- 4k\n- anal\n- boobs\n- butts\n- hanal\n- hbj\n- hboobs\n- hcum\n- hentai\n- hgif\n- hles\n- hpussy\n- neko\n- ngif\n- pgif\n**OWNER**\n- prefix\n- settings\n- welcome\n**UTIL**\n- clean\n- say\n\nTo get more info on each command type help <your command>\nexample: suppose prefix is & then\n &help ping \n it will give you more info on ping command`);
+        .setDescription(`Server prefix is**\ \ \ \        . **\n
+        **INFO**\n- help\n- ping\n- whois\n
+        **FUN**\n- write\n- read\n- invite\n
+        **MODERATION**\n- kick\n- ban\n- report\n
+        **NSFW**\n- 4k\n- anal\n- boobs\n- butts\n- hanal\n- hbj\n- hboobs\n- hcum\n- hentai\n- hgif\n- hles\n- hpussy\n- neko\n- ngif\n- pgif\n
+        **OWNER**\n- prefix\n- settings\n- welcome\n
+        **UTIL**\n- clean\n- say\n\n
+        To get more info on each command type help <your command>\n
+        example: suppose prefix is & then\n &help ping \n it will give you more info on ping command`);
         
 //     // Map all the commands
 //     // with the specific category
@@ -47,8 +55,7 @@ function getAll(client, message) {
 //         .reduce((string, category) => string + "\n" + category);
 
 //     return message.channel.send(embed.setDescription(info));
-    message.channel.send("**Bot is in heavy development right now **\n")
-    message.channel.send(embed);
+    message.channel.send("**Bot is in heavy development right now **\n",embed);
 }
 
 function getCMD(client, message, input) {
