@@ -1,26 +1,21 @@
 const Discord = require('discord.js');
-// exports.run = (client, oldPresence, newPresence) => {
+
 module.exports =  (oldPresence, newPresence) => {
 		/* try {
-			if (!client.provider.isReady); // return
-			if (!client.provider.getGuild(newPresence.guild.id, 'prefix')) return;
 
-			if (client.provider.getGuild(newPresence.guild.id, 'presenceupdatelog') === 'false') return;
-
-			const lang = require(`../languages/${client.provider.getGuild(newPresence.guild.id, 'language')}.json`);
-
-			const messagechannel = client.channels.get(client.provider.getGuild(newPresence.guild.id, 'presenceupdatelogchannel'));
+            
+			const messagechannel = channel.guild.channels.find(ch => ch.name.includes('member-log')) || channel.guild.channels.find(ch => ch.name.includes('log')) || channel.guild.channels.find(ch => ch.name.includes('logs')) || channel.guild.channels.find(ch => ch.name.includes('general')) ;
 			if (!messagechannel) return;
 
 			if (oldPresence.status !== newPresence.status) {
 				const embed = new Discord.MessageEmbed()
 					.setColor('ORANGE')
 					.setTimestamp()
-					.setAuthor(lang.presenceupdateevent_changed)
-					.addField(`📎 ${lang.presenceupdateevent_member}:`, `${newPresence.user.tag} (${newPresence.userID})`)
-					.addField(`📤 ${lang.presenceupdateevent_old}:`, oldPresence.status)
-					.addField(`📥 ${lang.presenceupdateevent_new}:`, newPresence.status);
-				messagechannel.send({ embed: embed });
+					.setAuthor(`:information_source: Presence changed!`)
+					.addField(`📎 Member:`, `${newPresence.user.tag} (${newPresence.userID})`)
+					.addField(`📤 Old presence:`, oldPresence.status)
+					.addField(`📥 New presence:`, newPresence.status);
+				messagechannel.send(embed);
 			}
 		} catch (error) {
 			console.error(error);
