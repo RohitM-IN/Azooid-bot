@@ -2,14 +2,14 @@
 
         
 
-module.exports = async (client, message,channel   ) => {
+module.exports = async (client, guild,user   ) => {
         //log to console
-        console.log('[' + guild.name + '][UNBAN] ' + user.username + '#' + user.discriminator);
+        // console.log('[' + guild.name + '][UNBAN] ' + user.username + '#' + user.discriminator);
 
         //post in the guild's log channel
-        var log = newMessage.guild.channels.find(ch => ch.name.includes('member-log')) || newMessage.guild.channels.find(ch => ch.name.includes('log')) || newMessage.guild.channels.find(ch => ch.name.includes('logs')) ;
-        if (log != null)
-            log.sendMessage('**[Unbanned]** ' + user);
+        // var log = newMessage.guild.channels.find(ch => ch.name.includes('member-log')) || newMessage.guild.channels.find(ch => ch.name.includes('log')) || newMessage.guild.channels.find(ch => ch.name.includes('logs')) ;
+        // if (log != null)
+        //     log.sendMessage('**[Unbanned]** ' + user);
     // var log = messageDelete.guild.channels.find(ch => ch.name.includes('member-log')) || messageDelete.guild.channels.find(ch => ch.name.includes('log')) || messageDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
     // var sEmbed = new Discord.RichEmbed()
     //             .setColor("e8a515")

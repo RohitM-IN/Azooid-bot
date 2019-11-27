@@ -10,7 +10,7 @@ module.exports = async (client) => {
             status: "online",
             game: {
                 name: "@mention help",
-                type: "STREAMING"
+                type: "PLAYING"
             }
         });
     
