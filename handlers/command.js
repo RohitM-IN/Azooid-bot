@@ -4,6 +4,8 @@ const ascii = require("ascii-table");
 
 let table = new ascii("Commands");
 table.setHeading("Command", "Load status");
+// let table1 = new ascii("events");
+// table1.setHeading("Command", "Load status");
 
 module.exports = (client) => {
     var total = 0;
@@ -29,7 +31,24 @@ module.exports = (client) => {
         }
        
     });
-
+    // readdirSync("./events/").forEach(dir => {
+    //     const commands = readdirSync(`./events/`).filter(file => file.endsWith(".js"));
+    
+    //     for (let file of commands) {
+    //         let pull = require(`../events/${file}`);
+    
+    //         if (pull.name) {
+    //             client.commands.set(pull.name, pull);
+    //             table1.addRow(file, '✅');
+    //         } else {
+    //             table1.addRow(file, `❌  -> missing a help.name, or help.name is not a string.`);
+    //             continue;
+    //         }
+    
+    //         if (pull.aliases && Array.isArray(pull.aliases)) pull.aliases.forEach(alias => client.aliases.set(alias, pull.name));
+    //     }
+       
+    // });
     
     console.log(table.toString());
     console.log(`Total no of commands ${total} loaded ✅`);

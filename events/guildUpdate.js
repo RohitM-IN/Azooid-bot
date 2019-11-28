@@ -1,13 +1,6 @@
 const Discord = require('discord.js');
 module.exports = async (oldGuild, newGuild) => {
-		// if (!client.provider.isReady) return;
-		// if (!client.provider.getGuild(newGuild.id, 'prefix')) return;
 
-		// const lang = require(`../languages/${client.provider.getGuild(newGuild.id, 'language')}.json`);
-
-		// if (client.provider.getGuild(newGuild.id, 'guildupdatelog') === 'false') return;
-
-		// const messagechannel = client.channels.get(client.provider.getGuild(newGuild.id, 'guildupdatelogchannel'));
 		// // // //  var log = newGuild.channels.find(ch => ch.name.includes('member-log')) || newGuild.channels.find(ch => ch.name.includes('log')) // || channel.guild.channels.find(ch => ch.name.includes('logs')) || channel.guild.channels.find(ch => ch.name.includes('general')) ;
 		// // // // if (!messagechannel) return;
 		// // // // console.log(oldGuild.name + "\n"+ newGuild.name)

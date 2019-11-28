@@ -1,7 +1,7 @@
 const { RichEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const fs = require('fs');
-let prefixes = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
+// let prefixes = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
 
 
 module.exports = {
@@ -27,20 +27,66 @@ module.exports = {
 }
 
 function getAll(client, message) {
-    // let prefix = prefixes[message.guild.id].prefixes ;
+   // let prefix = prefixes[message.guild.id].prefixes ;
     const embed = new RichEmbed()
         .setColor("RANDOM")
-        .setDescription(`Server prefix is**\ \ \ \        . **\n
-        **INFO**\n- help\n- ping\n- whois\n
-        **FUN**\n- write\n- read\n- invite\n
-        **MODERATION**\n- kick\n- ban\n- report\n
-        **NSFW**\n- 4k\n- anal\n- boobs\n- butts\n- hanal\n- hbj\n- hboobs\n- hcum\n- hentai\n- hgif\n- hles\n- hpussy\n- neko\n- ngif\n- pgif\n
-        **OWNER**\n- prefix\n- settings\n- welcome\n
-        **UTIL**\n- clean\n- say\n\n
-        To get more info on each command type help <your command>\n
-        example: suppose prefix is & then\n &help ping \n it will give you more info on ping command`);
+        .setDescription(stripIndents`Server prefix is**\ \ \ \        . **
+        **Game**
+        - apex
+        - fortnite
+        - overwatch
+        - r6stats
+        - steam
+        **INFO**
+        - serverinfo
+        - help
+        - ping
+        - whois
+        **FUN**
+        - uptime
+        - write
+        - read
+        - invite
+        - meme
+        **MODERATION**
+        - addrole
+        - removerole
+        - kick
+        - ban
+        - report
+        - logger
+        **NSFW**
+        - 4k
+        - anal
+        - boobs
+        - butts
+        - hanal
+        - hbj
+        - hboobs
+        - hcum
+        - hentai
+        - hgif
+        - hles
+        - hpussy
+        - neko
+        - ngif
+        - pgif
+        - urban
+        **OWNER**
+        - prefix
+        - settings
+        - welcome
+        - autorole
+        **UTIL**
+        - clean
+        - say
         
-//     // Map all the commands
+        To get more info on each command type help <your command>
+        example: suppose prefix is & then
+        &help ping 
+        it will give you more info on ping command`);
+        
+//     // Map all the commands not adding every command idk why
 //     // with the specific category
 //     const commands = (category) => {
 //         return client.commands
@@ -55,7 +101,8 @@ function getAll(client, message) {
 //         .reduce((string, category) => string + "\n" + category);
 
 //     return message.channel.send(embed.setDescription(info));
-    message.channel.send("**Bot is in heavy development right now **\n",embed);
+    message.channel.send("**Bot is in heavy development right now **\n")
+    message.channel.send(embed);
 }
 
 function getCMD(client, message, input) {

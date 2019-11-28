@@ -5,7 +5,7 @@ const fs = require("fs");
 const config1 = require("./config.json");
 const xp = require("./data/xp.json");
 const Canvas = require("canvas")
-const { promisify } = require('util');
+const { promisify, inspect } = require('util');
 const readdir = promisify(fs.readdir);
 
 const client = new Client({
@@ -26,6 +26,7 @@ config({
 });
    const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
  client.on('message', async (message) => {
+    
     if (message.author.bot) return;
     if (!message.guild) return;
     // let prefixes = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
@@ -67,14 +68,7 @@ config({
 
     if (command)
         command.run(client, message, args);
-
-
-
  })
-
-
-
-
 
 const load = async () => {
     const evtFiles = await readdir("./events");
@@ -91,6 +85,6 @@ const load = async () => {
 process.on('unhandledRejection', error => console.log('Uncaught Promise Rejection', error));
 
 // client.login(process.env.TOKEN);
-   client.login(config1.token);
+client.login(config1.token);
   load();
   

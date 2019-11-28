@@ -4,9 +4,8 @@ const config1 = require("../config.json");
 
 module.exports =  (client, message,guild) => {
 
-    let msgs = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
-console.log(guild)
-console.log(guild.id)
+//     let msgs = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
+
     // msgs [client.guild.id]= {
     //     prefixes: config1.prefix
     // };
