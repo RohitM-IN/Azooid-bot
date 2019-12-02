@@ -22,3 +22,7 @@
 
     // }
     // console.log(`my current xp is ${curxp} and current level is ${curlvl}`)
+
+
+
+anidbjs https://github.com/miraris/anidbjs

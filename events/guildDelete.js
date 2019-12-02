@@ -11,5 +11,6 @@ module.exports =  async (guild) => {
 	// 	await client.channels.get('497400159894896651').send({ embed: embed });
 
 	// 	await client.provider.clearGuild(guild.id);
+	console.log(`Hi, ${client.user.username} is now serving  in ${client.guilds.size} servers and serving ${client.guilds.reduce((c, p) => c + p.memberCount, 0)} users!.`);
 	}
 

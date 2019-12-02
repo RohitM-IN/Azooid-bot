@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports = async ( client ,channel ) => {
+module.exports = async ( client , channel ) => {
 
     var log = channel.guild.channels.find(ch => ch.name.includes('member-log')) || channel.guild.channels.find(ch => ch.name.includes('log')) || channel.guild.channels.find(ch => ch.name.includes('logs')) || channel.guild.channels.find(ch => ch.name.includes('general')) ;
     var sEmbed = new Discord.RichEmbed()

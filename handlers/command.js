@@ -32,12 +32,13 @@ module.exports = (client) => {
        
     });
     // readdirSync("./events/").forEach(dir => {
-    //     const commands = readdirSync(`./events/`).filter(file => file.endsWith(".js"));
+
+    //     const events = readdirSync(`./events/`).filter(file => file.endsWith(".js"));
     
-    //     for (let file of commands) {
-    //         let pull = require(`../events/${file}`);
+    //     for (let file of events) {
+    //         let _pull = require(`../events/${file}`);
     
-    //         if (pull.name) {
+    //         if (_pull) {
     //             client.commands.set(pull.name, pull);
     //             table1.addRow(file, '✅');
     //         } else {
