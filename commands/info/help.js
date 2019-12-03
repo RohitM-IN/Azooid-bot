@@ -30,32 +30,34 @@ function getAll(client, message) {
    // let prefix = prefixes[message.guild.id].prefixes ;
     const embed = new RichEmbed()
         .setColor("RANDOM")
-        .setDescription(stripIndents`Server prefix is**\ \ \ \        . **
-        **Game**
-        - apex
-        - fortnite
-        - overwatch
-        - r6stats
-        - steam
-        **INFO**
-        - serverinfo
-        - help
-        - ping
-        - whois
-        **FUN**
+        .setTimestamp()
+        .setDescription(`Server prefix is**\ \ \ \        . **`)
+        .addField("**FUN**",stripIndents`
         - uptime
         - write
         - read
         - invite
         - meme
-        **MODERATION**
+        - xkcd`,true)
+        .addField(`**Game**`,stripIndents`
+        - apex
+        - fortnite
+        - overwatch
+        - r6stats
+        - steam`,true)
+        .addField("**INFO**",stripIndents`
+        - serverinfo
+        - help
+        - ping
+        - whois`,true)
+        .addField("**MODERATION**",stripIndents`
         - addrole
         - removerole
         - kick
         - ban
         - report
-        - logger
-        **NSFW**
+        - logger`,true)
+        .addField("**NSFW**",stripIndents`
         - 4k
         - anal
         - boobs
@@ -71,20 +73,21 @@ function getAll(client, message) {
         - neko
         - ngif
         - pgif
-        - urban
-        **OWNER**
+        - urban`,true)
+        .addField("**OWNER**",stripIndents`
         - prefix
         - settings
         - welcome
-        - autorole
-        **UTIL**
+        - autorole`,true)
+        .addField("**UTIL**",stripIndents`
         - clean
-        - say
-        
-        To get more info on each command type help <your command>
+        - say`,true)
+        .addField("Note",stripIndents`
+        To get more info on each command type help <your command>        
         example: suppose prefix is & then
         &help ping 
-        it will give you more info on ping command`);
+        it will give you more info on ping command`)
+        .setFooter(`${client.user.username}`)
         
 //     // Map all the commands not adding every command idk why
 //     // with the specific category
@@ -101,8 +104,8 @@ function getAll(client, message) {
 //         .reduce((string, category) => string + "\n" + category);
 
 //     return message.channel.send(embed.setDescription(info));
-    message.channel.send("**Bot is in heavy development right now **\n")
-    message.channel.send(embed);
+    message.channel.send("**Bot is in heavy development right now **\n",embed)
+    // message.channel.send(embed);
 }
 
 function getCMD(client, message, input) {
