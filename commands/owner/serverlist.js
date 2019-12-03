@@ -1,4 +1,8 @@
 const Discord = require("discord.js");
+const os = require('os');
+var memStat = require('mem-stat');
+var netStat = require('net-stat');
+var disk = require('diskusage');
 const ownerid = "348832732647784460";
 
 module.exports = {

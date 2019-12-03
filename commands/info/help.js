@@ -44,7 +44,11 @@ function getAll(client, message) {
         - fortnite
         - overwatch
         - r6stats
-        - steam`,true)
+        - steam
+        - csgo
+        - csgow
+        - pcount
+        - dleaderboard (dlb)`,true)
         .addField("**INFO**",stripIndents`
         - serverinfo
         - help
