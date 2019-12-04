@@ -38,7 +38,15 @@ function getAll(client, message) {
         - read
         - invite
         - meme
-        - xkcd`,true)
+        - xkcd
+        - joke
+        - amazeme
+        - love
+        - rps
+        - drankrate (d%)
+        - fakeban
+        - fidgetspinner (fspin)
+        `,true)
         .addField(`**Game**`,stripIndents`
         - apex
         - fortnite
@@ -53,7 +61,18 @@ function getAll(client, message) {
         - serverinfo
         - help
         - ping
-        - whois`,true)
+        - whois
+        - rank`,true)
+        .addField("**meme:**",stripIndents`
+        - 3000-years (3ky)
+        - belike
+        - beautiful
+        - demotivational
+        - discordcard (dcard)
+        - thug-life
+        - to-be-continued (tbc)
+        - triggered
+        `,true)
         .addField("**MODERATION**",stripIndents`
         - addrole
         - removerole
@@ -84,8 +103,10 @@ function getAll(client, message) {
         - welcome
         - autorole`,true)
         .addField("**UTIL**",stripIndents`
+        - bug
         - clean
-        - say`,true)
+        - say
+        - info`,true)
         .addField("Note",stripIndents`
         To get more info on each command type help <your command>        
         example: suppose prefix is & then

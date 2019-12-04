@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 const dateFormat = require("dateformat")
 const { api: { steamapi } } = require("../../auth.json");
 
+
 module.exports = {
     name: "steam",
     category: "game",
@@ -46,9 +47,15 @@ module.exports = {
                 **Bans:** Vac: ${NumberOfVACBans}, Game: ${NumberOfGameBans}
                 **Link:** [link to profile](${profileurl})
                 `)
-                .setTimestamp();
+                .setTimestamp()
+                .setFooter(client.user.username);
+                
+                
 
+		
+        
                 message.channel.send(embed);
+                
                               
             })
         })
