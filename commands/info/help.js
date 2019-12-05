@@ -32,21 +32,14 @@ function getAll(client, message) {
         .setColor("RANDOM")
         .setTimestamp()
         .setDescription(`Server prefix is**\ \ \ \        . **`)
-        .addField("**FUN**",stripIndents`
-        - uptime
-        - write
-        - read
-        - invite
-        - meme
-        - xkcd
-        - joke
-        - amazeme
-        - love
-        - rps
-        - drankrate (d%)
-        - fakeban
-        - fidgetspinner (fspin)
-        `,true)
+
+        .addField("**MODERATION**",stripIndents`
+        - addrole
+        - removerole
+        - kick
+        - ban
+        - report
+        - logger`,true)
         .addField(`**Game**`,stripIndents`
         - apex
         - fortnite
@@ -63,23 +56,40 @@ function getAll(client, message) {
         - ping
         - whois
         - rank`,true)
-        .addField("**meme:**",stripIndents`
-        - 3000-years (3ky)
-        - belike
-        - beautiful
-        - demotivational
-        - discordcard (dcard)
-        - thug-life
-        - to-be-continued (tbc)
-        - triggered
+
+        .addField("**FUN**",stripIndents`
+        - uptime
+        - write
+        - read
+        - invite
+        - meme
+        - xkcd
+        - joke
+        - amazeme
+        - love
+        - rps
+        - drankrate (d%)
+        - fakeban
+        - fidgetspinner (fspin)
         `,true)
-        .addField("**MODERATION**",stripIndents`
-        - addrole
-        - removerole
-        - kick
-        - ban
-        - report
-        - logger`,true)
+        .addField("**SEARCH**",stripIndents`
+        - book
+        - giphy
+        - google-autofill (autofill)
+        - gravatar
+        - itunes
+        - mdn
+        - movie
+        - nasa
+        - npm
+        - osu
+        - recipe
+        - reddit
+        - rule
+        - stack-overflow
+        - weather
+        - wikipedia (wiki)
+        `,true)
         .addField("**NSFW**",stripIndents`
         - 4k
         - anal
@@ -97,18 +107,31 @@ function getAll(client, message) {
         - ngif
         - pgif
         - urban`,true)
+        .addField("**meme:**",stripIndents`
+        - 3000-years (3ky)
+        - belike
+        - beautiful
+        - demotivational
+        - discordcard (dcard)
+        - thug-life
+        - to-be-continued (tbc)
+        - triggered
+        `,true)
         .addField("**OWNER**",stripIndents`
         - prefix
         - settings
         - welcome
         - autorole`,true)
+
         .addField("**UTIL**",stripIndents`
         - bug
         - clean
         - say
-        - info`,true)
+        - info
+        - hastebin (pastebin)`,true)
         .addField("Note",stripIndents`
-        To get more info on each command type help <your command>        
+        To get more info on each command type help <your command>
+        Total commands **87**        
         example: suppose prefix is & then
         &help ping 
         it will give you more info on ping command`)

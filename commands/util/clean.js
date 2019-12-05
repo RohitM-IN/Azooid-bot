@@ -19,8 +19,8 @@ module.exports = {
             message.channel.send("please enter amount less than 100").then(msg => msg.delete(5000));
         }
         else{
-            message.channel.bulkDelete(args[0]).then(() => {
-                message.channel.send(`Cleared ${args[0]} messages.`).then(msg => msg.delete(5000));
+            message.channel.bulkDelete(args[0],true).then(() => {
+                message.channel.send(`Cleared ${args[0]} messages.`).then(msg => msg.delete(5000)).catch(err => message.channel.send('There are no messages younger than two weeks that can be deleted.'));
             })
         }
 

@@ -48,10 +48,55 @@ module.exports = {
                   msg.edit("No CSGO profile found.");
                   return;
                 }
+                var headshotk = body.playerstats.stats.filter((stat) => {
+                  return stat.name === 'total_kills_headshot';
+                });
+                let _headshotk = headshotk.reduce((sum, el) => {
+                sum += el.value;
+                return sum;
+                }, 0);
+                var knifek = body.playerstats.stats.filter((stat) => {
+                return stat.name === 'total_kills_knife';
+                });
+                let _knifek = knifek.reduce((sum, el) => {
+                sum += el.value;
+                return sum;
+                }, 0);
+                var hegrenade = body.playerstats.stats.filter((stat) => {
+                return stat.name === 'total_kills_hegrenade';
+                });
+                let _hegrenade = hegrenade.reduce((sum, el) => {
+                sum += el.value;
+                return sum;
+                }, 0);
+                var zoomed_sniper = body.playerstats.stats.filter((stat) => {
+                return stat.name === 'total_kills_against_zoomed_sniper';
+                });
+                let _zoomed_sniper = zoomed_sniper.reduce((sum, el) => {
+                sum += el.value;
+                return sum;
+                }, 0);
+                var mvps = body.playerstats.stats.filter((stat) => {
+                return stat.name === 'total_mvps';
+                 });
+                let _mvps = mvps.reduce((sum, el) => {
+                sum += el.value;
+                return sum;
+                }, 0);
+                var weapons_donated = body.playerstats.stats.filter((stat) => {
+                  return stat.name === 'total_weapons_donated';
+                   });
+                  let _weapons_donated = weapons_donated.reduce((sum, el) => {
+                  sum += el.value;
+                  return sum;
+                  }, 0);
+                
                 var kd = bigInt("" + body.playerstats.stats[0].value).divmod("" + body.playerstats.stats[1].value);
                 // console.log("kd: " + new String(kd.quotient));
                 var tempString = new String(kd.remainder / body.playerstats.stats[1].value);
                 var calculatedKD = new String(kd.quotient) + tempString.substring(tempString.indexOf("."));
+                
+              
                 let embed = new Discord.RichEmbed()
                 .setColor("RANDOM")
                 .setAuthor(`Counter-Strike: Global Offensive | ${playerID}`)
@@ -66,17 +111,17 @@ module.exports = {
                 .addField(`**Money:**`,`$${numberWithCommas(String(body.playerstats.stats[7].value))} earned`,true)
                 .addField(`**Damage:**`,`${numberWithCommas(String(body.playerstats.stats[6].value))}`,true)
                 .addField("**Misc. Kill Stats:**",`:point_down:`)
-                .addField(`**Headshots:**`,`${numberWithCommas(String(body.playerstats.stats[24].value))}`,true)
+                .addField(`**Headshots:**`,`${numberWithCommas(_headshotk)}`,true)
                 .addField(`**Enemy Weapons:**`,`${numberWithCommas(String(body.playerstats.stats[25].value))}`,true) 
-                .addField(`**knife:**`,`${numberWithCommas(String(body.playerstats.stats[9].value))}`,true)
-                .addField(`**HE nades:**`,`${numberWithCommas(String(body.playerstats.stats[10].value))}`,true)
+                .addField(`**knife:**`,`${numberWithCommas(_knifek)}`,true)
+                .addField(`**HE nades:**`,`${numberWithCommas(_hegrenade)}`,true)
                 .addField("**Other Stats:**",`:point_down:`)
                 .addField(`**rounds:**`,`${numberWithCommas(String(body.playerstats.stats[45].value))}`,true)
                 .addField(`**kills:**`,`${numberWithCommas(String(body.playerstats.stats[0].value))} times`,true)
                 .addField(`**Deaths:**`,`${numberWithCommas(String(body.playerstats.stats[1].value))} shots`,true)
-                .addField(`**killed:**`,`${numberWithCommas(String(body.playerstats.stats[39].value))} zoomed in snipers`,true)
-                .addField(`**donated weapons:**`,`${numberWithCommas(String(body.playerstats.stats[35].value))} `,true) 
-                .addField(`**MVPs:**`,`${numberWithCommas(String(body.playerstats.stats[98].value))} received`,true)
+                .addField(`**killed:**`,`${numberWithCommas(_zoomed_sniper)} zoomed in snipers`,true)
+                .addField(`**donated weapons:**`,`${numberWithCommas(_weapons_donated)} `,true) 
+                .addField(`**MVPs:**`,`${numberWithCommas(_mvps)} received`,true)
                 .setTimestamp()
                 .setFooter(client.user.username);
                 
