@@ -2,10 +2,8 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const Canvas = require("canvas")
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const config = require('../config.json');
 const applyText = (canvas, text) => {
-    const ctx = canvas.getContext('2d');
-    
+	const ctx = canvas.getContext('2d');
 
 	// Declare a base size of the font
 	let fontSize = 70;
@@ -19,7 +17,7 @@ const applyText = (canvas, text) => {
 	// Return the result to use in the actual canvas
     return ctx.font;
 }
-module.exports = async (client, message,member) => {
+module.exports = async (client, message) => {
         let welcomes = JSON.parse(fs.readFileSync("./serversettings.json", "utf8"));
         //console.log(member);
         //console.log(msg.user.id)
@@ -61,16 +59,7 @@ module.exports = async (client, message,member) => {
     
         channel.send(`Welcome to the server, ${message}!`, attachment);
 
-        // let roles = JSON.parse(fs.readFileSync("./role.json", "utf8"));
-        // if (!roles[message.guild.id]) {
-        //     roles[message.guild.id] = {
-        //         roles: config.role
-        //     };
-        // }
-        // var autorole = roles[message.guild.id].roles;
-        // if (autorole === '0') return;
-        // member.addRole(autorole)
-
+        
 
 }
 
