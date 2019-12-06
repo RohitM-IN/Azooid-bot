@@ -7,6 +7,9 @@ const xp = require("./data/xp.json");
 const Canvas = require("canvas")
 const { promisify, inspect } = require('util');
 const readdir = promisify(fs.readdir);
+const ascii = require("ascii-table");
+let table = new ascii("Events");
+table.setHeading("Event", "Load status");
 
 const client = new Client({
     disableEveryone: true
@@ -72,19 +75,24 @@ config({
 
 const load = async () => {
     const evtFiles = await readdir("./events");
+    var total = 0;
 
     evtFiles.forEach(file => {
         if (file.split(".").slice(-1)[0] !== "js") return;
         const evtName = file.split(".")[0];
         const event = require(`./events/${file}`);
+        table.addRow(file, '✅');
         client.on(evtName, event.bind(null, client));
         delete require.cache[require.resolve(`./events/${file}`)];
+        total = total +1;
 
     })
+    console.log(table.toString());
+    console.log(`Total no of events ${total} loaded ✅`);
 }
 process.on('unhandledRejection', error => console.log('Uncaught Promise Rejection', error));
 
-// client.login(process.env.TOKEN);
-client.login(config1.token);
+client.login(process.env.TOKEN);
+// client.login(config1.token);
   load();
   
