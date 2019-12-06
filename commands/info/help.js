@@ -87,6 +87,7 @@ function getAll(client, message) {
         - reddit
         - rule
         - stack-overflow
+        - youtube
         - weather
         - wikipedia (wiki)
         `,true)
@@ -131,7 +132,7 @@ function getAll(client, message) {
         - hastebin (pastebin)`,true)
         .addField("Note",stripIndents`
         To get more info on each command type help <your command>
-        Total commands **87**        
+        Total commands **88**        
         example: suppose prefix is & then
         &help ping 
         it will give you more info on ping command`)

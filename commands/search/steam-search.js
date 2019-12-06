@@ -26,7 +26,7 @@ module.exports = {
 
 	async run(client , message ,args) {
 		// let query = args.join(" ")
-		// // try {
+		// try {
 			
 		// 		const { body } = await request
 		// 			.get('https://store.steampowered.com/api/storesearch')
@@ -37,15 +37,19 @@ module.exports = {
 		// 			});
 		// 		if (!body.items.length) return null;
 		// 		const id =  body.items[0].id;
+		// 		let _x = body.items[0]
+				
 		// 		if (!id) return message.channel.send('Could not find any results.');
 			
-		// 		console.log(body.items[0])
+		// 		console.log(id)
+		// 		console.log(_x)
+
 		
 			
 		// 		const { Data } = await request
 		// 			.get('https://store.steampowered.com/api/appdetails')
 		// 			.query({ appids: id });
-		// 			const data = Data[id.toString()].data;
+		// 			const data = Data;
 			
 			
 			
@@ -74,9 +78,9 @@ module.exports = {
 		// 		.addField('❯ Developers', data.developers ? data.developers.join(', ') || '???' : '???')
 		// 		.addField('❯ Publishers', data.publishers ? data.publishers.join(', ') || '???' : '???');
 		// 	return message.channel.send(embed);
-		// // } catch (err) {
-		// // 	return message.channel.send(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
-		// // }
+		// } catch (err) {
+		// 	return message.channel.send(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+		// }
 	}
 
 	
