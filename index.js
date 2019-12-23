@@ -10,6 +10,8 @@ const readdir = promisify(fs.readdir);
 const ascii = require("ascii-table");
 let table = new ascii("Events");
 table.setHeading("Event", "Load status");
+// let cooldown = new Set();
+// let cdseconds = 3;
 
 const client = new Client({
     disableEveryone: true
@@ -32,6 +34,8 @@ config({
     
     if (message.author.bot) return;
     if (!message.guild) return;
+	if(message.tts == true && !message.author.bot) message.react("📢");
+	
     // let prefixes = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
     
     // if(!prefixes[message.guild.id]){
@@ -52,6 +56,14 @@ config({
     // }
     
     let prefix = "." || config1.prefix_mention ; //prefixes[message.guild.id].prefixes
+//     if(cooldown.has(message.author.id)){
+//         message.delete();
+//         return message.reply(`you have to wait for 3 sec before each command!!`)
+//     }
+//    if(!message.member.hasPermission("ADMINISTRATOR")){
+//         cooldown.add(message.author.id);
+//     }
+
 
     if (!message.member) message.member = await message.guild.fetchMember(message);
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
@@ -71,6 +83,10 @@ config({
 
     if (command)
         command.run(client, message, args);
+
+    // setTimeout(() => {
+    //     cooldown.delete(message.author.id)
+    // }, cdseconds * 1000)
  })
 
 const load = async () => {
