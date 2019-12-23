@@ -1,19 +1,21 @@
 # discordbotethyt
 
-[issues]
+[issues❌❌❌]
 
-music system lavalink connection refused error 
+music system lavalink connection refused error  ❌
 
-[to do ]
-
+[to do 🤔🤔 ]
+ 
 anime notification system [may be tv series and movie notification system too ]
 
 discord server backup system 
 
-music system [may be]
+music system [may be] 
+
+online radio system using (http://www.radio-browser.info/webservice) api
 
 
 
-[solved issues]
+[solved issues✅]
 
-createchannel event firing when joining a new server
+createchannel event firing when joining a new server ✅
