@@ -10,7 +10,7 @@ module.exports = {
   cooldown: 10,
   loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for hentai porn gifs...",
   aliases: ["hentaigif"],
-  run: async (client,message, args, level, loadingMessage) => {
+  run: async (client,message, args) => {
       
     if (!message.channel.nsfw) return message.reply("🔞 Cannot display NSFW content in a SFW channel.");
 

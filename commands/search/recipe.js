@@ -10,12 +10,6 @@ module.exports = {
 			memberName: 'recipe',
 			description: 'Searches for recipes based on your query.',
 			clientPermissions: ['EMBED_LINKS'],
-			credit: [
-				{
-					name: 'Recipe Puppy API',
-					url: 'http://www.recipepuppy.com/about/api/'
-				}
-			],
 			args: [
 				{
 					key: 'query',
@@ -26,6 +20,8 @@ module.exports = {
 
 	async run(client ,message ,args) {
 		let query = args.join(" ")
+		if (!query) return message.channel.send(`What recipe would you like to search for?`)
+
 		try {
 			const { text } = await request
 				.get('http://www.recipepuppy.com/api/')

@@ -19,6 +19,8 @@ module.exports =  {
 
 	async run(client ,message ,args) {
         let query = args.join(" ")
+		if (!query) return message.channel.send(`What would you like to search for?`)
+		
 		try {
 			const { text } = await request
 				.get('https://suggestqueries.google.com/complete/search')

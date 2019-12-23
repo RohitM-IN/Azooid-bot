@@ -27,7 +27,9 @@ module.exports =  {
 
 
 	async run(client ,message ,args) {
-        let user = args.join(" ")
+		let user = args.join(" ")
+		if (!user) return message.channel.send(`What user would you like to get information on?`)
+		
 		try {
 			const { body } = await request
 				.get('https://osu.ppy.sh/api/get_user')

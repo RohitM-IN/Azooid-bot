@@ -23,7 +23,9 @@ module.exports = {
 
 
 	async run(client, message, args) {
-        let pkg = args.join(" ");
+		let pkg = args.join(" ");
+		if (!pkg) return message.channel.send(`What package would you like to get information on?`)
+		
 		try {
 			const { body } = await request.get(`https://registry.npmjs.com/${pkg}`);
 			if (body.time.unpublished) return msg.say('This package no longer exists.');

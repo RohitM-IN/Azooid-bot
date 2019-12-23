@@ -23,7 +23,8 @@ module.exports = {
 
 
 	async run(client, message, args) {
-        let query = args.join(" ");
+		let query = args.join(" ");
+		if (!query) return message.channel.send(`Enter a book name!!`)
 		try {
 			const { body } = await request
 				.get('https://www.googleapis.com/books/v1/volumes')

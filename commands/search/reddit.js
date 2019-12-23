@@ -25,6 +25,8 @@ module.exports =  {
 
 	async run(client ,message ,args) {
 		let user = args.join(" ");
+		if (!user) return message.channel.send(`What user would you like to get information on?`)
+
 		try {
 			const { body } = await request.get(`https://www.reddit.com/user/${user}/about.json`);
 			const { data } = body;

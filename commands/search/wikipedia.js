@@ -22,6 +22,8 @@ module.exports = {
 
 	async run(client ,message ,args) {
 		let query = args.join(" ")
+		if (!query) return message.channel.send(`What article would you like to search for?`)
+
 		try {
 			const { body } = await request
 				.get('https://en.wikipedia.org/w/api.php')

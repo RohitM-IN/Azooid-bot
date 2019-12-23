@@ -76,7 +76,7 @@ const auth = require('../../auth.json').api.steamapi;
                                     .setTimestamp()
                                     .setAuthor(`Here are some popular steam games ${message.author.tag}`)
                                     .setDescription(`Player Counts:`)
-                                    .addField(`**Rainbow Six Siege:**`,`${numberWithCommas(bodyAll.response.player_count)} currently online.`)
+                                    .addField(`**Rainbow Six Siege:**`,`${numberWithCommas(bodyAll.response.player_count)} currently in game.`)
                                     .addField(`**Dota 2:**`,`${numberWithCommas(bodyDota.response.player_count)} currently in game.`)
                                     .addField(`**CSGO:**`,`${numberWithCommas(bodyCSGO.response.player_count)} currently in game.`)
                                     .addField(`**Destiny 2:**`,`${numberWithCommas(bodyTF.response.player_count)} currently in game.`)

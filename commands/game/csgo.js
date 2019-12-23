@@ -21,6 +21,7 @@ module.exports = {
     category: "game",
     aliases: ["cs-go"] , 
     run: async (client, message, args, userID, channelID) => {
+      if (!args[0]) return message.channel.send(`usage: ".csgo <steamid or custom url>"`)
         let test = args[0];
         let id = test.match(/^(https:\/\/steamcommunity\.com\/id\/)?([^\s\/]+)\/?$/);
         let id_ = test.match(/^(https:\/\/steamcommunity\.com\/profiles\/)?([^\s\/]+)\/?$/);

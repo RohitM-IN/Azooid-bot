@@ -11,6 +11,8 @@ module.exports = {
 			description: 'Searches iTunes for your query.',
 			details: '**Codes:** <https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes>',
 			clientPermissions: ['EMBED_LINKS'],
+			usage:"itunes <country> <query>",
+			example:"itunes IN thats what i like",
 
 			args: [
 				{
@@ -29,6 +31,9 @@ module.exports = {
 	async run(client ,message ,args) {
 		let country = args[0];
 		let query = args.slice(args[0]).join(" ");
+		if (!query) return message.channel.send(`What song would you like to search for?`)
+		if (!country) return message.channel.send(`usage: itunes <country> <query>`)
+
 		try {
 			const { text } = await request
 				.get('https://itunes.apple.com/search')

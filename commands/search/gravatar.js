@@ -26,6 +26,8 @@ module.exports = {
 
 	async run(client ,message ,args) {
 		let email = args.join(" ")
+		if (!email) return message.channel.send(`What email do you want to get the Gravatar for?`)
+		
 		const emailHash = hash(email, 'md5');
 		try {
 			const { body } = await request

@@ -11,7 +11,7 @@ module.exports = {
   cost: 40,
   cooldown: 10,
   aliases: ["catgirl"],
-  run: async (client,message, args, level) => {
+  run: async (client,message, args) => {
       
     if (!message.channel.nsfw) return message.reply("🔞 Cannot display NSFW content in a SFW channel.");
 

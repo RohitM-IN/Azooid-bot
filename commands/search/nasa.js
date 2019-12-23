@@ -20,7 +20,9 @@ module.exports = {
 
 
         async run(client, message, args) {
-                let query = args.join(" ");
+				let query = args.join(" ");
+		if (!query) return message.channel.send(`What image would you like to search for?`)
+				
                 
 		try {
             function cleanHTML(text) {

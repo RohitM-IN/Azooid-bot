@@ -22,7 +22,9 @@ module.exports =  {
 
 
 	async run(client, message, args) {
-        let query = args.join(" ")
+		let query = args.join(" ")
+		if (!query) return message.channel.send(`What movie would you like to search for?`)
+		
 		try {
 			const search = await request
 				.get('http://api.themoviedb.org/3/search/movie')

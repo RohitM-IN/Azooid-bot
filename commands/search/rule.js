@@ -20,6 +20,8 @@ module.exports = {
 
 	run(client ,message ,args) {
 		let rule = args.join(" ")
+		if (!rule) return message.channel.send(`Which rule would you like to view?`)
+
 		if(rule > rules.length) return message.channel.send(`There are only ${rules.length} rules!!`);
 		return message.channel.send(`**Rule #${rule}:** ${rules[rule - 1]}`);
 	}

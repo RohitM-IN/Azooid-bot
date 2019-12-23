@@ -30,6 +30,8 @@ module.exports =  {
 
 	async run(client ,message ,args) {
 		let query = args.join(" ")
+		if (!query) return message.channel.send(`What video would you like to search for?`)
+
 		try {
 			const { body } = await request
 				.get('https://www.googleapis.com/youtube/v3/search')
