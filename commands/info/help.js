@@ -1,7 +1,6 @@
 const { RichEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const fs = require('fs');
-
 // let prefixes = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
 
 
@@ -12,7 +11,6 @@ module.exports = {
     description: "Returns all commands, or one specific command info",
     usage: "[command | alias]",
     run: async (client, message, args) => {
-     
        
         // If there's an args found
         // Send the info of that command found
@@ -29,11 +27,6 @@ module.exports = {
 }
 
 function getAll(client, message) {
-  fs.readFile('./total.txt','utf8', function (err, data) {
-    if (err) throw err;
-    let Data = data;
-   
-  
    // let prefix = prefixes[message.guild.id].prefixes ;
     const embed = new RichEmbed()
         .setColor("RANDOM")
@@ -47,20 +40,26 @@ function getAll(client, message) {
           ban
           report
           logger`,true)
-          .addField("**OWNER**",stripIndents`
-          prefix
-          settings
-          welcome
-          autorole`,true)
-
+        .addField(`**Game**`,stripIndents`
+          apex
+          dota
+          dhero
+          ditem
+          fortnite
+          overwatch
+          r6stats
+          steam
+          csgo
+          csgow
+          pcount
+          dleaderboard (dlb)
+        `,true)
         .addField("**INFO**",stripIndents`
           serverinfo
           help
           ping
           whois
-          rank
-          markdown
-          `,true)
+          rank`,true)
 
         .addField("**FUN**",stripIndents`
           uptime
@@ -124,20 +123,13 @@ function getAll(client, message) {
           to-be-continued (tbc)
           triggered
         `,true)
-        .addField(`**Game**`,stripIndents`
-        apex
-        dota
-        dhero
-        ditem
-        fortnite
-        overwatch
-        r6stats
-        steam
-        csgo
-        csgow
-        pcount
-        dleaderboard (dlb)
-      `,true)
+        .addField("**OWNER**",stripIndents`
+          log
+          reset  (reset-settings)
+          prefix
+          settings
+          welcome
+          autorole`,true)
 
         .addField("**UTIL**",stripIndents`
           bug
@@ -165,7 +157,6 @@ function getAll(client, message) {
           mocking
           morse
           nobody name
-          instagram (insta)
         `,true)
         .addField(`**text edit**`,stripIndents`
         
@@ -190,7 +181,7 @@ function getAll(client, message) {
           zalgo`,true)
         .addField("Note",stripIndents`
         To get more info on each command type help <your command>
-        Total commands **${data}**+ (Including hidden commands that are in development or not for public use)     
+        Total commands **138**+        
         example: suppose prefix is . then
         .help ping 
         it will give you more info on ping command`)
@@ -213,8 +204,6 @@ function getAll(client, message) {
 //     return message.channel.send(embed.setDescription(info));
     message.channel.send("**Bot is in heavy development right now **\n",embed)
     // message.channel.send(embed);
-    
-  });
 }
 
 function getCMD(client, message, input) {
@@ -238,7 +227,6 @@ function getCMD(client, message, input) {
         info += `\n**Usage**: ${cmd.usage}`;
         embed.setFooter(`Syntax: <> = required, [] = optional`);
     }
-    if(cmd.example) info += `\n**Example**: ${cmd.example}`;
 
     return message.channel.send(embed.setColor("GREEN").setDescription(info));
 }
