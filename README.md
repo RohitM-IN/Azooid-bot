@@ -1,4 +1,6 @@
 # discordbotethyt
+[DONE✅]
+added firebase db support to discord bot
 
 [issues❌❌❌]
 
