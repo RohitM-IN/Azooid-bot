@@ -1,5 +1,6 @@
 var dateFormat = require('dateformat');
 module.exports =  async (client,oldMember, newMember) => {
+		//if(oldMember == )
 
 		var log = newMember.guild.channels.find(ch => ch.name.includes('voice-log')) || newMember.guild.channels.find(ch => ch.name.includes('voicelog')) || newMember.guild.channels.find(ch => ch.name.includes('log')) || newMember.guild.channels.find(ch => ch.name.includes('general')) ;
 		if(!log) return;
