@@ -107,7 +107,8 @@ client.on('guildCreate' , async gData =>  {
         'logchannel':'default',
         'voicelogchannel':'default',
         'guildautorole':'default',
-        'defaultchannelID':"default"
+        'defaultchannelID':"default",
+        'playervolume':100
     })
 })
 client.on('guildDelete' , async gData =>  {
