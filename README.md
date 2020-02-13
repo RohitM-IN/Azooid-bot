@@ -1,24 +1,21 @@
 # discordbotethyt
 [DONE✅]
 
-✅ added firebase db support to discord bot
+✅ music system added with equilizer and stuff
+✅ radio command added
+
 
 [issues❌❌❌]
 
-music system lavalink connection refused error  ❌
+NON at the moment
 
 [to do 🤔🤔 ]
  
-anime notification system [may be tv series and movie notification system too ]
+🤔 anime notification system [may be tv series and movie notification system too ] 
 
-discord server backup system 
-
-music system [may be] 
-
-online radio system using (http://www.radio-browser.info/webservice) api
-
-
+🤔 discord server backup system 
 
 [solved issues✅]
 
-createchannel event firing when joining a new server ✅
+✅ createchannel event firing when joining a new server
+✅ added firebase db support to discord bot
