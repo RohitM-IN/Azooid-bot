@@ -1,21 +1,23 @@
 
 const { get } = require("snekfetch");
 
+
 module.exports = {
-  name: "hgif",
-  description: "This command will return hentai porn in gif form.",
+  name: "neko",
+  description: "Shows a picture of a neko.",
   category: "NSFW",
-  usage: "hgif",
+  usage: "neko",
+  extended: "This command will return a Neko, a lewd Neko if used in a NSFW channel",
   cost: 40,
   cooldown: 10,
-  loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for hentai porn gifs...",
-  aliases: ["hentaigif"],
+  aliases: ["catgirl"],
   run: async (client,message, args) => {
       
     if (!message.channel.nsfw) return message.reply("🔞 Cannot display NSFW content in a SFW channel.");
 
-    const { body } = await get("https://nekos.life/api/v2/img/Random_hentai_gif");
-    await message.channel.send({
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
+    const { body } = await get("https://nekos.life/api/v2/img/lewd");
+    await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": body.url,
