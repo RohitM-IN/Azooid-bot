@@ -14,7 +14,10 @@
 
 🤔 discord server backup system 
 
+🤔 XP and Leveling System
+
 [solved issues✅]
+
 ✅ music system added with equilizer and stuff
 
 ✅ radio command added
