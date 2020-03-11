@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 
 module.exports = async ( client , channel ) => {
-    let x = channel.guild.me.joinedTimestamp/1000
+    //console.log(client.guild.me.joinedTimestamp)
+    let x = client.guild.me.joinedTimestamp/1000
+    
 
     if(x <= (x+10)) return;
     

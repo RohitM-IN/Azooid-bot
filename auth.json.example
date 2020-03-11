@@ -1,0 +1,63 @@
+{
+	"discord": {
+		"prefix": "",
+		"token": "",
+        "ownerID": ""
+		
+	},
+	"rainbow": {
+		"email":"",
+		"password":""
+
+	},
+	"api": {
+        "Spotify_ClientID": "",
+        "Spotify_ClientSecret": "",
+        "pubgapi": "",
+		"steamapi": "",
+		"fortnite_api": "",
+		"google": "",
+		"youtube": "",
+		"youtubev3":"",
+        "weather": "",
+		"cleverbot": "",
+		"discord_bans": "",
+		"discordbots_org": "",
+        "lsterminalink_api": "",
+        "wit.ai_app_id" : "",
+        "wit_token_server": "",
+		"wit_token_client":"",
+		"WEBSTER_KEY":"",
+		"movie_key":"",
+		"osu_key":"",
+		"giphy_key":"",
+		"stackoverflow":"",
+		"Cr_key":"",
+		"paladins_devid":"",
+		"paladins_authkey":"",
+		"pubg_api":""
+	},
+	"dashboard": {
+		"clientid": "",
+		"clientSecret": "",
+		
+		"callbackURL": "https://discordapp.com/api/oauth2/authorize?client_id=567224530708332544&permissions=8&redirect_uri=https%3A%2F%2Fdiscordapp.com%2Fapi%2Foauth2%2Fauthorize%3Fclient_id%3D567224530708332544%26permissions%3D8%26scope%3Dbot&scope=bot",
+		"session_secret": "",
+		"portHttp": 0,
+		"portHttps": 0
+	},
+	"blacklist":{
+		"guilds":{},
+		"users":{}
+	},
+	"levels":{
+		"level":"300"
+		
+
+
+
+	},
+	"nodes":[
+		{	"host":"localhost","port":"2334","password":"youshallnotpass","region": "europe"	}
+	]
+}

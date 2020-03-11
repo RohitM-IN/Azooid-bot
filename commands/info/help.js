@@ -2,6 +2,7 @@ const { RichEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const fs = require('fs');
 
+// let prefixes = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
 
 
 module.exports = {
@@ -10,15 +11,8 @@ module.exports = {
     category: "info",
     description: "Returns all commands, or one specific command info",
     usage: "[command | alias]",
-    run: async (client, message, args,db) => {
-      let prefix
-   await db.collection('guilds').doc(message.guild.id).get().then((q) => {
-        if(q.exists){
-            prefix = q.data().prefix;
-        }else{
-            prefix = "." || config1.prefix_mention ;
-        }
-    })
+    run: async (client, message, args) => {
+     
        
         // If there's an args found
         // Send the info of that command found
@@ -29,17 +23,22 @@ module.exports = {
         } else {
             // Otherwise send all the commands available
             // Without the cmd info
-            return getAll(client, message,prefix);
+            return getAll(client, message);
         }
     }
 }
 
-function getAll(client, message,prefix) {
+function getAll(client, message) {
+  fs.readFile('./total.txt','utf8', function (err, data) {
+    if (err) throw err;
+    let Data = data;
+   
+  
    // let prefix = prefixes[message.guild.id].prefixes ;
     const embed = new RichEmbed()
         .setColor("RANDOM")
         .setTimestamp()
-        .setDescription(`Server prefix is\ \ \ \`${prefix}\``)
+        .setDescription(`Server prefix is\ \ \ \`.\``)
 
         .addField("**MODERATION**",stripIndents`
           addrole
@@ -48,32 +47,22 @@ function getAll(client, message,prefix) {
           ban
           report
           logger`,true)
-        .addField(`**Game**`,stripIndents`
-          apex
-          dota
-          dhero
-          ditem
-          fortnite
-          overwatch
-          r6stats
-          steam
-          csgo
-          csgow
-          pcount
-          dleaderboard (dlb)
-        `,true)
+          .addField("**OWNER**",stripIndents`
+          prefix
+          settings
+          welcome
+          autorole`,true)
+
         .addField("**INFO**",stripIndents`
           serverinfo
           help
           ping
           whois
-          today (today-in-history)
-          hunble-bundle
-          rank`,true)
+          rank
+          markdown
+          `,true)
 
         .addField("**FUN**",stripIndents`
-          apod
-          calander
           uptime
           write
           read
@@ -90,6 +79,7 @@ function getAll(client, message,prefix) {
           typing test
         `,true)
         .addField("**SEARCH**",stripIndents`
+          anime
           book
           giphy
           google autofill (autofill)
@@ -121,6 +111,9 @@ function getAll(client, message,prefix) {
           hgif
           hles
           hpussy
+          neko
+          ngif
+          pgif
           urban`,true)
         .addField("**meme:**",stripIndents`
           3000-years (3ky)
@@ -132,13 +125,20 @@ function getAll(client, message,prefix) {
           to-be-continued (tbc)
           triggered
         `,true)
-        .addField("**OWNER**",stripIndents`
-          log
-          reset  (reset-settings)
-          prefix
-          settings
-          welcome
-          autorole`,true)
+        .addField(`**Game**`,stripIndents`
+        apex
+        dota
+        dhero
+        ditem
+        fortnite
+        overwatch
+        r6stats
+        steam
+        csgo
+        csgow
+        pcount
+        dleaderboard (dlb)
+      `,true)
 
         .addField("**UTIL**",stripIndents`
           bug
@@ -166,17 +166,19 @@ function getAll(client, message,prefix) {
           mocking
           morse
           nobody name
+          instagram (insta)
         `,true)
         .addField(`**text edit**`,stripIndents`
+        
           owo
           pig latin
           pirate
-          repeattxt
+          repeat
           reverse
           sha-1
           sha-256
           ship-name
-          shuffletxt
+          shuffle
           snake-speak
           spoiler-letter
           superscript (tiny-text)
@@ -187,22 +189,9 @@ function getAll(client, message,prefix) {
           uri-encode
           uri-decode
           zalgo`,true)
-          .addField(`**Music**`,stripIndents`
-          play (p)
-          stop (disconnect,leave)
-          seek
-          skip
-          nowplaying (np)
-          radio (usage: radio <station name>)
-          repeat
-          repeatqueue
-          shuffle
-          eq (usage: eq help)
-          volume (vol)
-          `,true)
         .addField("Note",stripIndents`
         To get more info on each command type help <your command>
-        Total commands **155**+        
+        Total commands **${data}**+ (Including hidden commands that are in development or not for public use)     
         example: suppose prefix is . then
         .help ping 
         it will give you more info on ping command`)
@@ -225,6 +214,8 @@ function getAll(client, message,prefix) {
 //     return message.channel.send(embed.setDescription(info));
     message.channel.send("**Bot is in heavy development right now **\n",embed)
     // message.channel.send(embed);
+    
+  });
 }
 
 function getCMD(client, message, input) {
@@ -247,7 +238,8 @@ function getCMD(client, message, input) {
     if (cmd.usage) {
         info += `\n**Usage**: ${cmd.usage}`;
         embed.setFooter(`Syntax: <> = required, [] = optional`);
-    } 
+    }
+    if(cmd.example) info += `\n**Example**: ${cmd.example}`;
 
     return message.channel.send(embed.setColor("GREEN").setDescription(info));
 }

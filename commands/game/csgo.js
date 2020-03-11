@@ -127,7 +127,8 @@ module.exports = {
                 .setFooter(client.user.username);
                 
           
-                msg.edit(embed);
+                msg.edit(embed,"To get info on weapons stats use \`csgow\` command");
+                
                   
                 },function(error, response) {
                     if(error) return message.channel.send("looks like i broke try the command again");
