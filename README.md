@@ -1,13 +1,12 @@
 # discordbotethyt
 [DONE✅]
 
-✅ music system added with equilizer and stuff
-✅ radio command added
+✅ shuffle command, now playing command , queue command ,repeat command ,etc music commands added
 
 
 [issues❌❌❌]
 
-NON at the moment
+❌❌❌EVENTS : CHECK IF bot has send message permissions NEEDED Help HERE❌❌❌
 
 [to do 🤔🤔 ]
  
@@ -16,6 +15,11 @@ NON at the moment
 🤔 discord server backup system 
 
 [solved issues✅]
+✅ music system added with equilizer and stuff
+
+✅ radio command added
 
 ✅ createchannel event firing when joining a new server
+
 ✅ added firebase db support to discord bot
+
