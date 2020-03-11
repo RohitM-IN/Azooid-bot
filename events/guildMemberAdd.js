@@ -17,16 +17,16 @@ const applyText = (canvas, text) => {
 	// Return the result to use in the actual canvas
     return ctx.font;
 }
-module.exports = async (client, message) => {
-        let welcomes = JSON.parse(fs.readFileSync("./serversettings.json", "utf8"));
-        //console.log(member);
-        //console.log(msg.user.id)
-        const channelName = '📜welcome📜';
-        //console.log(channelName.includes('welcome'));
-        // const channel = welcomes[member.guild.id].welcomes || member.guild.channels.find(ch => ch.name.includes('welcome')) || member.guild.channels.find(ch => ch.name.includes('general'));
+module.exports = async (client, member) => {
+        let channelID = JSON.parse(fs.readFileSync("./data/json/serversettings.json", "utf8"))
+        let roles = channelID['guilds'][member.guild.id]['guildautorole'];
+        let channelsend = channelID['guilds'][member.guild.id]['welcomeChannelID'];
+        channelsend = channelsend.replace(/[^0-9]/g, '');
         
-        const channel =  message.guild.channels.find(ch => ch.name.includes('welcome')) || message.guild.channels.find(ch => ch.name.includes('general'));
+        const channel =  member.guild.channels.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.find(ch => ch.name.includes('welcome')) || member.guild.channels.find(ch => ch.name.includes('general'));
         if (!channel) return;
+        var log = member.guild.channels.find(ch => ch.name.includes('member-log')) || member.guild.channels.find(ch => ch.name.includes('log')) || memberDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
+        
     
         canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
@@ -43,21 +43,37 @@ module.exports = async (client, message) => {
     
     
         // Add an exclamation point here and below
-        ctx.font = applyText(canvas, `${message.displayName}!`);
+        ctx.font = applyText(canvas, `${member.displayName}!`);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${message.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
+        ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
     
         ctx.beginPath();
         ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
         ctx.closePath();
         ctx.clip();
     
-        const avatar = await Canvas.loadImage(message.user.displayAvatarURL);
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
         ctx.drawImage(avatar, 25, 25, 200, 200);
     
         const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.jpg');
-    
-        channel.send(`Welcome to the server, ${message}!`, attachment);
+
+        if(channelsend !== 'default' || channelsend != undefined) {
+            client.channels.get(channelsend).send(`Welcome to the server, ${member.displayName}!`, attachment);
+        } else{
+            channel.send(`Welcome to the server, ${member.displayName}!`, attachment);
+        }
+        
+        // if (!member.hasPermission("MANAGE_ROLES")) {
+        //     if(!log) return;
+        //     var embed2 = new discord.RichEmbed()
+        //      .setTitle("Error")
+        //      .setDescription("The bot doesn't have the appropriate permissions to assign new members roles automatically.\nTo resolve this problem, go to **Server Settings** and then navigate to the **Roles** option. Next, click on **Bots**, and then click on the slider next to **Manage Roles** to activate it.")
+        //      .setColor("#3937a5")
+        //     log.send(embed2);
+        //  } else {
+        //     member.addRole(member.guild.roles.find(role => role.name = roles))
+        //  }
+        
 
         
 

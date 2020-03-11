@@ -1,9 +1,16 @@
 const https = require("https");
 var fs = require("fs");
+const { RichEmbed } = require('discord.js')
+const firebase = require('firebase/app');
+const FieldValue = require('firebase-admin').firestore.FieldValue;
+const admin = require('firebase-admin');
+const serviceAccount = require('../serviceAccount.json')
+let db = admin.firestore();
+var ref = admin.database().ref();
+var usersRef = ref.child('guilds');
+const { nodes,nodes1 } = require("../config.json")
+
 const { ErelaClient, Utils } = require("erela.js");
-const { nodes } = require("../auth.json")
-var http = require('http');
-var index = fs.readFileSync('index.html');
 
 module.exports = async (client) => {
     
@@ -18,20 +25,6 @@ module.exports = async (client) => {
                 type: "PLAYING"
             }
         });
-		
-
-
-		http.createServer(function (req, res) {
-		res.writeHead(200, {'Content-Type': 'text/plain'});
-			res.end(index);
-			
-		}).listen(9615);
-		console.log("Http Started");
-		
-		
-		
-		
-		
         refreshDotaData();
     
     function refreshDotaData() {
@@ -107,24 +100,70 @@ module.exports = async (client) => {
             })
           }
         });
-
-    //     client.music = new ErelaClient(client, nodes)
-    //     .on("nodeError", console.log)
-    //     .on("nodeConnect", () => console.log("Successfully created a new Node."))
-    //     .on("queueEnd", player => {
-    //         player.textChannel.send("Queue has ended.")
-    //         return client.music.players.destroy(player.guild.id)
-    //     })
-    //     .on("trackStart", ({textChannel}, {title, duration}) => textChannel.send(`Now playing: **${title}** \`${Utils.formatTime(duration, true)}\``).then(m => m.delete(15000)));
-
-    // client.levels = new Map()
-    //     .set("none", 0.0)
-    //     .set("low", 0.10)
-    //     .set("medium", 0.15)
-    //     .set("high", 0.25);
-
       
       }
+      load()
+
+    function load() {
+      let query = db.collection('guilds')
+      let guilds = {} // plain object, not array   
+      let promise = new Promise(async function(resolve) {
       
+      await query.get().then(snapshot => {
+      let remaining = snapshot.size; // If firebase, there is this property
+          snapshot.forEach(doc => {
+              guilds[doc.id] = doc.data();
+              remaining--;
+              if (!remaining) resolve(guilds);
+          });
+          })
+      });
+          promise.then(async function (guilds) {
+              // do anything you like with guilds inside this function...
+              let temp = { guilds };
+              await fs.writeFileSync ("./data/json/serversettings.json", JSON.stringify(temp), function(err) {
+                  if (err) throw err;
+              
+              })
+      });
+      console.log("done saving serversettings.json")
+    }
+    
+    client.music = new ErelaClient(client, nodes)
+        .on("nodeError", console.log)
+        .on("nodeConnect", () => console.log("Successfully created a new Node."))
+        .on("queueEnd", player => {
+            player.textChannel.send("Well nothing left for me to play see you soon !")
+            player.setTrackRepeat(false);
+            player.setQueueRepeat(false);
+            return client.music.players.destroy(player.guild.id)
+        })
+        .on("trackStart", async ({textChannel, trackRepeat}, {title, duration , thumbnail ,requester ,uri }) => {
+          
+          if(trackRepeat === false){
+            let Embed = new RichEmbed()
+          .setTitle(`:musical_note: Now Playing`)
+          .addField(`**Title :** `,`${title} : \`${Utils.formatTime(duration, true)}\``)
+          .setThumbnail(thumbnail)
+          .addField(`Requested By :`,requester.username)
+          .addField(`**Link:**`,`[${title}](${uri})`)
+          .setTimestamp()
+          .setFooter(`${client.user.username}`);
+          textChannel.send(Embed);
+          }else{
+            return;
+          }
+          
+        })
+      
+        .on("nodeDisconnect", (node, error) => console.log(error));
+    client.levels = new Map()
+        .set("none", 0.0)
+        .set("low", 0.10)
+        .set("medium", 0.15)
+        .set("high", 0.25);
+
+        
+        
     
 }

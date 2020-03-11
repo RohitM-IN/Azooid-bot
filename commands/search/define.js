@@ -22,6 +22,8 @@ module.exports = {
 
 
 	async run(client, message, args) {
+		message.channel.send("Command in development")
+
     //     if(!args[0]) message.channel.send("enter a word you want to search");
     //     let word = args[0] 
 

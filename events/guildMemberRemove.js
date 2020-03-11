@@ -17,13 +17,14 @@ const applyText = (canvas, text) => {
 	// Return the result to use in the actual canvas
     return ctx.font;
 }
-module.exports = async (client, message) => {
-    let welcomes = JSON.parse(fs.readFileSync("./serversettings.json", "utf8"));
-    //console.log(member);
-    //console.log(msg.user.id)
+module.exports = async (client, member) => {
+	let channelID = JSON.parse(fs.readFileSync("./data/json/serversettings.json", "utf8"))
+	let channelsend = channelID['guilds'][member.guild.id]['welcomeChannelID'];
+	channelsend = channelsend.replace(/[^0-9]/g, '');
     const channelName = '📜welcome📜';
 
-    const channel = message.guild.channels.find(ch => ch.name.includes('welcome')) || message.guild.channels.find(ch => ch.name.includes('general'));
+	const channel =  member.guild.channels.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.find(ch => ch.name.includes('welcome')) || member.guild.channels.find(ch => ch.name.includes('general'));
+
     if (!channel) return;
     
    
@@ -42,19 +43,23 @@ module.exports = async (client, message) => {
 	ctx.fillText('Good Bye! see you once again,', canvas.width / 3, canvas.height / 3.5);
 
 	// Add an exclamation point here and below
-	ctx.font = applyText(canvas, `${message.displayName}!`);
+	ctx.font = applyText(canvas, `${member.displayName}!`);
 	ctx.fillStyle = '#ffffff';
-	ctx.fillText(`${message.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
+	ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
 
 	ctx.beginPath();
 	ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
 	ctx.closePath();
 	ctx.clip();
 
-	const avatar = await Canvas.loadImage(message.user.displayAvatarURL);
+	const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
 	ctx.drawImage(avatar, 25, 25, 200, 200);
 
 	const attachment = new Discord.Attachment(canvas.toBuffer(), 'leave-image.jpg');
-
-    channel.send(`See you once again ${message}!`, attachment);
+	if(channelsend !== 'default' || channelsend != undefined) {
+		client.channels.get(channelsend).send(`See you once again, ${member.displayName}!`, attachment);
+	} else{
+		channel.send(`See you once again, ${member.displayName}!`, attachment);
+	}
+    
 }

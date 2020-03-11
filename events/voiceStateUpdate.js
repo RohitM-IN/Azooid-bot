@@ -8,7 +8,7 @@ module.exports =  async (client,oldMember, newMember) => {
 		let username = oldMember.displayName;
 		let oldVCID = oldMember.voiceChannelID;
 		let newVCID = newMember.voiceChannelID;
-		let day=dateFormat(new Date(), "dd-mm-yy-hh:MM:ss");
+		let day=dateFormat(new Date(), "dd-mm-yy hh:MM:ss");
 		if(oldVCID == newVCID) return;
 		
 		

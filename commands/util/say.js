@@ -7,7 +7,7 @@ module.exports = {
     description: "clean up to last 100 messages ",
     usage: "<no of messages>",
     run: async (client, message, args) => {
-        if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.require("off..");
+        if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send("off..You dont have permission to use this command");
         if (args.length < 1) return message.channel.reply('nothing to say').then(m => m.delete(5000));
        let botmessage = args.join(" ");
        message.delete().catch();

@@ -26,24 +26,5 @@ module.exports = {
       .setFooter(client.user.username, client.user.displayAvatarURL)
 
       message.channel.send(embed)
-    //   message.channel.send({
-    //     embed: {
-    //       author: {
-    //         name: client.user.username,
-    //         icon_url: client.user.avatarURL,
-    //       },
-    //       title: 'Scanning...',
-    //       thumbnail: {
-    //         url: message.author.avatarURL,
-    //       },
-    //       description: `${message.member.user.username} is ${randomnumber}% dank! :fire:`,
-    //       color: 0x2471a3,
-    //       timestamp: new Date(),
-    //       footer: {
-    //         icon_url: client.user.avatarURL,
-    //         text: client.config.embed.footer,
-    //       },
-    //     },
-    //   });
     },
   };

@@ -47,28 +47,23 @@ const types = {
 
 module.exports = {
 
-			name: 'character',
-			aliases: ['anilist-character', 'anime-character', 'manga-character', 'manga-char', 'ani-char', 'char'],
-			group: 'search',
-			memberName: 'character',
-			description: 'Searches AniList for your query, getting character results.',
-			clientPermissions: ['EMBED_LINKS'],
-			credit: [
-				{
-					name: 'AniList API',
-					url: 'https://anilist.gitbook.io/anilist-apiv2-docs/'
-				}
-			],
-			args: [
-				{
-					key: 'query',
-					prompt: 'What character would you like to search for?',
-					type: 'string'
-				}
-			],
+	name: 'character',
+	aliases: ['anilist-character', 'anime-character', 'manga-character', 'manga-char', 'ani-char', 'char'],
+	group: 'search',
+	memberName: 'character',
+	description: 'Searches AniList for your query, getting character results.',
+	clientPermissions: ['EMBED_LINKS'],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What character would you like to search for?',
+			type: 'string'
+		}
+	],
 
 
-            async run(client, message, args) {
+	async run(client, message, args) {
+		message.channel.send("Command in development")
         //         let query = args.join(" ");
 		// try {
         //     const { body } = await request

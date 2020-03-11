@@ -8,6 +8,7 @@ module.exports = async (client, message  ) => {
         msg = message.content;
     }
     var log = message.guild.channels.find(ch => ch.name.includes('member-log')) || message.guild.channels.find(ch => ch.name.includes('log')) || messageDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
+    if(!log) return;
     var sEmbed = new Discord.RichEmbed()
                 .setColor("RANDOM")
                 .setTitle(`:warning: A Message Was Deleted!`)

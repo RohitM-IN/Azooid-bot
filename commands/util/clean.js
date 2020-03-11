@@ -8,7 +8,7 @@ module.exports = {
     usage: "<no of messages>",
     aliases:["cleanup", "clear"],
     run: async (client, message, args) => {
-        if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.require("off..");
+        if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send("off..You dont have permission to use this command");
         if(!args[0]) return message.channel.send("enter amount of message max 100");
         // if(args[0] == String) return message.channel.send('enter amount!'); 
         if(args[0] == "all") args[0]= 100;

@@ -8,7 +8,7 @@ module.exports = {
     usage: "<user> <platform>",
     category: "miscellaneous",
     accessableby: "Members",
-    aliases: ["apec"] , 
+    aliases: ["apec"] ,
     run: async (client, message, args) => {
         if(!args[0]) return message.channel.send("Please supply a username.");
         if(!args[1]) return message.channel.send("Please supply a platform to check. `pc`, `xbox` or `ps4`");

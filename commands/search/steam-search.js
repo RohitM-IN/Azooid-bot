@@ -25,6 +25,8 @@ module.exports = {
 			],
 
 	async run(client , message ,args) {
+		message.channel.send("Command in development")
+		
 		// let query = args.join(" ")
 		// try {
 			

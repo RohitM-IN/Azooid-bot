@@ -1,17 +1,16 @@
-const { Client, Collection } = require("discord.js");
+const {Client,Collection} = require("discord.js");
 const Discord = require("discord.js");
-const { config } = require("dotenv");
+const {config} = require("dotenv");
 const fs = require("fs");
 const config1 = require("./config.json");
 const xp = require("./data/xp.json");
 const Canvas = require("canvas")
-const { promisify, inspect } = require('util');
+const {promisify,inspect} = require('util');
 const readdir = promisify(fs.readdir);
 const ascii = require("ascii-table");
 let table = new ascii("Events");
+const https = require("https");
 table.setHeading("Event", "Load status");
-// let cooldown = new Set();
-// let cdseconds = 3;
 
 const client = new Client({
     disableEveryone: true
@@ -22,6 +21,21 @@ client.aliases = new Collection();
 
 client.categories = fs.readdirSync("./commands/");
 
+//init database
+const firebase = require('firebase/app');
+const FieldValue = require('firebase-admin').firestore.FieldValue;
+const admin = require('firebase-admin');
+const serviceAccount = require('./serviceAccount.json')
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://azooid-discordbot.firebaseio.com"
+})
+
+let db = admin.firestore();
+var ref = admin.database().ref();
+var usersRef = ref.child('guilds');
+
 config({
     path: __dirname + "/.env"
 });
@@ -29,65 +43,39 @@ config({
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
 });
-   const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
- client.on('message', async (message) => {
-    
+const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+client.on('message', async (message) => {
+
     if (message.author.bot) return;
     if (!message.guild) return;
-	if(message.tts == true && !message.author.bot) message.react("📢");
-	
-    // let prefixes = JSON.parse(fs.readFileSync("./prefixsettings.json", "utf8"));
-    
-    // if(!prefixes[message.guild.id]){
-    //     prefixes[message.guild.id] = {
-    //         prefixes: config1.prefix
-    //     }
+    let prefix
+    await db.collection('guilds').doc(message.guild.id).get().then((q) => {
+        if (q.exists) {
+            prefix = q.data().prefix || config1.prefix_mention;
+        } else {
+            prefix = "." || config1.prefix_mention;
+        }
+    })
 
-    // }
-    // let prefixset =  prefixes[message.guild.id] = {
-    // //     prefixes: config1.prefix
-    // }
-    // if(prefixes[message.guild.id] == undefined){
-    //     await fs.writeFile("./prefixsettings.json", JSON.stringify(prefixset), (err) => {
-    //     if (err) throw err;
-    //     console.log(`done`);
- 
-    // });
-    // }
-    
-    let prefix = "." || config1.prefix_mention ; //prefixes[message.guild.id].prefixes
-//     if(cooldown.has(message.author.id)){
-//         message.delete();
-//         return message.reply(`you have to wait for 3 sec before each command!!`)
-//     }
-//    if(!message.member.hasPermission("ADMINISTRATOR")){
-//         cooldown.add(message.author.id);
-//     }
-
-
-    if (!message.member) message.member = await message.guild.fetchMember(message);
+    //if (!message.member) message.member = await message.guild.fetchMember(message);
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
-	if (!prefixRegex.test(message.content)) return;
+    if (!prefixRegex.test(message.content)) return;
 
-	const [, matchedPrefix] = message.content.match(prefixRegex);
-	const args = message.content.slice(matchedPrefix.length).trim().split(/ +/g);
+    const [, matchedPrefix] = message.content.match(prefixRegex);
+    const args = message.content.slice(matchedPrefix.length).trim().split(/ +/g);
 
 
     // const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const cmd = args.shift().toLowerCase();
-
     if (cmd.length === 0) return;
 
     let command = client.commands.get(cmd);
     if (!command) command = client.commands.get(client.aliases.get(cmd));
+    if (!message.channel.permissionsFor(client.user).has("SEND_MESSAGES")) return;
 
     if (command)
-        command.run(client, message, args);
-
-    // setTimeout(() => {
-    //     cooldown.delete(message.author.id)
-    // }, cdseconds * 1000)
- })
+        command.run(client, message, args, db);
+})
 
 const load = async () => {
     const evtFiles = await readdir("./events");
@@ -100,15 +88,39 @@ const load = async () => {
         table.addRow(file, '✅');
         client.on(evtName, event.bind(null, client));
         delete require.cache[require.resolve(`./events/${file}`)];
-        total = total +1;
+        total = total + 1;
 
     })
     console.log(table.toString());
     console.log(`Total no of events ${total} loaded ✅`);
 }
+
+client.on('guildCreate', async gData => {
+    db.collection('guilds').doc(gData.id).set({
+        'guildID': gData.id,
+        'guildName': gData.name,
+        'guildOwner': gData.owner.user.username,
+        'guildOwnerID': gData.owner.id,
+        'guildMemberCount': gData.memberCount,
+        'prefix': '.',
+        'welcomeChannelID': "default",
+        'logchannel': 'default',
+        'voicelogchannel': 'default',
+        'guildautorole': 'default',
+        'defaultchannelID': "default",
+        'playervolume': 100
+    })
+    client.fetchUser(gData.owner.id, false).then(user => {
+        user.send("Thanks for Inviting me to " + gData.name + " plz use welcome and log command to set the channel \nEX: <prefix>welcome #<channel name> \nEX: <prefix>log -h", )
+    })
+})
+client.on('guildDelete', async gData => {
+    db.collection('guilds').doc(gData.id).delete()
+})
+
+
 process.on('unhandledRejection', error => console.log('Uncaught Promise Rejection', error));
 
 client.login(process.env.TOKEN);
 // client.login(config1.token);
-  load();
-  
+load();

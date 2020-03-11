@@ -35,6 +35,8 @@ module.exports = {
 
 
 	async run(client ,message ,args) {
+		message.channel.send("Command in development")
+
 		// let element = args[0]
 		// const num = Number.parseInt(element, 10);
 		// 				if (!Number.isNaN(num) && num >= 0 && num <= elements.length - 1) return true;
