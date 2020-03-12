@@ -8,6 +8,8 @@ module.exports = {
     category: "game",
     description: "Get steam stats of a user (requires the Custom URL or just last id)",
     usage: "<user> <platform>",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     aliases:["ftn"],
     run: async (client, message, args) => {
     if(!args[0]) return message.channel.send("Please supply a username.");

@@ -4,20 +4,20 @@ const request = require('node-superfetch');
 
 module.exports ={
 
-			name: 'mdn',
-			group: 'search',
-			memberName: 'mdn',
-			description: 'Searches MDN for your query.',
-			clientPermissions: ['EMBED_LINKS'],
-
-			args: [
-				{
-					key: 'query',
-					prompt: 'What article would you like to search for?',
-					type: 'string',
-					parse: query => query.replace(/#/g, '.prototype.')
-				}
-			],
+	name: 'mdn',
+	group: 'search',
+	memberName: 'mdn',
+	description: 'Searches MDN for your query.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What article would you like to search for?',
+			type: 'string',
+			parse: query => query.replace(/#/g, '.prototype.')
+		}
+	],
 
 	async run(client ,message ,args) {
 		let query = args.join(" ")

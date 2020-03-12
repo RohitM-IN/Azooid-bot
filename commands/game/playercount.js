@@ -8,6 +8,8 @@ const auth = require('../../auth.json').api.steamapi;
     name: "playercount",
     description: "Displays total no of players in game!",
     usage: "playercount ",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
     category: "game",
     aliases: ["pcount"] , 
     run: async (client, message, args, userID) => {

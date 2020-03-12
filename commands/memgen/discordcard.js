@@ -8,20 +8,19 @@ const { getMember } = require("../../functions.js");
 
 module.exports =  {
 
-			name: 'discord-card',
-			aliases: ['dcard'],
-			group: 'memgen',
-			description: 'Draws a user\'s avatar on a Discord\'s Trading Card.',
-			clientPermissions: ['ATTACH_FILES'],
-			args: [
-				{
-					key: 'user',
-					prompt: 'Which user would you like to edit the avatar of?',
-					type: 'user'
-				}
-			],
-
-
+	name: 'discord-card',
+	aliases: ['dcard'],
+	group: 'memgen',
+	description: 'Draws a user\'s avatar on a Discord\'s Trading Card.',
+	clientPermissions: ["ATTACH_FILES","EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'user',
+			prompt: 'Which user would you like to edit the avatar of?',
+			type: 'user'
+		}
+	],
 	async run(client, message, args) {
         const member = getMember(message, args.join(" "));
 		

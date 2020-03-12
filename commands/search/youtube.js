@@ -7,25 +7,26 @@ const GOOGLE_KEY = require('../../auth.json').api.youtubev3;
 
 module.exports =  {
 
-			name: 'youtube',
-			aliases: ['y-tube', 'u-tube', 'yt'],
-			group: 'search',
-			memberName: 'youtube',
-			description: 'Searches YouTube for your query.',
-			clientPermissions: ['EMBED_LINKS'],
-			credit: [
-				{
-					name: 'YouTube Data API',
-					url: 'https://developers.google.com/youtube/v3/'
-				}
-			],
-			args: [
-				{
-					key: 'query',
-					prompt: 'What video would you like to search for?',
-					type: 'string'
-				}
-			],
+	name: 'youtube',
+	aliases: ['y-tube', 'u-tube', 'yt'],
+	group: 'search',
+	memberName: 'youtube',
+	description: 'Searches YouTube for your query.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	credit: [
+		{
+			name: 'YouTube Data API',
+			url: 'https://developers.google.com/youtube/v3/'
+		}
+	],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What video would you like to search for?',
+			type: 'string'
+		}
+	],
 
 
 	async run(client ,message ,args) {

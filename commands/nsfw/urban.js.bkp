@@ -7,6 +7,8 @@ module.exports = {
     aliases: ["urb", "urbandictionary", "ud"],
     category: "nfsw",
     description: "gets an urban dictionary definition",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     usage: "<search|random> (query)",
     run: async (bot, message, args) => {
         if(!message.channel.nsfw) return message.channel.send("Please run this command in a `NSFW` channel.");

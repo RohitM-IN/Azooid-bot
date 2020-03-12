@@ -2,6 +2,8 @@ module.exports = {
     name: "ping",
     category: "info",
     description: "Returns latency and API ping",
+    clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args) => {
         
         const msg = await message.channel.send(`🏓 Pinging....`);

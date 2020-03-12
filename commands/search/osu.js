@@ -5,27 +5,19 @@ const { formatNumber } = require('../../util/Util');
 const  OSU_KEY  = require('../../auth.json').api.osu_key
 
 module.exports =  {
-
-			name: 'osu',
-			group: 'search',
-			memberName: 'osu',
-			description: 'Responds with information on an osu! user.',
-			clientPermissions: ['EMBED_LINKS'],
-			credit: [
-				{
-					name: 'osu!api',
-					url: 'https://github.com/ppy/osu-api/wiki'
-				}
-			],
-			args: [
-				{
-					key: 'user',
-					prompt: 'What user would you like to get information on?',
-					type: 'string'
-				}
-			],
-
-
+	name: 'osu',
+	group: 'search',
+	memberName: 'osu',
+	description: 'Responds with information on an osu! user.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'user',
+			prompt: 'What user would you like to get information on?',
+			type: 'string'
+		}
+	],
 	async run(client ,message ,args) {
 		let user = args.join(" ")
 		if (!user) return message.channel.send(`What user would you like to get information on?`)

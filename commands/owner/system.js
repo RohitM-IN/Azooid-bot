@@ -8,6 +8,8 @@ const ownerid = "348832732647784460";
 module.exports = {
     name: "system",
     category: "owner",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     description: "shows the statistics of the bot ",
     run: async (client, message, args) => {
         if(message.author.id != ownerid) return;

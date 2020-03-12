@@ -6,6 +6,8 @@ module.exports = {
     name: "prefix",
     category: "owner",
     description: "change prefix of the server ",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","ADMINISTRATOR"],
     run: async (client, message, args,db) => {
         if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("you dont have admin rights contact server admin");
         if(!args[0]) return message.channel.send("please enter server prefix");

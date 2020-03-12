@@ -7,20 +7,21 @@ const { getMember } = require("../../functions.js");
 
 module.exports =  {
 
-			name: 'to-be-continued',
-			group: 'meme-gen',
-			memberName: 'to-be-continued',
-			description: 'Draws an image with the "To Be Continued..." arrow.',
-			clientPermissions: ['ATTACH_FILES'],
-			aliases: ["tbc"],
-			args: [
-				{
-					key: 'image',
-					prompt: 'What image would you like to edit?',
-					type: 'image',
-					default: msg => msg.author.displayAvatarURL({ format: 'png', size: 512 })
-				}
-			],
+	name: 'to-be-continued',
+	group: 'meme-gen',
+	memberName: 'to-be-continued',
+	description: 'Draws an image with the "To Be Continued..." arrow.',
+	clientPermissions: ["ATTACH_FILES","EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	aliases: ["tbc"],
+	args: [
+		{
+			key: 'image',
+			prompt: 'What image would you like to edit?',
+			type: 'image',
+			default: msg => msg.author.displayAvatarURL({ format: 'png', size: 512 })
+		}
+	],
 	async run(client,message,args) {
         const member = getMember(message, args.join(" "));
 		

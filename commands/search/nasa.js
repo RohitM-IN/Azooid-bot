@@ -9,7 +9,8 @@ module.exports = {
 			group: 'search',
 			memberName: 'nasa',
 			description: 'Searches NASA\'s image archive for your query.',
-			clientPermissions: ['EMBED_LINKS'],
+			clientPermissions: ["EMBED_LINKS","SEND_MESSAGES","ATTACH_FILES"],
+			userPermissions:["VIEW_CHANNEL"],
 			args: [
 				{
 					key: 'query',

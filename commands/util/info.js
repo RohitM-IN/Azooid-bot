@@ -5,6 +5,8 @@ module.exports = {
         name: "info",
         description: "Pulls the info of the bot!",
         usage: "info",
+        clientPermissions: ["SEND_MESSAGES","EMBED_LINKS"],
+        userPermissions:["VIEW_CHANNEL"],
         category: "util",
     run: async (client, message, args) => {
     let sEmbed = new RichEmbed()

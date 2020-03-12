@@ -7,26 +7,19 @@ const  STACKOVERFLOW_KEY  = require('../../auth.json').api.stackoverflow;
 
 module.exports =  {
 
-			name: 'stack-overflow',
-			group: 'search',
-			memberName: 'stack-overflow',
-			description: 'Searches Stack Overflow for your query.',
-			clientPermissions: ['EMBED_LINKS'],
-			credit: [
-				{
-					name: 'Stack Exchange API',
-					url: 'https://api.stackexchange.com/docs'
-				}
-			],
-			args: [
-				{
-					key: 'query',
-					prompt: 'What question would you like to search for?',
-					type: 'string'
-				}
-			],
-
-
+	name: 'stack-overflow',
+	group: 'search',
+	memberName: 'stack-overflow',
+	description: 'Searches Stack Overflow for your query.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What question would you like to search for?',
+			type: 'string'
+		}
+	],
 	async run(client ,message, args) {
 		let query = args.join(" ")
 		if (!query) return message.channel.send(`What question would you like to search for?`)

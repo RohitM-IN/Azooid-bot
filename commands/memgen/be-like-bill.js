@@ -11,29 +11,26 @@ const { getMember } = require("../../functions.js");
 
 module.exports =  {
 	
-			name: 'be-like-bill',
-			aliases: ['belike'],
-			group: 'meme-gen',
-			memberName: 'be-like-bill',
-			description: 'Sends a "Be Like Bill" meme with the name of your choice.',
-			throttling: {
-				usages: 1,
-				duration: 10
-			},
-			clientPermissions: ['ATTACH_FILES'],
-
-			args: [
-				{
-					key: 'name',
-					prompt: 'What should the name on the meme be?',
-					type: 'string',
-					default: 'Bill',
-					max: 20
-				}
-			],
-
-	
-
+	name: 'be-like-bill',
+	aliases: ['belike'],
+	group: 'meme-gen',
+	memberName: 'be-like-bill',
+	description: 'Sends a "Be Like Bill" meme with the name of your choice.',
+	throttling: {
+		usages: 1,
+		duration: 10
+	},
+	clientPermissions: ["ATTACH_FILES","EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'name',
+			prompt: 'What should the name on the meme be?',
+			type: 'string',
+			default: 'Bill',
+			max: 20
+		}
+	],
 	async run(client,message,args) {
 		const member = getMember(message, args.join(" "));
 		let name = member.user.username;

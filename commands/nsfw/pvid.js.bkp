@@ -10,6 +10,8 @@ module.exports = {
     clientpermissions: ['SEND_MESSAGES'],
     userpermissions: [],
     shortDescription: 'Videos',
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message) => {
 
         const args = message.content.split(' ').slice(1);

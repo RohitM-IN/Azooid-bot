@@ -6,6 +6,8 @@ module.exports = {
 		aliases: ['paypal'],
 		group: 'util',
 		memberName: 'donate',
+		clientPermissions: ["SEND_MESSAGES"],
+		userPermissions:["VIEW_CHANNEL"],
 		description: 'Responds with the bot\'s donation links.',
 		guarded: true,
 	    run(client,message) {

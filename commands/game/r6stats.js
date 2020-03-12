@@ -10,6 +10,8 @@ module.exports = {
     category: "game",
     description: "Displays your rainbow six siege stats for specified player",
     usage: "<user> (platform)",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     aliases: ["rainbow", "rainbow6"],
     run: async (client, message, args) => {
         const platforms = { pc: "UPLAY", xbox: "XBL", ps4: "PSN" };

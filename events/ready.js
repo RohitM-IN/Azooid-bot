@@ -28,48 +28,55 @@ module.exports = async (client) => {
         refreshDotaData();
     
     function refreshDotaData() {
-  
-      https.get("https://raw.githubusercontent.com/odota/dotaconstants/master/build/heroes.json", res => {
-        res.setEncoding("utf8");
-        let body = "";
-        res.on("data", data => {
-          body += data;
+      try{
+        https.get("https://raw.githubusercontent.com/odota/dotaconstants/master/build/heroes.json", res => {
+          res.on('error', function errorHandler(err) { console.log(err); });
+          res.setEncoding("utf8");
+          let body = "";
+          res.on("data", data => {
+            body += data;
+          });
+          res.on("end", () => {
+      
+            // console.log("Hero Data Retrieved");
+            //  body = "[" + body.substring(body.indexOf("{") + 1, body.lastIndexOf("}")) + "]";
+            fileData("./heroes.json", body);
+            // console.log("Hero Data Written");
+          });
         });
-        res.on("end", () => {
-    
-          // console.log("Hero Data Retrieved");
-          //  body = "[" + body.substring(body.indexOf("{") + 1, body.lastIndexOf("}")) + "]";
-          fileData("./heroes.json", body);
-          // console.log("Hero Data Written");
+        https.get("https://raw.githubusercontent.com/odota/dotaconstants/master/build/items.json", res => {
+          res.on('error', function errorHandler(err) { console.log(err); });
+          res.setEncoding("utf8");
+          let body = "";
+          res.on("data", data => {
+            body += data;
+          });
+          res.on("end", () => {
+      
+            // console.log("Item Data Retrieved");
+            //  body = "[" + body.substring(body.indexOf("{") + 1, body.lastIndexOf("}")) + "]";
+            fileData("./items.json", body);
+            // console.log("Item Data Written");
+          });
         });
-      });
-      https.get("https://raw.githubusercontent.com/odota/dotaconstants/master/build/items.json", res => {
-        res.setEncoding("utf8");
-        let body = "";
-        res.on("data", data => {
-          body += data;
+        https.get("https://raw.githubusercontent.com/odota/dotaconstants/master/build/abilities.json", res => {
+          res.on('error', function errorHandler(err) { console.log(err); });
+          res.setEncoding("utf8");
+          let body = "";
+          res.on("data", data => {
+            body += data;
+          });
+          res.on("end", () => {
+            // console.log("Ability Data Retrieved");
+            //  body = "[" + body.substring(body.indexOf("{") + 1, body.lastIndexOf("}")) + "]";
+            fileData("./abilities.json", body);
+            // console.log("Ability Data Written");
+          });
         });
-        res.on("end", () => {
-    
-          // console.log("Item Data Retrieved");
-          //  body = "[" + body.substring(body.indexOf("{") + 1, body.lastIndexOf("}")) + "]";
-          fileData("./items.json", body);
-          // console.log("Item Data Written");
-        });
-      });
-      https.get("https://raw.githubusercontent.com/odota/dotaconstants/master/build/abilities.json", res => {
-        res.setEncoding("utf8");
-        let body = "";
-        res.on("data", data => {
-          body += data;
-        });
-        res.on("end", () => {
-          // console.log("Ability Data Retrieved");
-          //  body = "[" + body.substring(body.indexOf("{") + 1, body.lastIndexOf("}")) + "]";
-          fileData("./abilities.json", body);
-          // console.log("Ability Data Written");
-        });
-      });
+      }catch(err) {
+        console.log(err)
+      }
+      
     }
     function fileData(savPath, newData) {
 
@@ -155,8 +162,8 @@ module.exports = async (client) => {
           }
           
         })
-      
-        .on("nodeDisconnect", (node, error) => console.log(error));
+        .on("nodeDisconnect", (node, error) => console.log(error))
+        .on("nodeReconnect", (node) => console.log('Node reconnected ') )
     client.levels = new Map()
         .set("none", 0.0)
         .set("low", 0.10)
@@ -167,3 +174,4 @@ module.exports = async (client) => {
         
     
 }
+process.on('unhandledRejection', error => console.log('Uncaught Promise Rejection', error));

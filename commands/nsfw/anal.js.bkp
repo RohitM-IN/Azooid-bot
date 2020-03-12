@@ -10,6 +10,8 @@ module.exports = {
   usage: "anal",
   cost: 40,
   cooldown: 10,
+  clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
   loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for porn gifs...",
   aliases: ["bumfun"],
   run: async (client,message, args) => {

@@ -7,6 +7,8 @@ const { inspect } = require("util");
     name: "eval",
     category: "owner",
     description: "Dangerous eval command",
+    clientPermissions: ["SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args) => {
       
       

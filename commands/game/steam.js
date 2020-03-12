@@ -10,6 +10,8 @@ module.exports = {
     category: "game",
     description: "Get steam stats of a user (requires the Custom URL or just last id)",
     usage: "<user>",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args) => {
         if(!args[0]) return message.channel.send("Please provide an account name!");
         const id_ = args[0].match(/^(https:\/\/steamcommunity\.com\/id\/)?([^\s\/]+)\/?$/);

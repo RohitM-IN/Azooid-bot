@@ -6,6 +6,8 @@ module.exports = {
     name: "bug",
     aliases: ["reportbug", "report-bug"],
     category: "util",
+    clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     description: "reports the owner of a bug",
     usage: "bug <issue>",
     run: (client, message, args) => {

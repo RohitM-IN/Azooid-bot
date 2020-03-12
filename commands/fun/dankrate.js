@@ -5,7 +5,8 @@ module.exports = {
     name: 'drankrate',
     aliases: ['dank', 'd%', '%d'],
     description: 'this command will rank your dankness.',
-
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
     run: (client, message, args) => {
         const member = getMember(message, args.join(" "));
 		

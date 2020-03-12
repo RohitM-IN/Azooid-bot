@@ -7,21 +7,20 @@ const { getMember } = require("../../functions.js");
 
 module.exports = {
 
-			name: 'thug-life',
-			group: 'meme-gen',
-			memberName: 'thug-life',
-			description: 'Draws "Thug Life" over an image or a user\'s avatar.',
-			clientPermissions: ['ATTACH_FILES'],
-			args: [
-				{
-					key: 'image',
-					prompt: 'What image would you like to edit?',
-					type: 'image',
-					default: msg => msg.author.displayAvatarURL({ format: 'png', size: 2048 })
-				}
-			],
-
-
+	name: 'thug-life',
+	group: 'meme-gen',
+	memberName: 'thug-life',
+	description: 'Draws "Thug Life" over an image or a user\'s avatar.',
+	clientPermissions: ["ATTACH_FILES","EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'image',
+			prompt: 'What image would you like to edit?',
+			type: 'image',
+			default: msg => msg.author.displayAvatarURL({ format: 'png', size: 2048 })
+		}
+	],
 	async run(client,message,args) {
 		const member = getMember(message, args.join(" "));
 		

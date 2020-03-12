@@ -5,28 +5,29 @@ const request = require('node-superfetch');
 
 module.exports = {
 
-			name: 'itunes',
-			group: 'search',
-			memberName: 'itunes',
-			description: 'Searches iTunes for your query.',
-			details: '**Codes:** <https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes>',
-			clientPermissions: ['EMBED_LINKS'],
-			usage:"itunes <country> <query>",
-			example:"itunes IN thats what i like",
+	name: 'itunes',
+	group: 'search',
+	memberName: 'itunes',
+	description: 'Searches iTunes for your query.',
+	details: '**Codes:** <https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes>',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	usage:"itunes <country> <query>",
+	example:"itunes IN thats what i like",
 
-			args: [
-				{
-					key: 'country',
-					prompt: 'What country code should results be obtained for?',
-					type: 'string',
-					parse: country => country.toLowerCase()
-				},
-				{
-					key: 'query',
-					prompt: 'What song would you like to search for?',
-					type: 'string'
-				}
-			],
+	args: [
+		{
+			key: 'country',
+			prompt: 'What country code should results be obtained for?',
+			type: 'string',
+			parse: country => country.toLowerCase()
+		},
+		{
+			key: 'query',
+			prompt: 'What song would you like to search for?',
+			type: 'string'
+		}
+	],
 
 	async run(client ,message ,args) {
 		let country = args[0];

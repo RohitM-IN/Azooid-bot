@@ -9,6 +9,8 @@ const auth = require('../../auth.json').api.steamapi;
   description: "Displays a user's dota2 stats!",
   usage: "dota <steamid or custom url>",
   category: "game",
+  clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
   aliases: ["dota2"] , 
   run: async (client, message, args) => {
       

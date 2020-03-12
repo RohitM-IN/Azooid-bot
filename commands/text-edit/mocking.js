@@ -8,7 +8,8 @@ module.exports = {
 			group: 'text-edit',
 			memberName: 'mocking',
 			description: 'SenDs TexT lIkE ThiS.',
-			clientPermissions: ['USE_EXTERNAL_EMOJIS'],
+			clientPermissions: ["SEND_MESSAGES","USE_EXTERNAL_EMOJIS"],
+			userPermissions:["VIEW_CHANNEL"],
 			args: [
 				{
 					key: 'text',

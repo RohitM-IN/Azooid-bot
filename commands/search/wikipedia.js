@@ -5,19 +5,20 @@ const { shorten } = require('../../util/Util');
 
 module.exports = {
 
-			name: 'wikipedia',
-			aliases: ['wiki'],
-			group: 'search',
-			memberName: 'wikipedia',
-			description: 'Searches Wikipedia for your query.',
-			clientPermissions: ['EMBED_LINKS'],
-			args: [
-				{
-					key: 'query',
-					prompt: 'What article would you like to search for?',
-					type: 'string'
-				}
-			],
+	name: 'wikipedia',
+	aliases: ['wiki'],
+	group: 'search',
+	memberName: 'wikipedia',
+	description: 'Searches Wikipedia for your query.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What article would you like to search for?',
+			type: 'string'
+		}
+	],
 
 
 	async run(client ,message ,args) {

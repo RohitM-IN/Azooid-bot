@@ -5,6 +5,8 @@ module.exports = {
     name: "skip",
     description: "skips the current audio in queue",
     usage: ".skip ",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     category: "music",
     aliases: ["s"],
     run: async (client, message, args) => {

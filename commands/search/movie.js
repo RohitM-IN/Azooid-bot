@@ -6,19 +6,20 @@ const  TMDB_KEY  = require('../../auth.json').api.movie_key;
 
 module.exports =  {
 
-			name: 'movie',
-			aliases: ['tmdb-movie', 'imdb'],
-			group: 'search',
-			memberName: 'movie',
-			description: 'Searches TMDB for your query, getting movie results.',
-			clientPermissions: ['EMBED_LINKS'],
-			args: [
-				{
-					key: 'query',
-					prompt: 'What movie would you like to search for?',
-					type: 'string'
-				}
-			],
+	name: 'movie',
+	aliases: ['tmdb-movie', 'imdb'],
+	group: 'search',
+	memberName: 'movie',
+	description: 'Searches TMDB for your query, getting movie results.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES","ATTACH_FILES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What movie would you like to search for?',
+			type: 'string'
+		}
+	],
 
 
 	async run(client, message, args) {

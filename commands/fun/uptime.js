@@ -3,6 +3,8 @@ module.exports = {
     description: "Displays the bots current uptime!",
     usage: ".uptime",
     category: "miscellaneous",
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     aliases: ["ut"],
     run: async (bot, message, args) => {
 

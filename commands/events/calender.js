@@ -8,7 +8,9 @@ module.exports ={
 			name: 'calendar',
 			aliases: ['holidays', 'events'],
 			group: 'events',
-			description: 'Responds with today\'s holidays.',
+            description: 'Responds with today\'s holidays.',
+            clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+            userPermissions:["VIEW_CHANNEL"],
            run: async (client, message, args) => {
 		try {
             

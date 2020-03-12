@@ -12,6 +12,8 @@ module.exports = {
     name: "pubg",
     description: "Displays a user's pubg stats! \ntype .pubg -help",
     usage: ".pubg -game <PUBG Nickname> <PUBG Platform>",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
     category: "game",
     aliases: ["pbg"] , 
     run: async (client, message, args, userID, channelID) => {

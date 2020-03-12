@@ -5,22 +5,21 @@ const  WEBSTER_KEY = require('../../auth.json').api.WEBSTER_KEY;
 
 module.exports = {
 
-			name: 'define',
-			aliases: ['dictionary', 'webster'],
-			group: 'search',
-			memberName: 'define',
-			description: 'Defines a word.',
-
-			args: [
-				{
-					key: 'word',
-					prompt: 'What word would you like to look up?',
-					type: 'string',
-					parse: word => encodeURIComponent(word)
-				}
-			],
-
-
+	name: 'define',
+	aliases: ['dictionary', 'webster'],
+	group: 'search',
+	memberName: 'define',
+	description: 'Defines a word.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'word',
+			prompt: 'What word would you like to look up?',
+			type: 'string',
+			parse: word => encodeURIComponent(word)
+		}
+	],
 	async run(client, message, args) {
 		message.channel.send("Command in development")
 

@@ -9,6 +9,8 @@ module.exports = {
   extended: "This command will return boobs.",
   cost: 40,
   cooldown: 10,
+  clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
   aliases: ["breasts","jugs","cans","knockers","bongos","bubbies","bumpers","bewbz","tits","tatas","chesticles","gazongas","titties","headlamps","honkburgers","jubblies","mankillers","melons"],
   run: async (client, message, args) => {
       

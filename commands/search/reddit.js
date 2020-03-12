@@ -6,23 +6,21 @@ const { formatNumber } = require('../../util/Util');
 
 module.exports =  {
 
-			name: 'reddit',
-			aliases: ['u/'],
-			group: 'search',
-			memberName: 'reddit',
-			description: 'Responds with information on a Reddit user.',
-			clientPermissions: ['EMBED_LINKS'],
-
-			args: [
-				{
-					key: 'user',
-					prompt: 'What user would you like to get information on?',
-					type: 'string',
-					parse: user => encodeURIComponent(user)
-				}
-			],
-
-
+	name: 'reddit',
+	aliases: ['u/'],
+	group: 'search',
+	memberName: 'reddit',
+	description: 'Responds with information on a Reddit user.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'user',
+			prompt: 'What user would you like to get information on?',
+			type: 'string',
+			parse: user => encodeURIComponent(user)
+		}
+	],
 	async run(client ,message ,args) {
 		let user = args.join(" ");
 		if (!user) return message.channel.send(`What user would you like to get information on?`)

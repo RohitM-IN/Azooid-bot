@@ -8,8 +8,11 @@ module.exports = {
     name: "settings",
     category: "owner",
     description: "Displays all the settings of the server ",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","ADMINISTRATOR"],
     aliases: ["setting","setup"],
     run: async (client, message) => {
+        message.channel.send("This command is in development!!")
         // if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("you dont have admin rights contact server admin");
         // if(!args[0]) return message.channel.send("please enter server prefix");
         

@@ -9,6 +9,9 @@ module.exports = {
     aliases: ["h"],
     category: "info",
     description: "Returns all commands, or one specific command info",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
+    userPermissions: [''],
     usage: "[command | alias]",
     run: async (client, message, args,db) => {
       let prefix

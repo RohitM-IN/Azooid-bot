@@ -3,18 +3,20 @@ const zalgo = require('../../assets/json/zalgo');
 
 module.exports =  {
 
-			name: 'zalgo',
-			group: 'text-edit',
-			memberName: 'zalgo',
-			description: 'Converts text to zalgo.',
-			args: [
-				{
-					key: 'text',
-					prompt: 'What text would you like to convert to zalgo?',
-					type: 'string',
-					max: 200
-				}
-			],  
+	name: 'zalgo',
+	group: 'text-edit',
+	memberName: 'zalgo',
+	description: 'Converts text to zalgo.',
+	clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'text',
+			prompt: 'What text would you like to convert to zalgo?',
+			type: 'string',
+			max: 200
+		}
+	],  
 
 	run(client ,message ,args) {
 		let text = args.join(" ")

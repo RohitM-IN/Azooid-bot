@@ -2,17 +2,19 @@
 
 module.exports =  {
 
-			name: 'reverse',
-			group: 'text-edit',
-			memberName: 'reverse',
-			description: 'Reverses text.',
-			args: [
-				{
-					key: 'text',
-					prompt: 'What text would you like to reverse?',
-					type: 'string'
-				}
-			],
+	name: 'reverse',
+	group: 'text-edit',
+	memberName: 'reverse',
+	description: 'Reverses text.',
+	clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'text',
+			prompt: 'What text would you like to reverse?',
+			type: 'string'
+		}
+	],
 
 
     run(client ,message ,args) {

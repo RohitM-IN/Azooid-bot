@@ -6,6 +6,8 @@ module.exports = {
     aliases: ["q"],
     description: "displays songs queue",
     accessableby: "Member",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     category: "music",
     run: async (client, message, args) => {
         const player = client.music.players.get(message.guild.id);

@@ -7,6 +7,8 @@ module.exports = {
 			name: 'apod',
 			aliases: ['astronomy-picture-of-the-day'],
 			group: 'events',
+			clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+			userPermissions:["VIEW_CHANNEL"],
 			description: 'Responds with today\'s Astronomy Picture of the Day.',
             run: async (client, message, args) => {
 		try {

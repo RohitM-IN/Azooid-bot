@@ -8,6 +8,8 @@ module.exports = {
         aliases: ['humble'],
         group: 'events',
         memberName: 'humble-bundle',
+        clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+        userPermissions:["VIEW_CHANNEL"],
         description: 'Responds with the current Humble Bundle.',
         run: async (client, message, args) => {
         try {

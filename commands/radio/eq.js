@@ -7,6 +7,8 @@ module.exports = {
     description: "plays audio",
     usage: ".eq <on/off>",
     category: "music",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     aliases: ["equalizer"],
     run: async (client, message, args) => {
     const player = client.music.players.get(message.guild.id);

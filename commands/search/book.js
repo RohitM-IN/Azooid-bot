@@ -15,7 +15,8 @@ module.exports = {
 	group: 'search',
 	memberName: 'book',
 	description: 'Searches Google Books for a book.',
-	clientPermissions: ['EMBED_LINKS'],
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
 
 	args: [{
 		key: 'query',

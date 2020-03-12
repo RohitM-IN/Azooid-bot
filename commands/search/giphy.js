@@ -4,18 +4,20 @@ const  GIPHY_KEY  = require('../../auth.json').api.giphy_key;
 
 module.exports ={
 
-			name: 'giphy',
-			aliases: ['gif'],
-			group: 'search',
-			memberName: 'giphy',
-			description: 'Searches Giphy for your query.',
-			args: [
-				{
-					key: 'query',
-					prompt: 'What GIF would you like to search for?',
-					type: 'string'
-				}
-			],
+	name: 'giphy',
+	aliases: ['gif'],
+	group: 'search',
+	memberName: 'giphy',
+	description: 'Searches Giphy for your query.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What GIF would you like to search for?',
+			type: 'string'
+		}
+	],
 
 	async run(client ,message ,args) {
 		let query = args.join(" ")

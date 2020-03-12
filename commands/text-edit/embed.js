@@ -3,18 +3,19 @@ const { RichEmbed } = require('discord.js');
 
 module.exports =  {
 	
-			name: 'embed',
-			group: 'text-edit',
-			memberName: 'embed',
-			description: 'Sends text in an embed.',
-			clientPermissions: ['EMBED_LINKS'],
-			args: [
-				{
-					key: 'text',
-					prompt: 'What text would you like to embed?',
-					type: 'string'
-				}
-			],
+	name: 'embed',
+	group: 'text-edit',
+	memberName: 'embed',
+	description: 'Sends text in an embed.',
+	clientPermissions: ['EMBED_LINKS',"SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'text',
+			prompt: 'What text would you like to embed?',
+			type: 'string'
+		}
+	],
 
 
 run(client ,message ,args) {

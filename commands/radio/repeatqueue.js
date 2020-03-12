@@ -4,6 +4,8 @@ module.exports = {
         name:"queuerepeat",
         description: "Repeat Queue",
         category: "music",
+        clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+        userPermissions:["VIEW_CHANNEL"],
         aliases: [ "repeatq","queue-r","repeatqueue" ],
     run: async (client, message, args) => {
         const player = client.music.players.get(message.guild.id);

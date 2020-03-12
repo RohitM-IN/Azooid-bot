@@ -7,6 +7,8 @@ module.exports = {
     description: "Displays a user's apex stats!",
     usage: "<user> <platform>",
     category: "miscellaneous",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     accessableby: "Members",
     aliases: ["apec"] ,
     run: async (client, message, args) => {

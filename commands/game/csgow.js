@@ -18,6 +18,8 @@ module.exports = {
     name: "csgow",
     description: "Displays a user's csgo weapons stats!",
     usage: "csgow <steamid or custom url>",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
     category: "game",
     aliases: ["cs-gow"] , 
     run: async (client, message, args, userID, channelID) => {

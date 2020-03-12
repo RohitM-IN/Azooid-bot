@@ -8,15 +8,8 @@ module.exports = {
         group: 'events',
         memberName: 'today-in-history',
         description: 'Responds with an event that occurred today in history.',
-        clientPermissions: ['EMBED_LINKS'],
-        credit: [
-            {
-                name: 'muffinlabs - Today in History',
-                url: 'http://history.muffinlabs.com/',
-                reason: 'API',
-                reasonURL: 'http://history.muffinlabs.com/#api'
-            }
-        ],
+        clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+        userPermissions:["VIEW_CHANNEL"],
         args: [
             {
                 key: 'month',

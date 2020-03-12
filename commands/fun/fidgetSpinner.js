@@ -3,9 +3,8 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'fidgetSpinner',
     description: 'Spins a fidget spinner for you and shows for how long it was spinning.',
-    botPermission: '',
-    userTextPermission: '',
-    userVoicePermission: '',
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
     usage: 'fakeBan [ @USER_MENTION | USER_ID ]',
     aliases: ["fspin"] , 
     run: async (client, message, args ) => {

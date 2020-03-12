@@ -10,7 +10,8 @@ module.exports =  {
 	group: 'meme-gen',
 	memberName: '3000-years',
 	description: 'Draws a user\'s avatar over Pokémon\'s "It\'s been 3000 years" meme.',	
-	clientPermissions: ['ATTACH_FILES'],
+	clientPermissions: ["ATTACH_FILES","EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
 	async run(client, message, args) {
 
         // unable to get avatar url 

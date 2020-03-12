@@ -6,26 +6,25 @@ const { getMember } = require("../../functions.js");
 
 module.exports =  {
 
-			name: 'beautiful',
-			aliases: ['this-is-beautiful', 'grunkle-stan'],
-			group: 'meme-gen',
-			memberName: 'beautiful',
-			description: 'Draws a user\'s avatar over Gravity Falls\' "Oh, this? This is beautiful." meme.',
-			throttling: {
-				usages: 1,
-				duration: 10
-			},
-			clientPermissions: ['ATTACH_FILES'],
-			args: [
-				{
-					key: 'user',
-					prompt: 'Which user would you like to edit the avatar of?',
-					type: 'user',
-					default: msg => msg.author
-				}
-			],
-
-
+	name: 'beautiful',
+	aliases: ['this-is-beautiful', 'grunkle-stan'],
+	group: 'meme-gen',
+	memberName: 'beautiful',
+	description: 'Draws a user\'s avatar over Gravity Falls\' "Oh, this? This is beautiful." meme.',
+	throttling: {
+		usages: 1,
+		duration: 10
+	},
+	clientPermissions: ["ATTACH_FILES","EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'user',
+			prompt: 'Which user would you like to edit the avatar of?',
+			type: 'user',
+			default: msg => msg.author
+		}
+	],
 	async run(client,message,args) {
 		const member = getMember(message, args.join(" "));
 		

@@ -4,6 +4,8 @@ module.exports = {
     name: "joke",
     description: "Sends a Joke to a channel !",
     usage: "joke ",
+    clientPermissions: ['SEND_MESSAGES'],
+	userPermissions:["VIEW_CHANNEL"],
     category: "game",
     aliases: ["jokes"] , 
     run: async (client, message, args) => {

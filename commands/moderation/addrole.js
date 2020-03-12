@@ -5,6 +5,8 @@ module.exports= {
     description: "Adds a role to a member of the guild!",
     usage: "!addrole",
     category: "moderation",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","MANAGE_ROLES", "ADMINISTRATOR"],
     aliases: ["ar", "roleadd"],
     run: async (client, message, args) => {
 

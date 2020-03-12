@@ -5,24 +5,19 @@ const { formatNumber } = require('../../util/Util');
 
 module.exports = {
 
-			name: 'steam-search',
-			group: 'search',
-			memberName: 'steam',
-			description: 'Searches Steam for your query.',
-			clientPermissions: ['EMBED_LINKS'],
-			credit: [
-				{
-					name: 'Steam',
-					url: 'https://store.steampowered.com/'
-				}
-			],
-			args: [
-				{
-					key: 'query',
-					prompt: 'What game would you like to search for?',
-					type: 'string'
-				}
-			],
+	name: 'steam-search',
+	group: 'search',
+	memberName: 'steam',
+	description: 'Searches Steam for your query.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What game would you like to search for?',
+			type: 'string'
+		}
+	],
 
 	async run(client , message ,args) {
 		message.channel.send("Command in development")

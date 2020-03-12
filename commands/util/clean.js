@@ -6,6 +6,8 @@ module.exports = {
     category: "util",
     description: "clean up to last 100 messages ",
     usage: "<no of messages>",
+    clientPermissions: ["SEND_MESSAGES","MANAGE_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","MANAGE_MESSAGES"],
     aliases:["cleanup", "clear"],
     run: async (client, message, args) => {
         if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send("off..You dont have permission to use this command");

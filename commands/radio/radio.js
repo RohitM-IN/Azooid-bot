@@ -8,6 +8,8 @@ module.exports = {
     description: "Playes radio in the voice channel.",
     usage: "<prefix>radio <channel name>",
     example: ".radio ncs",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES","CONNECT","SPEAK"],
+	userPermissions:["VIEW_CHANNEL","CONNECT"],
     category: "music",
     run: async (client, message, args) => {
         if (!args[0]) return message.channel.send("Please provide a song name or link to search.");

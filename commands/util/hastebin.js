@@ -5,6 +5,8 @@ module.exports ={
     category: "util",
     description: "saves the message to hastebin ",
     usage: "hastebin <your complete message>",
+    clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     aliases:["pastebin"],
     run : async (client, message, args) => {
 

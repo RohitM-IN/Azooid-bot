@@ -6,6 +6,8 @@ module.exports = {
     name: "ban",
     category: "moderation",
     description: "bans the member",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL", "BAN_MEMBERS"],
     usage: "<id | mention>",
     run: async (client, message, args) => {
         const logChannel = message.guild.channels.find(c => c.name === "logs") || message.channel;

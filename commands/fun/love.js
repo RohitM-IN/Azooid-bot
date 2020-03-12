@@ -6,6 +6,8 @@ module.exports = {
     aliases: ["affinity"],
     category: "fun",
     description: "Calculates the love affinity you have for another person.",
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     usage: "[mention | id | username]",
     run: async (client, message, args) => {
         // Get a member from mention, id, or username

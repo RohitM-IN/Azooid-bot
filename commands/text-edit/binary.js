@@ -1,21 +1,23 @@
 
 
 module.exports = {
-			name: 'binary',
-			group: 'text-edit',
-			memberName: 'binary',
-			description: 'Converts text to binary.',
-			args: [
-				{
-					key: 'text',
-					prompt: 'What text would you like to convert to binary?',
-					type: 'string',
-					validate: text => {
-						if (this.binary(text).length < 2000) return true;
-						return 'Invalid text, your text is too long.';
-					}
-				}
-			],
+	name: 'binary',
+	group: 'text-edit',
+	memberName: 'binary',
+	description: 'Converts text to binary.',
+	clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'text',
+			prompt: 'What text would you like to convert to binary?',
+			type: 'string',
+			validate: text => {
+				if (this.binary(text).length < 2000) return true;
+				return 'Invalid text, your text is too long.';
+			}
+		}
+	],
 
 	run(client ,message , args) {
         

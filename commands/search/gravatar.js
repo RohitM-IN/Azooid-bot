@@ -4,26 +4,26 @@ const { hash } = require('../../util/Util');
 
 module.exports = {
 
-			name: 'gravatar',
-			group: 'search',
-			memberName: 'gravatar',
-			description: 'Responds with the Gravatar for an email.',
-			clientPermissions: ['ATTACH_FILES'],
-			credit: [
-				{
-					name: 'Gravatar',
-					url: 'https://en.gravatar.com/'
-				}
-			],
-			args: [
-				{
-					key: 'email',
-					prompt: 'What email do you want to get the Gravatar for?',
-					type: 'string',
-					parse: email => email.toLowerCase()
-				}
-			],
-
+	name: 'gravatar',
+	group: 'search',
+	memberName: 'gravatar',
+	description: 'Responds with the Gravatar for an email.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	credit: [
+		{
+			name: 'Gravatar',
+			url: 'https://en.gravatar.com/'
+		}
+	],
+	args: [
+		{
+			key: 'email',
+			prompt: 'What email do you want to get the Gravatar for?',
+			type: 'string',
+			parse: email => email.toLowerCase()
+		}
+	],
 	async run(client ,message ,args) {
 		let email = args.join(" ")
 		if (!email) return message.channel.send(`What email do you want to get the Gravatar for?`)

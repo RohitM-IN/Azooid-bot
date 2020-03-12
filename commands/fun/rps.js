@@ -8,6 +8,8 @@ module.exports = {
     category: "fun",
     description: "Rock Paper Scissors game. React to one of the emojis to play the game.",
     usage: "rps",
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args) => {
         const embed = new RichEmbed()
             .setColor("#ffffff")

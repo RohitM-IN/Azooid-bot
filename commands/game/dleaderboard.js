@@ -7,6 +7,8 @@ const https = require("https");
     description: "Displays dota 2 leaderboard!",
     usage: "dlb",
     category: "game",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
     aliases: ["dlb"] , 
     run: async (client, message, args, userID) => {
         

@@ -7,6 +7,8 @@ module.exports = {
     description: "plays audio",
     usage: ".eq <on/off>",
     category: "music",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args) => {
     const player = client.music.players.get(message.guild.id);
     if(!player) return message.channel.send("No song/s currently playing")

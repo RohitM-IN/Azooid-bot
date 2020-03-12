@@ -11,11 +11,10 @@ config({
     name: "restart",
     category: "owner",
     description: "reboot bot command",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","ADMINISTRATOR"],
     run: async (client, message, args) => {
-        console.log('woring before')
-        console.log(message.author.id)
-        if(message.author.id !== ownerid) return message.reply("you dont have perission to use this command").then(m => m.delete(5000));
-        console.log('woring after')
+        if(message.author.id !== ownerid) return message.reply("Bot Owner can only use this command").then(m => m.delete(5000));
             // message.channel.send('Resetting...')
             // .then(msg => client.destroy())
             // .then(() => client.login(config1.token));

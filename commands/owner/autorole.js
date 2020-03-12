@@ -6,6 +6,8 @@ module.exports = {
     name: "autorole",
     category: "owner",
     description: "sets auto role for new members of the server ",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","MANAGE_ROLES"],
     aliases: ["role","set-role"],
     run: async (client, message, args, db) => {
         if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send("you dont have admin rights contact server admin");

@@ -5,7 +5,9 @@ module.exports = {
     description: "Sends a message to amaze you !",
     usage: "amazeme ",
     category: "game",
-    aliases: ["amaze"] , 
+    aliases: ["amaze"] ,
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args) => {
         got('https://www.reddit.com/r/interestingasfuck/random.json').then(response => {
             let content = JSON.parse(response.body);

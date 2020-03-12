@@ -1,28 +1,30 @@
 
 module.exports = {
 
-			name: 'ship-name',
-			group: 'text-edit',
-			memberName: 'ship-name',
-			description: 'Creates a ship name from two names.',
-			args: [
-				{
-					key: 'start',
-					label: 'start name',
-					prompt: 'What name should be at the start of the ship name?',
-					type: 'string',
-					max: 500,
-					parse: start => start.toLowerCase()
-				},
-				{
-					key: 'end',
-					label: 'end name',
-					prompt: 'What name should be at the end of the ship name?',
-					type: 'string',
-					max: 500,
-					parse: end => end.toLowerCase()
-				}
-			],
+	name: 'ship-name',
+	group: 'text-edit',
+	memberName: 'ship-name',
+	description: 'Creates a ship name from two names.',
+	clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'start',
+			label: 'start name',
+			prompt: 'What name should be at the start of the ship name?',
+			type: 'string',
+			max: 500,
+			parse: start => start.toLowerCase()
+		},
+		{
+			key: 'end',
+			label: 'end name',
+			prompt: 'What name should be at the end of the ship name?',
+			type: 'string',
+			max: 500,
+			parse: end => end.toLowerCase()
+		}
+	],
 
 
 	run(client ,message ,args) {

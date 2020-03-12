@@ -6,6 +6,8 @@ module.exports = {
     name: "setup",
     category: "owner",
     description: "This will reset all the settigs of the server to default",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","ADMINISTRATOR"],
     aliases: ["server-setup"],
     run: async (client, message, args, db) => {
         if(!message.member.hasPermission('ADMINISTRATOR') || message.author.id == "348832732647784460") return message.channel.send("you dont have admin rights contact server admin");

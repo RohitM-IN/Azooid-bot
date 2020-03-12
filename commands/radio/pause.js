@@ -3,6 +3,8 @@ module.exports = {
     name: "pause",
     description: "Pauses the music.",
     category: "music",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args) => {
         const { voiceChannel } = message.member;
         const player = client.music.players.get(message.guild.id);

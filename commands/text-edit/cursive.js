@@ -4,21 +4,23 @@ const dictionary = require('../../assets/json/cursive');
 
 module.exports =  {
 
-			name: 'cursive',
-			group: 'text-edit',
-			memberName: 'cursive',
-			description: 'Converts text to cursive.',
-			args: [
-				{
-					key: 'text',
-					prompt: 'What text would you like to convert to cursive?',
-					type: 'string',
-					validate: text => {
-						if (letterTrans(text, dictionary).length < 2000) return true;
-						return 'Invalid text, your text is too long.';
-					}
-				}
-			],
+	name: 'cursive',
+	group: 'text-edit',
+	memberName: 'cursive',
+	description: 'Converts text to cursive.',
+	clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'text',
+			prompt: 'What text would you like to convert to cursive?',
+			type: 'string',
+			validate: text => {
+				if (letterTrans(text, dictionary).length < 2000) return true;
+				return 'Invalid text, your text is too long.';
+			}
+		}
+	],
 
 
 	run(client ,message ,args) {

@@ -4,19 +4,20 @@ const request = require('node-superfetch');
 
 module.exports = {
 
-			name: 'recipe',
-			aliases: ['recipe-puppy'],
-			group: 'search',
-			memberName: 'recipe',
-			description: 'Searches for recipes based on your query.',
-			clientPermissions: ['EMBED_LINKS'],
-			args: [
-				{
-					key: 'query',
-					prompt: 'What recipe would you like to search for?',
-					type: 'string'
-				}
-			],
+	name: 'recipe',
+	aliases: ['recipe-puppy'],
+	group: 'search',
+	memberName: 'recipe',
+	description: 'Searches for recipes based on your query.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'query',
+			prompt: 'What recipe would you like to search for?',
+			type: 'string'
+		}
+	],
 
 	async run(client ,message ,args) {
 		let query = args.join(" ")

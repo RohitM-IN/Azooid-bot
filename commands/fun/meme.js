@@ -5,6 +5,8 @@ module.exports = {
     name: "meme",
     category: "fun",
     description: "Sends an epic meme",
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args) => {
         const embed = new Discord.RichEmbed();
         got('https://www.reddit.com/r/dankmemes/random/.json').then(response => {

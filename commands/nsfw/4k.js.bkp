@@ -8,6 +8,8 @@ module.exports = {
       usage: "fourk",
       cost: 40,
       cooldown: 10,
+      clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	    userPermissions:["VIEW_CHANNEL"],
       loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking at 4K porn 😎...",
       aliases: ["4k"],
   run: async (client, message, args) => {

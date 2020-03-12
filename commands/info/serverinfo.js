@@ -7,6 +7,8 @@ module.exports = {
         usage: "!serverinfo",
         category: "miscellaneous",
         accessableby: "Members",
+        clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+        userPermissions:["VIEW_CHANNEL"],
         aliases: ["si", "serverdesc"],
     run: async (client, message, args) => {
     let sEmbed = new RichEmbed()

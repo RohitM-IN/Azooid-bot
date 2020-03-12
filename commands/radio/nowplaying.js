@@ -8,6 +8,8 @@ module.exports = {
         aliases: ["np", "now"],
         description: "Displays what the bot is currently playing.",
         accessableby: "Member",
+        clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+        userPermissions:["VIEW_CHANNEL"],
         category: "music",
     run: async (client, message, args) => {
         const player = client.music.players.get(message.guild.id);

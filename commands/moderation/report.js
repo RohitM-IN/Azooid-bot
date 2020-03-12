@@ -5,6 +5,8 @@ module.exports = {
     name: "report",
     category: "moderation",
     description: "Reports a member",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     usage: "<mention, id>",
     run: async (client, message, args) => {
         if (message.deletable) message.delete();

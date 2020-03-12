@@ -3,9 +3,8 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'fakeban',
     description: 'Bans a user from the server*. Oh, not really though, just to mess with them.',
-    botPermission: '',
-    userTextPermission: '',
-    userVoicePermission: '',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     usage: 'fakeBan [ @USER_MENTION | USER_ID ]',
     run: async (client, message, args ) => {
   

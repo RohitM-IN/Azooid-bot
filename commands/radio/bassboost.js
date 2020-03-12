@@ -6,6 +6,8 @@ module.exports = {
     name: "bassboost",
     description: "plays audio",
     usage: ".bassboost <on/off>",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     category: "music",
     run: async (client, message, args) => {
     const player = client.music.players.get(message.guild.id);

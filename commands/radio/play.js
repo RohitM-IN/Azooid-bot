@@ -10,6 +10,8 @@ module.exports = {
     description: "plays audio",
     usage: ".play <name of station>",
     category: "music",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES","CONNECT","SPEAK"],
+	userPermissions:["VIEW_CHANNEL","CONNECT"],
     aliases: ["p"],
     run: async (client, message, args) => {
         const { voiceChannel } = message.member;

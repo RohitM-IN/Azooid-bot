@@ -6,22 +6,21 @@ const { trimArray } = require('../../util/Util');
 
 module.exports = {
 
-			name: 'npm',
-			group: 'search',
-			memberName: 'npm',
-			description: 'Responds with information on an NPM package.',
-			clientPermissions: ['EMBED_LINKS'],
-			args: [
-				{
-					key: 'pkg',
-					label: 'package',
-					prompt: 'What package would you like to get information on?',
-					type: 'string',
-					parse: pkg => encodeURIComponent(pkg.replace(/ /g, '-'))
-				}
-			],
-
-
+	name: 'npm',
+	group: 'search',
+	memberName: 'npm',
+	description: 'Responds with information on an NPM package.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'pkg',
+			label: 'package',
+			prompt: 'What package would you like to get information on?',
+			type: 'string',
+			parse: pkg => encodeURIComponent(pkg.replace(/ /g, '-'))
+		}
+	],
 	async run(client, message, args) {
 		let pkg = args.join(" ");
 		if (!pkg) return message.channel.send(`What package would you like to get information on?`)

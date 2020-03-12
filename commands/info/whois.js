@@ -8,6 +8,8 @@ module.exports = {
     category: "info",
     description: "Returns user information",
     usage: "[username | id | mention]",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: (client, message, args) => {
         const member = getMember(message, args.join(" "));
         console.log(member.user.displayAvatarURL)

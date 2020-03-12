@@ -7,6 +7,8 @@ module.exports = {
     category: "game",
     description: "Displays your overwatch stats!",
     usage: "<user> (platform)",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     aliases: ["owstats", "ow"],
     run: async (client, message, args) => {
     if(!args[0]) return message.channel.send("Please supplay a username.");

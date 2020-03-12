@@ -7,6 +7,8 @@ module.exports = {
     category: "owner",
     description: "change the logging channel of the server ",
     usage:"log -v <#channelid> -o <#channelid> or log -a <#channelid>",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","ADMINISTRATOR"],
     aliases: ["setlog","logchannel"],
     run: async (client, message, args,db) => {
         if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("you dont have admin rights contact server admin");

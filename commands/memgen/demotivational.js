@@ -15,28 +15,29 @@ module.exports = {
 	group: 'meme-gen',
 	memberName: 'demotivational',
 	description: 'Draws an image or a user\'s avatar and the text you specify as a demotivational poster.',
-			clientPermissions: ['ATTACH_FILES'],
-			args: [
-				{
-					key: 'title',
-					prompt: 'What should the title of the poster be?',
-					type: 'string',
-					max: 50,
-					parse: title => title.toUpperCase()
-				},
-				{
-					key: 'text',
-					prompt: 'What should the text of the poster be?',
-					type: 'string',
-					max: 100
-				},
-				{
-					key: 'image',
-					prompt: 'What image would you like to edit?',
-					type: 'image',
-					
-				}
-			],
+	clientPermissions: ["ATTACH_FILES","EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'title',
+			prompt: 'What should the title of the poster be?',
+			type: 'string',
+			max: 50,
+			parse: title => title.toUpperCase()
+		},
+		{
+			key: 'text',
+			prompt: 'What should the text of the poster be?',
+			type: 'string',
+			max: 100
+		},
+		{
+			key: 'image',
+			prompt: 'What image would you like to edit?',
+			type: 'image',
+			
+		}
+	],
 
 
 	async run(client, message,args) {

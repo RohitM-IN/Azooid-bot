@@ -6,22 +6,20 @@ const path = require('path');
 const { drawImageWithTint } = require('../../util/Canvas');
 
 module.exports = {
-			name: 'triggered',
-			group: 'avatar-edit',
-			memberName: 'triggered',
-			description: 'Draws a user\'s avatar over the "Triggered" meme.',
-
-			clientPermissions: ['ATTACH_FILES'],
-			args: [
-				{
-					key: 'user',
-					prompt: 'Which user would you like to edit the avatar of?',
-					type: 'user',
-					default: msg => msg.author
-				}
-			],
-
-
+	name: 'triggered',
+	group: 'avatar-edit',
+	memberName: 'triggered',
+	description: 'Draws a user\'s avatar over the "Triggered" meme.',
+	clientPermissions: ["ATTACH_FILES","EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'user',
+			prompt: 'Which user would you like to edit the avatar of?',
+			type: 'user',
+			default: msg => msg.author
+		}
+	],
 	async run(client,message,args) {
         const member = getMember(message, args.join(" "));
 		

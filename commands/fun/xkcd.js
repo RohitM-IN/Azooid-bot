@@ -5,6 +5,8 @@ module.exports = {
     name: "xkcd",
     description: "xkcd comics, get the latest or certain comic",
     usage: "<search|latest> (id)",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     category: "miscellaneous",
     accessableby: "Members",
     run: async (client, message, args) => {

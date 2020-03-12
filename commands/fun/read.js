@@ -4,8 +4,10 @@ module.exports = {
     name: "read",
     category: "fun",
     description: "reads last saved message form our database",
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     run: async (client, message, args,member ) => {
-        let msg = JSON.parse(fs.readFileSync("./message.json", "utf8"));
+        let msg = JSON.parse(fs.readFileSync("./data/message.json", "utf8"));
         let author_id = message.author.id
         let guild_id = message.guild.id
        // let out = msg[guild_id].author_id.msgs

@@ -6,6 +6,8 @@ module.exports = {
     name: "repeat",
     description: "repeats the audio again and again",
     usage: "repeat",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     category: "music",
     run: async (client, message, args) => {
         const player = client.music.players.get(message.guild.id);

@@ -4,23 +4,25 @@ const dictionary = require('../../assets/json/emojify');
 
 module.exports = {
 
-			name: 'emojify',
-			aliases: ['regional-indicator'],
-			group: 'text-edit',
-			memberName: 'emojify',
-			description: 'Converts text to emoji form.',
-			args: [
-				{
-					key: 'text',
-					prompt: 'What text would you like to convert to emoji?',
-					type: 'string',
-					validate: text => {
-						if (letterTrans(text.toLowerCase(), dictionary, ' ').length < 2000) return true;
-						return 'Invalid text, your text is too long.';
-					},
-					parse: text => text.toLowerCase()
-				}
-			],
+	name: 'emojify',
+	aliases: ['regional-indicator'],
+	group: 'text-edit',
+	memberName: 'emojify',
+	clientPermissions: ["SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	description: 'Converts text to emoji form.',
+	args: [
+		{
+			key: 'text',
+			prompt: 'What text would you like to convert to emoji?',
+			type: 'string',
+			validate: text => {
+				if (letterTrans(text.toLowerCase(), dictionary, ' ').length < 2000) return true;
+				return 'Invalid text, your text is too long.';
+			},
+			parse: text => text.toLowerCase()
+		}
+	],
 
 
 	run(client ,message ,args) {

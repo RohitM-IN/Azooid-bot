@@ -5,6 +5,8 @@ module.exports = {
     name: "shuffle",
     description: "Loops the Queue",
     category: "music",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     accessableby: "Member",
     aliases: ["shift"],
     run: async (client, message, args) => {

@@ -7,6 +7,8 @@ module.exports = {
     description: "seeks the audio back and fourth",
     usage: "seek <time>",
     category: "music",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
     example: "seek 1h15m2s",
     run: async (client, message, args) => {
         const player = client.music.players.get(message.guild.id);

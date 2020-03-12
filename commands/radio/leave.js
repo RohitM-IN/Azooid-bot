@@ -6,6 +6,8 @@ module.exports = {
     description: "plays audio",
     usage: ".play <name of station>",
     category: "music",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+    userPermissions:["VIEW_CHANNEL"],
     aliases: ["disconnect","stop"],
     run: async (client, message, args) => {
       //message.channel.send(`Audio Quality not too good :wink:`);

@@ -55,6 +55,8 @@ var j = schedule.scheduleJob('0 20 * * 2', function() {
   name: "ditem",
   description: "Displays dota 2 heros stats!",
   usage: "ditem <item name>",
+  clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
   category: "game",
   aliases: ["getitem","dota-item"] , 
   run: async (client, message, args) => {

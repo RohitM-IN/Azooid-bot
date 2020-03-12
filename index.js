@@ -1,4 +1,4 @@
-const {Client,Collection} = require("discord.js");
+const {Client,Collection,Permissions} = require("discord.js");
 const Discord = require("discord.js");
 const {config} = require("dotenv");
 const fs = require("fs");
@@ -71,8 +71,25 @@ client.on('message', async (message) => {
 
     let command = client.commands.get(cmd);
     if (!command) command = client.commands.get(client.aliases.get(cmd));
-    if (!message.channel.permissionsFor(client.user).has("SEND_MESSAGES")) return;
+    if (!message.channel.permissionsFor(client.user).has("SEND_MESSAGES")) return message.author.send(`I cannot send message in ${message.channel.name} in ${message.guild.name} Contact server admin for this issue !`);
 
+    if(command.clientPermissions.length > 0) {
+        let clientChannelPermissions = message.channel.permissionsFor(client.user);
+        let ChannelPermissions = new Permissions(clientChannelPermissions.bitfield);
+        if(!ChannelPermissions.has(command.clientPermissions)) {
+            let missingPermissions = command.clientPermissions.filter(perm => ChannelPermissions.has(perm) === false).join(', ')
+            return message.reply(`I can't execute this command, missing permissions for ${missingPermissions}`)
+        }
+    }
+    
+    if(command.userPermissions.length > 0) {
+        let memberChannelPermissions = message.channel.permissionsFor(message.member);
+        memberChannelPermissions = new Permissions(memberChannelPermissions.bitfield);
+        if(!memberChannelPermissions.has(command.clientPermissions)) {
+            let missingPermissions = command.clientPermissions.filter(perm => memberChannelPermissions.has(perm) === false).join(', ')
+            return message.reply(`I can't execute this command, you are missing these permissions: ${missingPermissions}`)
+        }
+    }
     if (command)
         command.run(client, message, args, db);
 })
@@ -119,7 +136,7 @@ client.on('guildDelete', async gData => {
 })
 
 
-process.on('unhandledRejection', error => console.log('Uncaught Promise Rejection', error));
+process.on('unhandledRejection', (error,origin) => console.log(`Uncaught Promise Rejection ${error}\nOrigin: ${toString(origin)}`));
 
 client.login(process.env.TOKEN);
 // client.login(config1.token);

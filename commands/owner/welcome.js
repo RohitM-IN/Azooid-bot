@@ -6,6 +6,8 @@ module.exports = {
     name: "welcome",
     category: "owner",
     description: "change welcome channel of the server ",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","ADMINISTRATOR"],
     run: (client, message, args,db) => {
         if(!message.member.hasPermission('ADMINISTRATOR') || message.author.id == "348832732647784460") return message.channel.send("you dont have admin rights contact server admin");
         if(!args[0]) return message.channel.send("please enter channel id or #<id here>");

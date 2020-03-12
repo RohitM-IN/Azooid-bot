@@ -4,23 +4,24 @@ const request = require('node-superfetch');
 const  OPENWEATHERMAP_KEY  = require('../../auth.json').api.weather;
 
 module.exports =  {
-			name: 'weather',
-			aliases: ['open-weather-map', 'owm'],
-			group: 'search',
-			memberName: 'weather',
-			description: 'Responds with weather information for a specific location.',
-			clientPermissions: ['EMBED_LINKS'],
-			args: [
-				{
-					key: 'location',
-					prompt: 'What location would you like to get the weather of?',
-					type: 'string',
-					parse: location => {
-						if (/^[0-9]+$/.test(location)) return { type: 'zip', data: location };
-						return { type: 'q', data: location };
-					}
-				}
-			],
+	name: 'weather',
+	aliases: ['open-weather-map', 'owm'],
+	group: 'search',
+	memberName: 'weather',
+	description: 'Responds with weather information for a specific location.',
+	clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
+	args: [
+		{
+			key: 'location',
+			prompt: 'What location would you like to get the weather of?',
+			type: 'string',
+			parse: location => {
+				if (/^[0-9]+$/.test(location)) return { type: 'zip', data: location };
+				return { type: 'q', data: location };
+			}
+		}
+	],
 
 	async run(client, message, args) {
         let location = args[0];

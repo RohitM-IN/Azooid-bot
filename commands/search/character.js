@@ -52,7 +52,8 @@ module.exports = {
 	group: 'search',
 	memberName: 'character',
 	description: 'Searches AniList for your query, getting character results.',
-	clientPermissions: ['EMBED_LINKS'],
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL"],
 	args: [
 		{
 			key: 'query',
@@ -60,8 +61,6 @@ module.exports = {
 			type: 'string'
 		}
 	],
-
-
 	async run(client, message, args) {
 		message.channel.send("Command in development")
         //         let query = args.join(" ");

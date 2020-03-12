@@ -6,6 +6,8 @@ module.exports = {
     description: "Removes a role to a member of the guild!",
     usage: "!removerole",
     category: "moderation",
+    clientPermissions: ["EMBED_LINKS","SEND_MESSAGES"],
+	userPermissions:["VIEW_CHANNEL","MANAGE_ROLES", "ADMINISTRATOR"],
     aliases: ["rr", "roleremove"],
     run: async (client, message, args) => {
 
