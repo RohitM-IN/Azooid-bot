@@ -23,9 +23,9 @@ module.exports = async (client, member) => {
         let channelsend = channelID['guilds'][member.guild.id]['welcomeChannelID'];
         channelsend = channelsend.replace(/[^0-9]/g, '');
         
-        const channel =  member.guild.channels.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.find(ch => ch.name.includes('welcome')) || member.guild.channels.find(ch => ch.name.includes('general'));
-        if (!channel) return;
-        var log = member.guild.channels.find(ch => ch.name.includes('member-log')) || member.guild.channels.find(ch => ch.name.includes('log')) || memberDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
+        const log =  member.guild.channels.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.find(ch => ch.name.includes('welcome')) || member.guild.channels.find(ch => ch.name.includes('general'));
+        if (!log) return;
+        //var log = member.guild.channels.find(ch => ch.name.includes('member-log')) || member.guild.channels.find(ch => ch.name.includes('log')) || memberDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
         
     
         canvas = Canvas.createCanvas(700, 250);
@@ -60,7 +60,8 @@ module.exports = async (client, member) => {
         if(channelsend !== 'default' || channelsend != undefined) {
             client.channels.get(channelsend).send(`Welcome to the server, ${member.displayName}!`, attachment);
         } else{
-            channel.send(`Welcome to the server, ${member.displayName}!`, attachment);
+            if(!log) return;
+            log.send(`Welcome to the server, ${member.displayName}!`, attachment);
         }
         
         // if (!member.hasPermission("MANAGE_ROLES")) {

@@ -14,7 +14,18 @@ const { ErelaClient, Utils } = require("erela.js");
 
 module.exports = async (client) => {
     
-
+  // const promises = [
+  //   			client.shard.fetchClientValues('guilds.size'),
+  //   			client.shard.broadcastEval('this.guilds.reduce((c, p) => c + p.memberCount, 0)')
+  //   		];
+    
+  //   		Promise.all(promises)
+  //   			.then(results => {
+  //   				const totalGuilds = results[0].reduce((prev, guildCount) => prev + guildCount, 0);
+  //   				const totalMembers = results[1].reduce((prev, memberCount) => prev + memberCount, 0);
+  //   				console.log(`Hi, ${client.user.username} is now online and ready to server in ${totalGuilds} servers and serving  ${totalMembers} users!.`);
+  //   			})
+  //   			.catch(console.error);
         console.log(`Hi, ${client.user.username} is now online and ready to server in ${client.guilds.size} servers and serving ${client.guilds.reduce((c, p) => c + p.memberCount, 0)} users!.`);
         
     

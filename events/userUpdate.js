@@ -4,10 +4,9 @@ module.exports =  async (client,oldUser, newUser) => {
     if (newUser.bot) return;    
     if(oldUser.username === newUser.username) return ;
     
-        var log = client.guilds.channels.find(ch => ch.name.includes('member-log')) || client.guilds.channels.find(ch => ch.name.includes('log')) ;
+        var log = client.channels.cache.find(ch => ch.name.includes('member-log')) || client.channels.cache.find(ch => ch.name.includes('log')) ;
         if (!log) return;
-        if (!log.permissionsFor(client.user).has("SEND_MESSAGES")) return;
-        if (!log.permissionsFor(client.user).has("EMBED_LINKS")) return; 
+        if (!log.permissionsFor(client.user).has(["SEND_MESSAGES","EMBED_LINKS"])) return;
 
 
         var sEmbed = new Discord.RichEmbed()

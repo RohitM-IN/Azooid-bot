@@ -21,11 +21,11 @@ module.exports = async (client, member) => {
 	let channelID = JSON.parse(fs.readFileSync("./data/json/serversettings.json", "utf8"))
 	let channelsend = channelID['guilds'][member.guild.id]['welcomeChannelID'];
 	channelsend = channelsend.replace(/[^0-9]/g, '');
-    const channelName = '📜welcome📜';
+    //const channelName = '📜welcome📜';
 
-	const channel =  member.guild.channels.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.find(ch => ch.name.includes('welcome')) || member.guild.channels.find(ch => ch.name.includes('general'));
+	const log =  member.guild.channels.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.find(ch => ch.name.includes('welcome')) || member.guild.channels.find(ch => ch.name.includes('general'));
 
-    if (!channel) return;
+    if (!log) return;
     
    
 
@@ -59,7 +59,7 @@ module.exports = async (client, member) => {
 	if(channelsend !== 'default' || channelsend != undefined) {
 		client.channels.get(channelsend).send(`See you once again, ${member.displayName}!`, attachment);
 	} else{
-		channel.send(`See you once again, ${member.displayName}!`, attachment);
+		log.send(`See you once again, ${member.displayName}!`, attachment);
 	}
     
 }
