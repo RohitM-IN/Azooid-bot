@@ -12,6 +12,7 @@
   <% if(bot.appInfo.description.length > 3) { %> <meta property="og:description" content="<%= bot.appInfo.description %>" /> <% }  %>
     <meta property="og:image" content="<%= bot.user.avatarURL%>" 
   <!-- Bootstrap CSS -->
+  <!--link rel='icon' href='/images/favicon-16x16.png' class='js-favicon' -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/public/darkly.css" />
@@ -33,7 +34,7 @@
   <a name="top"></a>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <a class="navbar-brand" href="/" ><img src="<%= bot.user.avatarURL %>" width="30" height="30" class="d-inline-block rounded-circle" alt=""> <span class="align-middle"><%= bot.user.username %></span></a>
+      <a class="navbar-brand" href="/stats" ><img src="<%= bot.user.avatarURL %>" width="30" height="30" class="d-inline-block rounded-circle" alt=""> <span class="align-middle"><%= bot.user.username %></span></a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar01" aria-controls="navbar01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -42,8 +43,11 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="/commands">Commands</a></li>
-          <li class="nav-item"><a class="nav-link<% if(!bot.appInfo.botPublic) { %> disabled<% } %>" href="https://discordapp.com/oauth2/authorize?client_id=<%= bot.appInfo.id %>&scope=bot&response_type=code&redirect_uri=<%= encodeURIComponent(bot.config.dashboard.callbackURL) %>">Add to Server</a></li>
+          <li class="nav-item"><a class="nav-link<% if(!bot.appInfo.botPublic) { %> disabled<% } %>" href="https://discordapp.com/oauth2/authorize?client_id=<%= bot.appInfo.id %>&scope=bot&response_type=code&permissions=2080369911&redirect_uri=<%= encodeURIComponent(bot.config.dashboard.callbackURL) %>">Add to Server</a></li>
           <li class="nav-item"><a class="nav-link" href="/stats">On <%= bot.guilds.size %>  Servers</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://discord.gg/uBDPReC" target="_blank">Support Server</a></li>
+          <li class="nav-item"><a class="nav-link" href="/troubleshoot">Troubleshoot</a></li>
+
         </ul>
         <ul class="navbar-nav">
           <% if(user) { %>
@@ -58,6 +62,8 @@
                 <% if(user.id === bot.appInfo.owner.id) { %>
                   <a class="dropdown-item" href="/admin"><i class="fa fa-key"></i> Admin</a>
                 <% } %>
+                <a class="dropdown-item" href="/stats"><i class="fa fa-info" aria-hidden="false"></i>   Stats</a>
+
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
               </div>

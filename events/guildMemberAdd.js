@@ -1,3 +1,4 @@
+// This event executes when a new member joins a server. Let's welcome them!
 const Discord = require("discord.js");
 const fs = require("fs");
 const Canvas = require("canvas")
@@ -17,8 +18,19 @@ const applyText = (canvas, text) => {
 	// Return the result to use in the actual canvas
     return ctx.font;
 }
-module.exports = async (client, member) => {
-        let channelID = JSON.parse(fs.readFileSync("./data/json/serversettings.json", "utf8"))
+module.exports = async(client, member) => {
+  // Load the guild's settings
+  const settings = client.getSettings(member.guild);
+  
+  // If welcome is off, don't proceed (don't welcome the user)
+  if (settings.welcomeEnabled !== "true") return;
+
+  // Replace the placeholders in the welcome message with actual data
+  const welcomeMessage = settings.welcomeMessage.replace("{{user}}", member.user.tag);
+
+  // Send the welcome message to the welcome channel
+  // There's a place for more configs here.
+  let channelID = JSON.parse(fs.readFileSync("./data/json/serversettings.json", "utf8"))
         let roles = channelID['guilds'][member.guild.id]['guildautorole'];
         let channelsend = channelID['guilds'][member.guild.id]['welcomeChannelID'];
         channelsend = channelsend.replace(/[^0-9]/g, '');
@@ -63,20 +75,5 @@ module.exports = async (client, member) => {
             if(!log) return;
             log.send(`Welcome to the server, ${member.displayName}!`, attachment);
         }
-        
-        // if (!member.hasPermission("MANAGE_ROLES")) {
-        //     if(!log) return;
-        //     var embed2 = new discord.RichEmbed()
-        //      .setTitle("Error")
-        //      .setDescription("The bot doesn't have the appropriate permissions to assign new members roles automatically.\nTo resolve this problem, go to **Server Settings** and then navigate to the **Roles** option. Next, click on **Bots**, and then click on the slider next to **Manage Roles** to activate it.")
-        //      .setColor("#3937a5")
-        //     log.send(embed2);
-        //  } else {
-        //     member.addRole(member.guild.roles.find(role => role.name = roles))
-        //  }
-        
-
-        
-
-}
-
+  //member.guild.channels.find("name", settings.welcomeChannel).send(welcomeMessage).catch(console.error);
+};

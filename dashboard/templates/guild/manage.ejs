@@ -15,13 +15,36 @@
               </thead>
               <tbody>
                 <% const settings = bot.getSettings(guild);
-                const defaults = bot.config.defaultSettings;
-                for (const key in settings) { %>
-                  <tr>
-                    <th scope="row" class="align-middle"><%= key %></th>
-                    <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="<%= key %>" id="<%= key %>" value="<%= settings[key] %>" placeholder="Enter <%= key %>"></td>
-                  </tr>
-                <% } %>
+                const defaults = bot.config.defaultSettings;%>
+                <tr>
+                  <th scope="row" class="align-middle">Prefix</th>
+                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="Prefix" id="Prefix" value="<%= prefix %>" placeholder="Enter prefix "></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="align-middle">welcomeChannelID</th>
+                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="welcomeChannelID" id="welcomeChannelID" value="<%= welcomeChannelID %>" placeholder="Enter welcomeChannelID "></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="align-middle">logchannelID</th>
+                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="logchannelID" id="logchannelID" value="<%= logchannel %>" placeholder="Enter logchannelID "></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="align-middle">voicelogchannel</th>
+                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="voicelogchannelID" id="voicelogchannelID" value="<%= voicelogchannel %>" placeholder="Enter voicelogchannelID "></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="align-middle">defaultchannelID</th>
+                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="defaultchannelID" id="defaultchannelID" value="<%= defaultchannelID %>" placeholder="Enter defaultchannelID "></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="align-middle">guildautoroleID</th>
+                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="guildautoroleID" id="guildautoroleID" value="<%= guildautorole %>" placeholder="Enter guildautoroleID "></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="align-middle">playervolume</th>
+                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="playervolume" id="playervolume" value="<%= playervolume %>" placeholder="Enter playervolume "></td>
+                </tr>
+                %>
               </tbody>
             </table>
         <div style="width: 100%; text-align: right; margin-top: 20px;">

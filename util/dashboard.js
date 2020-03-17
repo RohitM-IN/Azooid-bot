@@ -26,9 +26,14 @@ const Discord = require("discord.js");
 // Express Session
 const express = require("express");
 const app = express();
+
 const moment = require("moment");
 require("moment-duration-format");
 
+//init db and other things 
+const admin = require('firebase-admin');
+let db = admin.firestore();
+const fs = require('fs');
 // Express Plugins
 // Specifically, passport helps with oauth2 in general.
 // passport-discord is a plugin for passport that handles Discord's specific implementation.
@@ -38,15 +43,18 @@ const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 const Strategy = require("passport-discord").Strategy;
-
+//var favicon = require('serve-favicon');
+//app.use(express.static('../assets/img/'));
+//app.use(favicon(path.join(__dirname + '/../assets/img/azooid.ico')));
 // Helmet is specifically a security plugin that enables some specific, useful 
 // headers in your page to enhance security.
 const helmet = require("helmet");
 
 // Used to parse Markdown from things like ExtendedHelp
 const md = require("marked");
-
-module.exports = (client) => {
+const { Utils } = require("erela.js")
+let {duration} = require('yet-another-duration');
+module.exports = async(client) => {
   // It's easier to deal with complex paths. 
   // This resolves to: yourbotdir/dashboard/
   const dataDir = path.resolve(`${process.cwd()}${path.sep}dashboard`);
@@ -134,7 +142,7 @@ module.exports = (client) => {
     req.session.backURL = req.url;
     res.redirect("/login");
   }
-
+  let prefix ,welcomeChannelID , playervolume , logchannel ,voicelogchannel , defaultchannelID ,guildautorole;
   // This function simplifies the rendering of the page, since every page must be rendered
   // with the passing of these 4 variables, and from a base path. 
   // Objectassign(object, newobject) simply merges 2 objects together, in case you didn't know!
@@ -238,6 +246,10 @@ module.exports = (client) => {
     const perms = Discord.EvaluatedPermissions;
     renderTemplate(res, req, "dashboard.ejs", {perms});
   });
+  app.get("/troubleshoot", checkAuth, (req, res) => {
+    const perms = Discord.EvaluatedPermissions;
+    renderTemplate(res, req, "troubleshoot.ejs", {perms});
+  });
 
   // The Admin dashboard is similar to the one above, with the exception that
   // it shows all current guilds the bot is on, not *just* the ones the user has
@@ -254,12 +266,31 @@ module.exports = (client) => {
 
   // Settings page to change the guild configuration. Definitely more fancy than using
   // the `set` command!
-  app.get("/dashboard/:guildID/manage", checkAuth, (req, res) => {
+  app.get("/dashboard/:guildID/manage", checkAuth, async (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
+    await db.collection('guilds').doc(req.params.guildID).get().then((q) => {
+      if (q.exists) {
+          prefix = q.data().prefix || config1.prefix_mention;
+          welcomeChannelID = q.data().welcomeChannelID || 'default';
+          playervolume = q.data().playervolume || 100;
+          logchannel = q.data().logchannel || 'default';
+          voicelogchannel = q.data().voicelogchannel || 'default';
+          defaultchannelID = q.data().defaultchannelID || 'default';
+          guildautorole = q.data().guildautorole || 'default' ;
+      } else {
+        prefix = "." ;
+        welcomeChannelID =  'default';
+        playervolume =  100;
+        logchannel = 'default';
+        voicelogchannel =  'default';
+        defaultchannelID = 'default';
+        guildautorole = 'default' ;
+      }
+  })
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    renderTemplate(res, req, "guild/manage.ejs", {guild});
+    await renderTemplate(res, req, "guild/manage.ejs", {guild ,prefix , welcomeChannelID , playervolume, logchannel ,voicelogchannel ,defaultchannelID , guildautorole});
   });
 
   // When a setting is changed, a POST occurs and this code runs
@@ -269,7 +300,21 @@ module.exports = (client) => {
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    client.writeSettings(guild.id, req.body);
+    if(welcomeChannelID !== `<#${(req.body.welcomeChannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) welcomeChannelID = `<#${(req.body.welcomeChannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    if(logchannel !== `<#${(req.body.logchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) logchannel = `<#${(req.body.logchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    if(voicelogchannel !== `<#${(req.body.voicelogchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) voicelogchannel = `<#${(req.body.voicelogchannelID).replace(/[^0-9a-zA-Z_]/g, '') }>`   
+    if(defaultchannelID !== `<#${(req.body.defaultchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) defaultchannelID = `<#${(req.body.defaultchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    if(guildautorole !== `<@${(req.body.guildautoroleID).replace(/[^0-9a-zA-Z_]/g, '')}>`) guildautorole = `<@${(req.body.guildautoroleID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    db.collection('guilds').doc(guild.id).update({
+      'prefix': req.body.Prefix,
+      'welcomeChannelID': welcomeChannelID.slice(2,-1) ,
+      'logchannel': logchannel.slice(2,-1),
+      'voicelogchannel': voicelogchannel.slice(2,-1),
+      'guildautorole': guildautorole.slice(2,-1),
+      'defaultchannelID':defaultchannelID.slice(2,-1),
+      'playervolume': req.body.playervolume
+    })
+    load()
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
@@ -343,14 +388,39 @@ module.exports = (client) => {
       members: returnObject
     });
   });
+  app.get("/dashboard/:guildID/stats/json", checkAuth, async (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    let player = client.music.players.get(req.params.guildID);
+    let play, title ;
+    if (player) play = duration(player.position).toString();
+    if (player) title = player.queue[0].title;
+ 
+    const returnObject = [];
+  
+      returnObject.push({
+        time: play,
+        name: title,
+      });
+    
+    res.json({
+      data: returnObject
+    });
+  });
 
   // Displays general guild statistics. 
   app.get("/dashboard/:guildID/stats", checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
+    let player = client.music.players.get(req.params.guildID);
+    let time , play;
+    if (player) play = duration(player.position).toString();
+    if (player) time = duration(player.queue[0].duration ).toString();
+    if(!player)  play = false;
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    renderTemplate(res, req, "guild/stats.ejs", {guild});
+    load()
+    renderTemplate(res, req, "guild/stats.ejs", {guild , player ,play ,time});
   });
   
   // Leaves the guild (this is triggered from the manage page, and only
@@ -361,6 +431,7 @@ module.exports = (client) => {
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
     await guild.leave();
+    load()
     res.redirect("/dashboard");
   });
 
@@ -370,9 +441,47 @@ module.exports = (client) => {
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    client.settings.delete(guild.id);
+   
+    db.collection('guilds').doc(req.params.guildID).set({
+      'prefix': '.',
+      'welcomeChannelID': "default",
+      'logchannel': 'default',
+      'voicelogchannel': 'default',
+      'guildautorole': 'default',
+      'defaultchannelID': "default",
+      'playervolume': 100
+  })
+  load()
+    //client.settings.delete(guild.id);
     res.redirect("/dashboard/"+req.params.guildID);
   });
-  
-  client.site = app.listen(client.config.dashboard.port);
+  let port = client.config.dashboard.port || 5000
+  app.set('port',client.config.dashboard.port || 5000);
+  app.set('host',client.config.dashboard.domain || 'localhost');
+  //client.site = app.listen(app.get('port') , () => console.log(`[log] [web] Dashboard is active on ${client.config.dashboard.port || 5000} and host is active on ${app.get("host")}:${app.get("port")}`) );
+  app.listen(app.get('port') ,app.get('host') , () => console.log(`[log] [web] Dashboard is active on ${client.config.dashboard.port || 5000} and host is active on ${app.get("host")}:${app.get("port")}`) );
+
+  function load() {
+    let query = db.collection('guilds')
+    let guilds = {} // plain object, not array   
+    let promise = new Promise(async function(resolve) {
+    
+    await query.get().then(snapshot => {
+    let remaining = snapshot.size; // If firebase, there is this property
+        snapshot.forEach(doc => {
+            guilds[doc.id] = doc.data();
+            remaining--;
+            if (!remaining) resolve(guilds);
+        });
+        })
+    });
+        promise.then(async function (guilds) {
+            // do anything you like with guilds inside this function...
+            let temp = { guilds };
+            await fs.writeFileSync ("./data/json/serversettings.json", JSON.stringify(temp), function(err) {
+                if (err) throw err;
+            
+            })
+    });
+  }
 };

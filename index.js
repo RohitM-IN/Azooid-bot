@@ -1,143 +1,93 @@
-const {Client,Collection,Permissions} = require("discord.js");
+// This will check if the node version you are running is the required
+// Node version, if it isn't it will throw the following error to inform
+// you.
+if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
+
+// Load up the discord.js library
 const Discord = require("discord.js");
-const {config} = require("dotenv");
-const fs = require("fs");
-const config1 = require("./config.json");
-const xp = require("./data/xp.json");
-const Canvas = require("canvas")
-const {promisify,inspect} = require('util');
-const readdir = promisify(fs.readdir);
-const ascii = require("ascii-table");
-let table = new ascii("Events");
-const https = require("https");
-table.setHeading("Event", "Load status");
+// We also load the rest of the things we need in this file:
+const { promisify } = require("util");
+const readdir = promisify(require("fs").readdir);
+const Enmap = require("enmap");
+const klaw = require("klaw");
+const path = require("path");
 
-const client = new Client({
-    disableEveryone: true
+// This is your client. Some people call it `bot`, some people call it `self`,
+// some might call it `cootchie`. Either way, when you see `client.something`,
+// or `bot.something`, this is what we're refering to. Your client.
+const client = new Discord.Client();
+
+// Here we load the config file that contains our token and our prefix values.
+client.config = require("./config.js");
+// client.config.token contains the bot's token
+// client.config.prefix contains the message prefix
+
+// Let's start by getting some useful functions that we'll use throughout
+// the bot, like logs and elevation features.
+require("./util/functions")(client);
+
+// Aliases and commands are put in collections where they can be read from,
+// catalogued, listed, etc.
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+
+// Now we integrate the use of Evie's awesome Enhanced Map module, which
+// essentially saves a collection to disk. This is great for per-server configs,
+// and makes things extremely easy for this purpose.
+client.settings = new Enmap({ 
+  name: "settings",
+  autoFetch: true,
+  fetchAll: false,
+  cloneLevel: 'deep',
+  ensureProps: true
 });
 
-client.commands = new Collection();
-client.aliases = new Collection();
+// Basically just an async shortcut to using a setTimeout. Nothing fancy!
+client.wait = promisify(setTimeout);
 
-client.categories = fs.readdirSync("./commands/");
+// We're doing real fancy node 8 async/await stuff here, and to do that
+// we need to wrap stuff in an anonymous function. It's annoying but it works.
 
-//init database
-const firebase = require('firebase/app');
-const FieldValue = require('firebase-admin').firestore.FieldValue;
-const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccount.json')
+const init = async () => {
+  //init database
+  const admin = require('firebase-admin');
+  const serviceAccount = require('./serviceAccount.json')
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://azooid-discordbot.firebaseio.com"
-})
+  admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: "https://azooid-discordbot.firebaseio.com"
+  })
+  // Here we load **commands** into memory, as a collection, so they're accessible
+  // here and everywhere else.
+  const cmdFiles = await readdir("./commands/");
+  client.log("log", `Loading a total of ${cmdFiles.length} commands.`);
+  klaw("./commands").on("data", (item) => {
+    const cmdFile = path.parse(item.path);
+    if (!cmdFile.ext || cmdFile.ext !== ".js") return;
+    const response = client.loadCommand(`${cmdFile.name}${cmdFile.ext}`);
+    //if (response) console.log(response);
+  });
 
-let db = admin.firestore();
-var ref = admin.database().ref();
-var usersRef = ref.child('guilds');
+  const evtFiles = await readdir("./events/");
+  client.log("log", `Loading a ${evtFiles.length} events.`);
+  klaw("./events").on("data", (item) => {
+    const evtFile = path.parse(item.path);
+    if (!evtFile.ext || evtFile.ext !== ".js") return;
+    const event = require(`./events/${evtFile.name}${evtFile.ext}`);
+    client.on(evtFile.name, event.bind(null, client));
+  });
 
-config({
-    path: __dirname + "/.env"
-});
+  // Generate a cache of client permissions for pretty perms
+  client.levelCache = {};
+  for (let i = 0; i < client.config.permLevels.length; i++) {
+    const thisLevel = client.config.permLevels[i];
+    client.levelCache[thisLevel.name] = thisLevel.level;
+  }
 
-["command"].forEach(handler => {
-    require(`./handlers/${handler}`)(client);
-});
-const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-client.on('message', async (message) => {
+  // Here we login the client.
+  client.login(client.config.token);
 
-    if (message.author.bot) return;
-    if (!message.guild) return;
-    let prefix
-    await db.collection('guilds').doc(message.guild.id).get().then((q) => {
-        if (q.exists) {
-            prefix = q.data().prefix || config1.prefix_mention;
-        } else {
-            prefix = "." || config1.prefix_mention;
-        }
-    })
+// End top-level async/await function.
+};
 
-    //if (!message.member) message.member = await message.guild.fetchMember(message);
-    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
-    if (!prefixRegex.test(message.content)) return;
-
-    const [, matchedPrefix] = message.content.match(prefixRegex);
-    const args = message.content.slice(matchedPrefix.length).trim().split(/ +/g);
-
-
-    // const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    const cmd = args.shift().toLowerCase();
-    if (cmd.length === 0) return;
-
-    let command = client.commands.get(cmd);
-    if (!command) command = client.commands.get(client.aliases.get(cmd));
-    if (!message.channel.permissionsFor(client.user).has("SEND_MESSAGES")) return message.author.send(`I cannot send message in ${message.channel.name} in ${message.guild.name} Contact server admin for this issue !`);
-
-    if(command.clientPermissions.length > 0) {
-        let clientChannelPermissions = message.channel.permissionsFor(client.user);
-        let ChannelPermissions = new Permissions(clientChannelPermissions.bitfield);
-        if(!ChannelPermissions.has(command.clientPermissions)) {
-            let missingPermissions = command.clientPermissions.filter(perm => ChannelPermissions.has(perm) === false).join(', ')
-            return message.reply(`I can't execute this command, missing permissions for ${missingPermissions}`)
-        }
-    }
-    
-    if(command.userPermissions.length > 0) {
-        let memberChannelPermissions = message.channel.permissionsFor(message.member);
-        memberChannelPermissions = new Permissions(memberChannelPermissions.bitfield);
-        if(!memberChannelPermissions.has(command.clientPermissions)) {
-            let missingPermissions = command.clientPermissions.filter(perm => memberChannelPermissions.has(perm) === false).join(', ')
-            return message.reply(`I can't execute this command, you are missing these permissions: ${missingPermissions}`)
-        }
-    }
-    if (command)
-        command.run(client, message, args, db);
-})
-
-const load = async () => {
-    const evtFiles = await readdir("./events");
-    var total = 0;
-
-    evtFiles.forEach(file => {
-        if (file.split(".").slice(-1)[0] !== "js") return;
-        const evtName = file.split(".")[0];
-        const event = require(`./events/${file}`);
-        table.addRow(file, '✅');
-        client.on(evtName, event.bind(null, client));
-        delete require.cache[require.resolve(`./events/${file}`)];
-        total = total + 1;
-
-    })
-    console.log(table.toString());
-    console.log(`Total no of events ${total} loaded ✅`);
-}
-
-client.on('guildCreate', async gData => {
-    db.collection('guilds').doc(gData.id).set({
-        'guildID': gData.id,
-        'guildName': gData.name,
-        'guildOwner': gData.owner.user.username,
-        'guildOwnerID': gData.owner.id,
-        'guildMemberCount': gData.memberCount,
-        'prefix': '.',
-        'welcomeChannelID': "default",
-        'logchannel': 'default',
-        'voicelogchannel': 'default',
-        'guildautorole': 'default',
-        'defaultchannelID': "default",
-        'playervolume': 100
-    })
-    client.fetchUser(gData.owner.id, false).then(user => {
-        user.send("Thanks for Inviting me to " + gData.name + " plz use welcome and log command to set the channel \nEX: <prefix>welcome #<channel name> \nEX: <prefix>log -h", )
-    })
-})
-client.on('guildDelete', async gData => {
-    db.collection('guilds').doc(gData.id).delete()
-})
-
-
-process.on('unhandledRejection', (error,origin) => console.log(`Uncaught Promise Rejection ${error}\nOrigin: ${toString(origin)}`));
-
-client.login(process.env.TOKEN);
-// client.login(config1.token);
-load();
+init();

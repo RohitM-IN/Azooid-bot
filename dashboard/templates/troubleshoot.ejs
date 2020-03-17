@@ -1,0 +1,20 @@
+<%- include('blocks/header', {bot, user, path}) %>
+  <div class="jumbotron">
+    <div>
+      <h1><%= bot.user.username %> Bot Trouble Shooting</h1>
+      <h4 class="card-header">Unable to manage Guild in web dashboard</h4>
+      <p class="card-body">Go to your Discord server Now type Command <code>@Azooid#8892 prefix &lt;prefix here&gt;</code><br/> Now You can manage guild In Web dashboard.<br/></p>
+      <h4 class="card-header">Forgot bot Prefix&lt;prefix here&gt;</h4>
+      <p class="card-body"><code>@Azooid#8892 prefix</code> type this command and your prefix will be changed and <code>@Azooid#8892</code> is an alteranate Default prefix .<br/></p>
+      <h4 class="card-header">I have a suggestion</h4>
+      <p class="card-body">So you got something awesome you think should be in the bot? Excellent, we love to hear all the ideas people come up with and want to see added to the bot!<br/>So now that you have your idea, you want to suggest it somewhere right? Well, our support server has a  dedicated channel just for that. You'll find them below the <a href="https://discord.gg/6uu5zQT" target="_blank">general channels </a>and above the bug reports channel.<br/></p>
+      <h4 class="card-header">Any other queries </h4>
+      <p class="card-body">You can join <a href="https://discord.gg/uBDPReC" target="_blank">my support channel by clicking here</a></p>
+      <h4 class="card-header">Commands not working</h4>
+      <p class="card-body">Type Command <code>@Azooid#8892 prefix &lt;prefix here&gt;</code> Click the button below to get more info on which commands work in this bot</p>
+      <p class="card-body">
+        <a class="btn btn-primary" href="/commands" role="button">Command Help »</a>
+      </p>
+    </div>
+  </div>
+<% include ./blocks/footer %>

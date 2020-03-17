@@ -6,16 +6,115 @@
     <div class="col">
       <div class="card text-white mb-3" style="width: 100%;">
         <%- include('../blocks/guild-nav', {active: "stats", guild}) %>
-        <div class="bg-info">
-          <div class="card-body" width="100%">
-            <p class="card-text">This page is currently unfinished, and may never be included.</p>
-          </div>
-        </div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Music Stats</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% const settings = bot.getSettings(guild);
+            const defaults = bot.config.defaultSettings;
+            let text , queue;
+            if(player) player.trackRepeat ? text = 'ON': text = 'OFF'
+            if(player) player.queueRepeat ? queue = 'ON': queue = 'OFF'%>
+            
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Title"> Title </th>
+        <td width="80%"><i class="fa fa-fw fa-music" aria-hidden="true"></i> <span class="col-5 text-nowrap" id="Title"><% if(player) { %> <%= player.queue[0].title %> <% } else { %>No Songs playing in server.<% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Duration"> Duration </th>
+        <td width="80%"><i class="fa fa-fw fa-music" aria-hidden="true"></i> <span class="col-5 text-nowrap" id="Duration"><% if(player) { %> <%= time %> <% } else { %>00:00 <% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Queue"> Queue </th>
+        <td width="80%"><i class="fa fa-fw fa-list" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= player.queue.length %> <% } else { %>0 Songs in the queue.<% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Volume </th>
+        <td width="80%"><i class="fa fa-fw fa-volume-up" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= player.volume %> <% } else { %> 100 <% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Track Repeat</th>
+        <td width="80%"><i class="fa fa-fw fa-repeat" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= text %> <% } else { %> false <% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Queue Repeat</th>
+        <td width="80%"><i class="fa fa-fw fa-repeat" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= queue %> <% } else { %> false <% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Voice Channel</th>
+        <td width="80%"><i class="fa fa-fw fa-repeat" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= player.voiceChannel.name %> (<%= player.voiceChannel.id %>)<% } else { %> Not connected to Voice Channel <% }%></span></td>
+    </tr>
+    <tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Current Position</th>
+        <td width="80%"><i class="fa fa-fw fa-repeat" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %>  {time}  <% } else { %> 00:00 <% }%></span></td>
+    </tr>
+    %>
+    %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
   <% include ../blocks/guild-modals %>
   <script type="text/javascript">
+  var guildID = "<%= guild.id %>";
+setInterval(updateTable, 5000);
+  function updateTable() {
+    $("table tbody").empty();
+    
+    $.getJSON(`/dashboard/${guildID}/stats/json`, function(response) {
+
+      var thishtml = snippet
+        .replace("{title}", response.data[0].name || "No Songs playing in server.")
+        .replace("{time}", response.data[0].time || '00:00')
+      $('table > tbody').append(thishtml);
+    });
+    };
+    var snippet = `
+    <%  
+            
+            if(player) player.trackRepeat ? text = 'ON': text = 'OFF'
+            if(player) player.queueRepeat ? queue = 'ON': queue = 'OFF'%>
+            
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Title"> Title </th>
+        <td width="80%"><i class="fa fa-fw fa-music" aria-hidden="true"></i> <span class="col-5 text-nowrap" id="Title"><% if(player) { %> {title} <% } else { %>No Songs playing in server.<% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Duration"> Duration </th>
+        <td width="80%"><i class="fa fa-fw fa-music" aria-hidden="true"></i> <span class="col-5 text-nowrap" id="Duration"><% if(player) { %> <%= time %> <% } else { %>00:00 <% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Queue"> Queue </th>
+        <td width="80%"><i class="fa fa-fw fa-list" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= player.queue.length %> <% } else { %>0 Songs in the queue.<% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Volume </th>
+        <td width="80%"><i class="fa fa-fw fa-volume-up" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= player.volume %> <% } else { %> 100 <% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Track Repeat</th>
+        <td width="80%"><i class="fa fa-fw fa-repeat" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= text %> <% } else { %> false <% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Queue Repeat</th>
+        <td width="80%"><i class="fa fa-fw fa-repeat" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= queue %> <% } else { %> false <% }%></span></td>
+    </tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Voice Channel</th>
+        <td width="80%"><i class="fa fa-fw fa-repeat" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %> <%= player.voiceChannel.name %> (<%= player.voiceChannel.id %>)<% } else { %> Not connected to Voice Channel <% }%></span></td>
+    </tr>
+    <tr>
+    <tr>
+        <th scope="row" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Volume"> Current Position</th>
+        <td width="80%"><i class="fa fa-fw fa-repeat" aria-hidden="true"></i> <span class="col-5 text-nowrap"><% if(player) { %>  {time}  <% } else { %> 00:00 <% }%></span></td>
+    </tr>
+    %>
+    `;
     var ts = parseInt($('#guildCreate').text());
     $('#guildCreate').html(`${moment(ts).format('MMMM Do YYYY')}`);
   </script>
