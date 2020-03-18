@@ -52,7 +52,6 @@ const helmet = require("helmet");
 
 // Used to parse Markdown from things like ExtendedHelp
 const md = require("marked");
-const { Utils } = require("erela.js")
 let {duration} = require('yet-another-duration');
 module.exports = async(client) => {
   // It's easier to deal with complex paths. 
@@ -142,7 +141,9 @@ module.exports = async(client) => {
     req.session.backURL = req.url;
     res.redirect("/login");
   }
-  let prefix ,welcomeChannelID , playervolume , logchannel ,voicelogchannel , defaultchannelID ,guildautorole;
+  let prefix ,welcomeChannelID , playervolume , logchannel ,voicelogchannel , defaultchannelID ,guildautorole, logging;
+  var timeout = require('connect-timeout');
+
   // This function simplifies the rendering of the page, since every page must be rendered
   // with the passing of these 4 variables, and from a base path. 
   // Objectassign(object, newobject) simply merges 2 objects together, in case you didn't know!
@@ -157,7 +158,10 @@ module.exports = async(client) => {
 
 
   /** PAGE ACTIONS RELATED TO SESSIONS */
-
+  //Site Map generated from a url
+  app.get('/sitemap.xml', function(req, res) {
+    res.sendFile('public/sitemap.xml');
+    });
   // The login page saves the page the person was on in the session,
   // then throws the user to the Discord OAuth2 login page.
   app.get("/login", (req, res, next) => {
@@ -219,7 +223,18 @@ module.exports = async(client) => {
   app.get("/commands", (req, res) => {
     renderTemplate(res, req, "commands.ejs", {md});
   });
-  
+  app.use(timeout(120000));
+  app.use(haltOnTimedout);
+  function haltOnTimedout(req, res, next){
+    if (!req.timedout) next();
+  }
+  app.get("/profile", (req, res) => {
+    const perms = Discord.EvaluatedPermissions;
+    renderTemplate(res, req, "guild/profile.ejs", {perms});
+  });
+  app.get("/license", (req, res) => {
+    renderTemplate(res, req, "license.ejs");
+  });
   // Bot statistics. Notice that most of the rendering of data is done through this code, 
   // not in the template, to simplify the page code. Most of it **could** be done on the page.
   app.get("/stats", (req, res) => {
@@ -241,14 +256,36 @@ module.exports = async(client) => {
       }
     });
   });
+  app.get("/stats/data", (req, res) => {
+    const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+    const members = client.guilds.reduce((p, c) => p + c.memberCount, 0);
+    const textChannels = client.channels.filter(c => c.type === "text").size;
+    const voiceChannels = client.channels.filter(c => c.type === "voice").size;
+    const guilds = client.guilds.size;
+    const returnObject = [];
+  
+    returnObject.push({
+      servers: guilds,
+      members: members,
+      text: textChannels,
+      voice: voiceChannels,
+      uptime: duration,
+      memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
+    });
+  
+  res.json({
+    data  : returnObject
+  });
 
+    
+  });
   app.get("/dashboard", checkAuth, (req, res) => {
     const perms = Discord.EvaluatedPermissions;
     renderTemplate(res, req, "dashboard.ejs", {perms});
   });
   app.get("/troubleshoot", checkAuth, (req, res) => {
-    const perms = Discord.EvaluatedPermissions;
-    renderTemplate(res, req, "troubleshoot.ejs", {perms});
+    
+    renderTemplate(res, req, "troubleshoot.ejs");
   });
 
   // The Admin dashboard is similar to the one above, with the exception that
@@ -277,6 +314,7 @@ module.exports = async(client) => {
           voicelogchannel = q.data().voicelogchannel || 'default';
           defaultchannelID = q.data().defaultchannelID || 'default';
           guildautorole = q.data().guildautorole || 'default' ;
+          logging = q.data().log || false;
       } else {
         prefix = "." ;
         welcomeChannelID =  'default';
@@ -285,12 +323,13 @@ module.exports = async(client) => {
         voicelogchannel =  'default';
         defaultchannelID = 'default';
         guildautorole = 'default' ;
+        logging = false;
       }
   })
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    await renderTemplate(res, req, "guild/manage.ejs", {guild ,prefix , welcomeChannelID , playervolume, logchannel ,voicelogchannel ,defaultchannelID , guildautorole});
+    await renderTemplate(res, req, "guild/manage.ejs", {guild ,prefix , welcomeChannelID , playervolume, logchannel ,voicelogchannel ,defaultchannelID , guildautorole , logging});
   });
 
   // When a setting is changed, a POST occurs and this code runs
@@ -305,6 +344,7 @@ module.exports = async(client) => {
     if(voicelogchannel !== `<#${(req.body.voicelogchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) voicelogchannel = `<#${(req.body.voicelogchannelID).replace(/[^0-9a-zA-Z_]/g, '') }>`   
     if(defaultchannelID !== `<#${(req.body.defaultchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) defaultchannelID = `<#${(req.body.defaultchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`
     if(guildautorole !== `<@${(req.body.guildautoroleID).replace(/[^0-9a-zA-Z_]/g, '')}>`) guildautorole = `<@${(req.body.guildautoroleID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    if(logging == true){logging = true} else logging = false 
     db.collection('guilds').doc(guild.id).update({
       'prefix': req.body.Prefix,
       'welcomeChannelID': welcomeChannelID.slice(2,-1) ,
@@ -312,8 +352,10 @@ module.exports = async(client) => {
       'voicelogchannel': voicelogchannel.slice(2,-1),
       'guildautorole': guildautorole.slice(2,-1),
       'defaultchannelID':defaultchannelID.slice(2,-1),
-      'playervolume': req.body.playervolume
+      'playervolume': req.body.playervolume,
+      'log': logging
     })
+    load()
     load()
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
@@ -392,15 +434,27 @@ module.exports = async(client) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     let player = client.music.players.get(req.params.guildID);
-    let play, title ;
-    if (player) play = duration(player.position).toString();
-    if (player) title = player.queue[0].title;
+    let play, title ,total , volume , repeat ,queue ,rep_queue , vschannel;
+    if (player) {play = duration(player.position).toString();} else play = '00:00'
+    if (player) {title = player.queue[0].title;} else title = 'No Songs playing in server.'
+    if (player) {total = duration(player.queue[0].duration ).toString();} else total='00:00'
+    if (player) {volume = player.volume} else volume = 100
+    if (player) {player.trackRepeat ? repeat = 'ON': repeat = 'OFF'} else repeat = 'OFF'
+    if (player) {player.queueRepeat ? rep_queue = 'ON': rep_queue = 'OFF'} else rep_queue = 'OFF'
+    if (player) {queue = `${player.queue.length} songs in the Queue`} else queue = '0 Songs in the queue.'
+    if (player) {vschannel = `${player.voiceChannel.name}  ( ${player.voiceChannel.id} )`} else vschannel = "Not connected to Voice Channel"
  
     const returnObject = [];
   
       returnObject.push({
         time: play,
         name: title,
+        duration:total,
+        volume:volume,
+        repeat:repeat,
+        rep_queue:rep_queue,
+        queue:queue,
+        vschannel:vschannel
       });
     
     res.json({
@@ -413,9 +467,8 @@ module.exports = async(client) => {
     const guild = client.guilds.get(req.params.guildID);
     let player = client.music.players.get(req.params.guildID);
     let time , play;
-    if (player) play = duration(player.position).toString();
-    if (player) time = duration(player.queue[0].duration ).toString();
-    if(!player)  play = false;
+    if (player) {play = duration(player.position || '0').toString() || '00:00'}else play = '00:00'
+    if (player) {time = duration(player.queue[0].duration || '0').toString() || '00:00'} else time = '00:00';
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
@@ -444,6 +497,7 @@ module.exports = async(client) => {
    
     db.collection('guilds').doc(req.params.guildID).set({
       'prefix': '.',
+      'log':false,
       'welcomeChannelID': "default",
       'logchannel': 'default',
       'voicelogchannel': 'default',

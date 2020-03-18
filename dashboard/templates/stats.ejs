@@ -34,4 +34,50 @@
           <div class="col-5 text-nowrap"><strong><%= stats.nVersion %></strong></div>
         </div>
     </div>
+    <script type="text/javascript">
+    let datas , usage ,servers ,members , text , voice ;
+  function uptime(){
+      // Pass some identifier to use for your database
+      $.ajax({
+    url: "/stats/data",
+    type: 'GET',
+    success: function(res) {
+      datas = res.data[0].uptime
+      
+      $('div.justify-content-md-center.row:nth-of-type(2) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
+     $('div.justify-content-md-center.row:nth-of-type(2) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(datas)
+
+    }
+  });
+}  
+function other(){
+      // Pass some identifier to use for your database
+      $.ajax({
+    url: "/stats/data",
+    type: 'GET',
+    success: function(res) {
+      servers = res.data[0].servers
+      members = res.data[0].members
+      text = res.data[0].text
+      voice = res.data[0].voice
+      usage = `${res.data[0].memoryUsage} MB`
+      $('div.justify-content-md-center.row:nth-of-type(1) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
+     $('div.justify-content-md-center.row:nth-of-type(1) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(servers)
+     $('div.justify-content-md-center.row:nth-of-type(3) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
+     $('div.justify-content-md-center.row:nth-of-type(3) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(members)
+     $('div.justify-content-md-center.row:nth-of-type(5) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
+     $('div.justify-content-md-center.row:nth-of-type(5) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(text)
+     $('div.justify-content-md-center.row:nth-of-type(6) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
+     $('div.justify-content-md-center.row:nth-of-type(6) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(voice)
+     $('div.justify-content-md-center.row:nth-of-type(4) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
+     $('div.justify-content-md-center.row:nth-of-type(4) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(usage)
+    }
+  });
+}
+
+   setInterval(uptime, 1000);
+   setInterval(other, 1000 * 60 * 10);
+   
+
+    </script>
     <% include ./blocks/footer %>

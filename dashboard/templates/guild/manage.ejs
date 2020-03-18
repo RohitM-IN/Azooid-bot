@@ -1,62 +1,91 @@
+
+
 <%- include('../blocks/header', {bot, user, path}) %>
-  <div class="row">
-    <div class="col col-3">
-      <%- include('../blocks/guild-card', {guild}) %>
-    </div>
-    <div class="col">
-      <%- include('../blocks/guild-nav.ejs', {active: "manage", guild}) %>
-      <form method="post">
-          <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Setting Name</th>
-                  <th scope="col">Current Setting</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% const settings = bot.getSettings(guild);
-                const defaults = bot.config.defaultSettings;%>
-                <tr>
-                  <th scope="row" class="align-middle">Prefix</th>
-                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="Prefix" id="Prefix" value="<%= prefix %>" placeholder="Enter prefix "></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="align-middle">welcomeChannelID</th>
-                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="welcomeChannelID" id="welcomeChannelID" value="<%= welcomeChannelID %>" placeholder="Enter welcomeChannelID "></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="align-middle">logchannelID</th>
-                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="logchannelID" id="logchannelID" value="<%= logchannel %>" placeholder="Enter logchannelID "></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="align-middle">voicelogchannel</th>
-                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="voicelogchannelID" id="voicelogchannelID" value="<%= voicelogchannel %>" placeholder="Enter voicelogchannelID "></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="align-middle">defaultchannelID</th>
-                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="defaultchannelID" id="defaultchannelID" value="<%= defaultchannelID %>" placeholder="Enter defaultchannelID "></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="align-middle">guildautoroleID</th>
-                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="guildautoroleID" id="guildautoroleID" value="<%= guildautorole %>" placeholder="Enter guildautoroleID "></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="align-middle">playervolume</th>
-                  <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;" name="playervolume" id="playervolume" value="<%= playervolume %>" placeholder="Enter playervolume "></td>
-                </tr>
-                %>
-              </tbody>
-            </table>
-        <div style="width: 100%; text-align: right; margin-top: 20px;">
-          <a class="btn btn-danger" data-toggle="modal" data-target="#settingsResetModal" role="button">Reset Defaults <i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
-          <button type="submit" class="btn btn-primary">Save Changes <i class="fa fa-fw fa-save" aria-hidden="true"></i></button>
+<div class="row" style="min-width: 400px;">
+  <div class="col col-3">
+    <%- include('../blocks/guild-card', {guild}) %>
+  </div>
+  <div class="col" style="min-width: 400px;">
+    <div class="card text-white mb-3" >
+      <%- include('../blocks/guild-nav', {active: "manage", guild}) %>
+      <table class="table table-hover">
+        <div class="bg-info">
+          <div class="card-body" width="100%">
+            <p class="card-text">Refresh the page in 5 sec after saving data get see results here <br />* very improtant</p>
+          </div>
         </div>
-      </form>
+        <thead>
+          <tr>
+            <th scope="col">Setting Name</th>
+              <th scope="col">Current Setting</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% const settings = bot.getSettings(guild);
+            const defaults = bot.config.defaultSettings;%>
+
+          <tr>
+            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+              data-toggle="tooltip" title="prefix"> Prefix<font color="red">*</font> </th>
+              <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
+                name="Prefix" id="Prefix" value="<%= prefix %>" placeholder="Enter prefix "></td>
+          </tr>
+          <tr>
+            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+              data-toggle="tooltip" title="welcomeChannelID"> welcomeChannelID </th>
+              <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
+                name="welcomeChannelID" id="welcomeChannelID" value="<%= welcomeChannelID %>"
+                placeholder="Enter welcomeChannelID "></td>
+          </tr>
+          <tr>
+            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+              data-toggle="tooltip" title="logchannelID"> logchannelID </th>
+              <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
+                name="logchannelID" id="logchannelID" value="<%= logchannel %>" placeholder="Enter logchannelID ">
+          </tr>
+          <tr>
+            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+              data-toggle="tooltip" title="voicelogchannelID"> voicelogchannelID </th>
+              <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
+                name="voicelogchannelID" id="voicelogchannelID" value="<%= voicelogchannel %>"
+                placeholder="Enter voicelogchannelID "></td>
+          </tr>
+          <tr>
+            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+              data-toggle="tooltip" title="defaultchannelID"> defaultchannelID</th>
+              <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
+                name="defaultchannelID" id="defaultchannelID" value="<%= defaultchannelID %>"
+                placeholder="Enter defaultchannelID "></td>
+          </tr>
+          <tr>
+            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+              data-toggle="tooltip" title="guildautoroleIDt"> guildautoroleID</th>
+              <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
+                name="guildautoroleID" id="guildautoroleID" value="<%= guildautorole %>"
+                placeholder="Enter guildautoroleID "></td>
+          </tr>
+          <tr>
+            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+              data-toggle="tooltip" title="playervolume"> playervolume</th>
+              <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
+                name="playervolume" id="playervolume" value="<%= playervolume %>" placeholder="Enter playervolume ">
+          </tr>
+            %>
+            %>
+        </tbody>
+      </table>
+      <div style="width: 100%; text-align: right; margin-top: 20px;">
+        <a class="btn btn-danger" data-toggle="modal" data-target="#settingsResetModal" role="button">Reset Defaults
+          <i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
+        <button type="submit" class="btn btn-primary">Save Changes <i class="fa fa-fw fa-save"
+            aria-hidden="true"></i></button>
+      </div>
     </div>
   </div>
-  <% include ../blocks/guild-modals %>
-  <script type="text/javascript">
-    var ts = parseInt($('#guildCreate').text());
-    $('#guildCreate').html(`${moment(ts).format('MMMM Do YYYY')}`);
-  </script>
+</div>
+<% include ../blocks/guild-modals %>
+<script type="text/javascript">
+  var ts = parseInt($('#guildCreate').text());
+  $('#guildCreate').html(`${moment(ts).format('MMMM Do YYYY')}`);
+</script>
 <% include ../blocks/footer %>
