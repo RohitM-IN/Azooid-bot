@@ -35,9 +35,9 @@ module.exports = async(client, member) => {
         let channelsend = channelID['guilds'][member.guild.id]['welcomeChannelID'];
         channelsend = channelsend.replace(/[^0-9]/g, '');
         
-        const log =  member.guild.channels.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.find(ch => ch.name.includes('welcome')) || member.guild.channels.find(ch => ch.name.includes('general'));
+        const log =  member.guild.channels.cache.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.cache.find(ch => ch.name.includes('welcome')) || member.guild.channels.cache.find(ch => ch.name.includes('general'));
         if (!log) return;
-        //var log = member.guild.channels.find(ch => ch.name.includes('member-log')) || member.guild.channels.find(ch => ch.name.includes('log')) || memberDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
+        //var log = member.guild.channels.cache.find(ch => ch.name.includes('member-log')) || member.guild.channels.cache.find(ch => ch.name.includes('log')) || memberDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
         
     
         canvas = Canvas.createCanvas(700, 250);
@@ -64,7 +64,7 @@ module.exports = async(client, member) => {
         ctx.closePath();
         ctx.clip();
     
-        const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL());
         ctx.drawImage(avatar, 25, 25, 200, 200);
     
         const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.jpg');
@@ -75,5 +75,5 @@ module.exports = async(client, member) => {
             if(!log) return;
             log.send(`Welcome to the server, ${member.displayName}!`, attachment);
         }
-  //member.guild.channels.find("name", settings.welcomeChannel).send(welcomeMessage).catch(console.error);
+  //member.guild.channels.cache.find("name", settings.welcomeChannel).send(welcomeMessage).catch(console.error);
 };

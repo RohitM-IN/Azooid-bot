@@ -87,7 +87,7 @@ exports.run = async (client, message, args, level,userID, channelID) => { // esl
                 var calculatedKD = new String(kd.quotient) + tempString.substring(tempString.indexOf("."));
                 
               
-                let embed = new Discord.RichEmbed()
+                let embed = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setAuthor(`Counter-Strike: Global Offensive | ${playerID}`)
                 .setThumbnail(profilePic)

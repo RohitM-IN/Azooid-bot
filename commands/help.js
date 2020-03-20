@@ -58,7 +58,7 @@ exports.run = (client, message, args, level) => {
       command = client.commands.get(command);
       if (level < client.levelCache[command.conf.permLevel]) return;
       message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage::${command.help.usage}`, {code:"asciidoc"});
-      message.channel.send(`See the Dashboard on <http://3.6.81.103>`);
+      message.channel.send(`See the Dashboard on <http://www.azooid.tk/>`);
     }
   }
 };

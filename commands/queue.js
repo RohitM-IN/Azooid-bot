@@ -1,8 +1,13 @@
 const {ErelaClient,Utils} = require("erela.js");
-const {RichEmbed} = require("discord.js")
+const {MessageEmbed} = require("discord.js")
 
 exports.run = async (client, message, args) => {
         const player = client.music.players.get(message.guild.id);
+        const  voiceChannel  = message.member.voice.channel;
+        const  voiceChannelID  = message.member.voice.channelID;
+
+        if (!voiceChannel || voiceChannelID !== player.voiceChannel.id) return message.channel.send("You need to be in a voice channel to play music.");
+
         let cyan = "#5780cd"
         if (!player) return message.channel.send({
             embed: {
@@ -26,7 +31,7 @@ exports.run = async (client, message, args) => {
                 description: `🎧 Now Playing:\n[${title}](${uri}) [<@${requester.id}>]`,
                 author: {
                     name: `${message.guild.name}'s Queue.`,
-                    icon_url: message.guild.iconURL
+                    icon_url: message.guild.iconURL()
                 },
                 color: 3447003
             }
@@ -46,7 +51,7 @@ exports.run = async (client, message, args) => {
             }
             let queuelist = player.queue.slice(x - 10, x).map(song => `**${++i}.** [${queue[i].title}](${queue[i].uri}) [<@${queue[i].requester.id}>]`).join('\n')
             if (!queuelist) return message.channel.send(`<:megX:476797393283710991> | Page doesn't exist!`)
-            const embed = new RichEmbed()
+            const embed = new MessageEmbed()
             embed.setDescription(`🎧 Now Playing:\n [${title}](${uri}) [<@${requester.id}>]\n__Up Next__:\n${queuelist}`)
             embed.setThumbnail("https://upload.wikimedia.org/wikipedia/commons/7/73/YouTube_Music.png")
             embed.setAuthor(`${message.guild.name}'s Queue (${Math.floor(x/10)} / ${Math.floor((player.queue.slice(1).length+10) /10)})`)

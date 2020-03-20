@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const { promptMessage } = require("../util/function.js");
 
@@ -10,57 +10,57 @@ exports.run = async (client, message, args) => {
         // No args
         if (!args[0]) {
             return message.reply("Please provide a person to ban.")
-                .then(m => m.delete(5000));
+                .then(m =>m.delete({ timeout: 5000 }));
         }
 
         // No reason
         if (!args[1]) {
             return message.reply("Please provide a reason to ban.")
-                .then(m => m.delete(5000));
+                .then(m =>m.delete({ timeout: 5000 }));
         }
 
         // No author permissions
         if (!message.member.hasPermission("BAN_MEMBERS")) {
             return message.reply("❌ You do not have permissions to ban members. Please contact a staff member")
-                .then(m => m.delete(5000));
+                .then(m =>m.delete({ timeout: 5000 }));
         
         }
         // No bot permissions
         if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
             return message.reply("❌ I do not have permissions to ban members. Please contact a staff member")
-                .then(m => m.delete(5000));
+                .then(m =>m.delete({ timeout: 5000 }));
         }
 
-        const toBan = message.mentions.members.first() || message.guild.members.get(args[0]);
+        const toBan = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
         // No member found
         if (!toBan) {
             return message.reply("Couldn't find that member, try again")
-                .then(m => m.delete(5000));
+                .then(m =>m.delete({ timeout: 5000 }));
         }
 
         // Can't ban urself
         if (toBan.id === message.author.id) {
             return message.reply("You can't ban yourself...")
-                .then(m => m.delete(5000));
+                .then(m =>m.delete({ timeout: 5000 }));
         }
 
         // Check if the user's banable
         if (!toBan.bannable) {
             return message.reply("I can't ban that person due to role hierarchy, I suppose.")
-                .then(m => m.delete(5000));
+                .then(m =>m.delete({ timeout: 5000 }));
         }
         
-        const embed = new RichEmbed()
+        const embed = new MessageEmbed()
             .setColor("#ff0000")
-            .setThumbnail(toBan.user.displayAvatarURL)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL)
+            .setThumbnail(toBan.user.displayAvatarURL())
+            .setFooter(message.member.displayName, message.author.displayAvatarURL())
             .setTimestamp()
             .setDescription(stripIndents`**> baned member:** ${toBan} (${toBan.id})
             **> baned by:** ${message.member} (${message.member.id})
             **> Reason:** ${args.slice(1).join(" ")}`);
 
-        const promptEmbed = new RichEmbed()
+        const promptEmbed = new MessageEmbed()
             .setColor("GREEN")
             .setAuthor(`This verification becomes invalid after 30s.`)
             .setDescription(`Do you want to ban ${toBan}?`)
@@ -93,7 +93,7 @@ exports.run = async (client, message, args) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ["ar", "roleadd"],
+    aliases: [],
     permLevel: "User"
   };
   

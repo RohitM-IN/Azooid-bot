@@ -6,6 +6,7 @@
     <%- include('../blocks/guild-card', {guild}) %>
   </div>
   <div class="col" style="min-width: 400px;">
+    <form action="/dashboard/:guildID/set" method="POST">
     <div class="card text-white mb-3" >
       <%- include('../blocks/guild-nav', {active: "manage", guild}) %>
       <table class="table table-hover">
@@ -73,13 +74,15 @@
             %>
             %>
         </tbody>
+      
       </table>
       <div style="width: 100%; text-align: right; margin-top: 20px;">
         <a class="btn btn-danger" data-toggle="modal" data-target="#settingsResetModal" role="button">Reset Defaults
           <i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
-        <button type="submit" class="btn btn-primary">Save Changes <i class="fa fa-fw fa-save"
+        <button type="submit" class="btn btn-primary" role="button">Save Changes <i class="fa fa-fw fa-save"
             aria-hidden="true"></i></button>
       </div>
+    </form>
     </div>
   </div>
 </div>
@@ -87,5 +90,44 @@
 <script type="text/javascript">
   var ts = parseInt($('#guildCreate').text());
   $('#guildCreate').html(`${moment(ts).format('MMMM Do YYYY')}`);
+  var guildID = "<%= guild.id %>";
+  function getdata(){
+    return {
+    prefix: $('#Prefix').val(),
+    welcomeChannelID: $('#welcomeChannelID').val(),
+    logchannelID: $('#logchannelID').val(),
+    voicelogchannelID: $('#voicelogchannelID').val(),
+    defaultchannelID: $('#defaultchannelID').val(),
+    guildautoroleID: $('#guildautoroleID').val(),
+    playervolume: $('#guildautoroleID').val(),
+    }
+  }
+  $('.btn-primary.btn').click(function() {
+            $.ajax({
+                url: `/dashboard/${guildID}/set`,
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(getdata()),
+                contentType: "application/json",
+                cache: false,
+                timeout: 5000,
+                complete: function() {
+                  //called when complete
+                  console.log('process complete');
+                  location.reload()
+                  exit;
+                },
+
+                success: function(data) {
+                  console.log('process sucess');
+                  exit;
+               },
+
+                error: function(e) {
+                  console.log(e)
+                  console.log('process error');
+                },
+              });
+        })
 </script>
 <% include ../blocks/footer %>

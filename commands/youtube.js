@@ -1,6 +1,6 @@
 
 const moment = require('moment');
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 const GOOGLE_KEY = require('../auth.json').api.youtubev3;
 
@@ -21,7 +21,7 @@ exports.run = async (client ,message ,args) => {
 				});
 			if (!body.items.length) return message.channel.send('Could not find any results.');
 			const data = body.items[0];
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setColor(0xDD2825)
 				.setTitle(data.snippet.title)
 				.setTimestamp()

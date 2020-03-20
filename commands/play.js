@@ -1,12 +1,12 @@
 const Discord = require("discord.js");
 const { Utils } = require("erela.js")
-const { RichEmbed } = require("discord.js")
+const { MessageEmbed } = require("discord.js")
 const opusscript = require("opusscript");
 var playAudioURL = require('play-audio-url');
 const fs = require("fs");
 
 exports.run = async (client, message, args) => {
-        const { voiceChannel } = message.member;
+        const  voiceChannel  = message.member.voice.channel;
         if (!voiceChannel) return message.channel.send("You need to be in a voice channel to play music.");
 
         const permissions = voiceChannel.permissionsFor(client.user);
@@ -16,8 +16,9 @@ exports.run = async (client, message, args) => {
         if (!args[0]) return message.channel.send("Please provide a song name or link to search.");
 
         let datas = JSON.parse(fs.readFileSync("./data/json/serversettings.json", "utf8"))
-        let volume = datas['guilds'][message.guild.id]['playervolume'];
+        let volume = datas['guilds'][message.guild.id]['playervolume'] || 100;
 
+        if(volume !== Number) volume = 100;
         const player = client.music.players.spawn({
             guild: message.guild,
             textChannel: message.channel,
@@ -38,8 +39,8 @@ exports.run = async (client, message, args) => {
                 case "SEARCH_RESULT":
                     let index = 1;
                     const tracks = res.tracks.slice(0, 5);
-                    const embed = new RichEmbed()
-                        .setAuthor("Song Selection.", message.author.displayAvatarURL)
+                    const embed = new MessageEmbed()
+                        .setAuthor("Song Selection.", message.author.displayAvatarURL())
                         .setDescription(tracks.map(video => `**${index++} -** ${video.title} : \`${Utils.formatTime(video.duration, true)}\``))
                         .setFooter("Your response time closes within the next 30 seconds. Type 'cancel' to cancel the selection");
 

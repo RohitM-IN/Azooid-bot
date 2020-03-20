@@ -5,8 +5,11 @@ const admin = require('firebase-admin')
 let db = admin.firestore();
 
 exports.run = async (client, message, args) => {
-    //message.channel.send(`Audio Quality not too good :wink:`);
+   
     const player = client.music.players.get(message.guild.id);
+    const  voiceChannel  = message.member.voice.channel;
+    const  voiceChannelID  = message.member.voice.channelID;
+    if (!voiceChannel || voiceChannelID !== player.voiceChannel.id) return message.channel.send("You need to be in a voice channel to use the Volume command.");
 
     if (!player) return message.channel.send("No song/s currently playing")
     if (!args[0]) return message.channel.send(`Current Volume is : ${player.volume}`);

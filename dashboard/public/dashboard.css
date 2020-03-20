@@ -39,3 +39,27 @@ body {
   background-color: #747f8d;
   border-color: #9099a4;
 }
+
+
+.scroll:hover {
+	color: #fff !important;
+	background-color: #007053;
+	text-decoration: none;
+}
+ 
+.scroll {
+	display: none;
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+	width: 3.2rem;
+	height: 3.2rem;
+	line-height: 3.2rem;
+	font-size: 1.4rem;
+	color: #fff;
+	background-color: #00bc8c;
+	text-decoration: none;
+	border-radius: 3.2rem;
+	text-align: center;
+	cursor: pointer;
+}

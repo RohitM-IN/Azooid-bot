@@ -7,7 +7,7 @@ exports.run = async (client, message, args,member ) => {
         let out = msg [guild_id][author_id].message  
         if(out  == null )return message.channel.send("save somthing first");
 
-       let sEmbed = new Discord.RichEmbed()
+       let sEmbed = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`Here is the massage you recorded`)
         .setDescription(`${ out}`);

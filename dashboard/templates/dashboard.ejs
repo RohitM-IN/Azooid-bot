@@ -1,7 +1,7 @@
 <%- include('blocks/header', {bot, user, path}) %>
 <h1 class="display-3">Dashboard</h1>
 <ul class="list-unstyled">
-  <% user.guilds.forEach(guild => { 
+  <%user.guilds.forEach(guild => { 
     const permsOnGuild = new perms(guild.permissions);
     if(!permsOnGuild.has("MANAGE_GUILD")) return;
   %>
@@ -27,7 +27,7 @@
         <% 
         let href, text;
         let enabled;
-        if(bot.guilds.get(guild.id)) {
+        if(bot.guilds.cache.get(guild.id)) {
           href = `/dashboard/${guild.id}/manage`;
           text = "Manage";
           enabled = true;

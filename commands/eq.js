@@ -1,11 +1,15 @@
-const {RichEmbed} = require("discord.js");
+const {MessageEmbed} = require("discord.js");
 const { Utils } = require("erela.js");
 
 
 exports.run = async (client, message, args) => {
+    const  voiceChannel  = message.member.voice.channel;
+    const  voiceChannelID  = message.member.voice.channelID;
     const player = client.music.players.get(message.guild.id);
     if(!player) return message.channel.send("No song/s currently playing")
-    let embed = new RichEmbed()
+    if(!voiceChannel || voiceChannelID !== player.voiceChannel.id) return message.channel.send("You need to be in a voice channel to play music.");
+
+    let embed = new MessageEmbed()
     .setTitle('🎵EQ command Help🎵')
     .setTimestamp()
     .addField(`Presets:`,`party, bass, trablebass (tb), radio, soft, bassboost (bb)`)

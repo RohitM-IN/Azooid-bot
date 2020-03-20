@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const fetch = require("node-fetch"); //npm i node-fetch
 
 exports.run = async (client, message, args) => {
@@ -12,7 +12,7 @@ let search = args[1] ? `http://xkcd.com/${args[1]}/info.0.json` : "http://xkcd.c
                 if(!res) return msg.edit("No results found for this comic, sorry!");
                 let { safe_title, img, day, month, year, num, alt} = res;
 
-                let embed = new RichEmbed()
+                let embed = new MessageEmbed()
                     .setColor("RANDOM")
                     .setDescription(alt ? alt : "*crickets* - No Description")
                     .setAuthor(`XKCD | ${safe_title} [${num}]`)

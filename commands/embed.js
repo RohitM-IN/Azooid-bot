@@ -1,11 +1,11 @@
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 exports.run = async(client ,message ,args) => {
 	let text = args.join(" ")
 	if (!text) return message.channel.send(`What text would you like to embed?`)
 	
-    let embed = new RichEmbed()
+    let embed = new MessageEmbed()
     .setTimestamp()
     .setColor("RANDOM")
     .setFooter(client.user.username)

@@ -1,5 +1,5 @@
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 const { formatNumber } = require('../util/Util');
 const  OSU_KEY  = require('../auth.json').api.osu_key
@@ -18,7 +18,7 @@ exports.run = async (client ,message ,args) => {
 				});
 			if (!body.length) return message.channel.send('Could not find any results.');
 			const data = body[0];
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setColor(0xFF66AA)
                 .setAuthor('osu!', 'https://i.imgur.com/hWrw2Sv.png', 'https://osu.ppy.sh/')
                 .setTimestamp()

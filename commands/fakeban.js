@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 exports.run = async (client, message, args ) => {
   
-        let embed = new Discord.RichEmbed()
+        let embed = new Discord.MessageEmbed()
         .setTitle(`:warning:`)
         .setDescription(`**${message.author.tag}** has banned **${args[0]}** from this server.`)
         .setFooter(`Oh, just kidding! XD`)

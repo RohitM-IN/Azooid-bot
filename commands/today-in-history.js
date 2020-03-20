@@ -1,4 +1,4 @@
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 
 exports.run = async (client, message, args) => {
@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
             const body = JSON.parse(text);
             const events = body.data.Events;
             const event = events[Math.floor(Math.random() * events.length)];
-            const embed = new RichEmbed()
+            const embed = new MessageEmbed()
                 .setColor(0x9797FF)
                 .setURL(body.url)
                 .setTitle(`On this day (${body.date})...`)

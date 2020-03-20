@@ -1,15 +1,19 @@
 const { Utils } = require("erela.js")
-const { RichEmbed } = require("discord.js")
+const { MessageEmbed } = require("discord.js")
 const { stripIndents } = require("common-tags")
 const fs = require("fs");
 
 exports.run = async (client, message, args) => {
+        const  voiceChannel  = message.member.voice.channel;
+        const  voiceChannelID  = message.member.voice.channelID;
         const player = client.music.players.get(message.guild.id);
-        
+
         if (!player || !player.queue[0]) {
           client.music.players.destroy(message.guild.id);
           return message.channel.send("No song/s currently playing within this guild.");
         }
+        if (!voiceChannel || voiceChannelID !== player.voiceChannel.id) return message.channel.send("You need to be in a voice channel to play music.");
+
         
           if (player.position > 5000){
             getnowplaying()
@@ -34,7 +38,7 @@ exports.run = async (client, message, args) => {
             amount = `00:00`
           }
           const part = Math.floor((player.position / duration) * 10);
-          const giveEmbed = new RichEmbed()
+          const giveEmbed = new MessageEmbed()
             .setColor("AQUA")
             .setFooter(`${client.user.username}`)
             .setDescription(`${player.playing ? "▶️" : "⏸️"} Currently Playing ${title}\n${volemoji} ${"▬".repeat(part) + "🔘" + "▬".repeat(10 - part)}[${amount} / ${Utils.formatTime(duration, true)}]\nRequested By: ${requester.tag}`)

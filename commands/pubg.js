@@ -18,7 +18,7 @@ exports.run = async (client, message, args, userID, channelID) => {
         }catch{
           message.channel.send("Looks like some error happned try again or play 1 match to get results")
         }
-            var embed = new Discord.RichEmbed()
+            var embed = new Discord.MessageEmbed()
             .setColor('#af1717')
             .addField(':question: **Help center**', 'How to use the command?')
             .addField(':bar_chart: **Get your stats**', 'To obtain your statistics, you must run the following command: **.pubg <PUBG Nickname> <PUBG Platform> <PUBG Game mode>**. The following platforms are available: steam, psn, xbox and kakao. The following game modes are available: solo, solo-fpp, duo, duo-fpp, squad, squad-fpp')

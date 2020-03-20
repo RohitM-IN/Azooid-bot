@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
             load();
         })
         load();
-        let sEmbed = new Discord.RichEmbed()
+        let sEmbed = new Discord.MessageEmbed()
         .setColor("e8a515")
         .setTitle("Server prefix successfully changed")
         .setDescription(`New server prefix is : " ${nPrefix} "`);

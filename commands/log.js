@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 const { stripIndents } = require("common-tags");
 const fs = require('fs');
-
-exports.run = async (client, message, args,db) => {
-        if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("you dont have admin rights contact server admin");
+const admin = require('firebase-admin');
+let db = admin.firestore();
+exports.run = async (client, message, args) => {
+        if(!message.member.hasPermission('ADMINISTRATOR') || !message.author.id == '348832732647784460') return message.channel.send("you dont have admin rights contact server admin");
         let data = await fs.readFileSync ("./data/json/serversettings.json","utf8", function(err,data) {
             if (err) throw err;
             
@@ -11,30 +12,51 @@ exports.run = async (client, message, args,db) => {
         data = JSON.parse(data)
         let guildID = message.guild.id
         let prefix = data['guilds'][guildID]['prefix'];
-        let Pembed = new Discord.RichEmbed()
+        let Pembed = new Discord.MessageEmbed()
                 .setColor("e8a515")
                 .setTitle(`Do you wish for two different channels for logging voice and other stuff`)
                 .addField(`IF yes then use the command like this`,stripIndents`
+                use ${prefix}log on/off [this will turn on the logging System]
                 use ${prefix}log -v <#channelid> -o <#channelid> 
                 where <#channelid> is just #channelname`)
                 .addField(`IF not then use `,stripIndents`
                 use ${prefix}log -a <#channelid>
-                where <#channelid> is just #channel Name`) 
-        if(!args) return message.channel.send(Pembed);
+                where <#channelid> is just #channel Name`) ;
+        if(!args) return //message.channel.send(Pembed);
         if(args[0] == 'help'||args[0] == '-h') return message.channel.send(Pembed);
         
-        let sEmbed = new Discord.RichEmbed()
+        let sEmbed = new Discord.MessageEmbed()
         .setColor("e8a515")
-        .setTitle("Welcome channel successfully changed")
-        if(args[0] == '-v' && args[2] == '-o' || args[0] == 'voice' && args[2] == 'other' ){
+        .setTitle("Logging Setting successfully changed")
+        if(args[0] == 'on'|| args[0] ==  'enable'){
+            db.collection('guilds').doc(message.guild.id).update({
+                'log': true
+            }).then(() => {
+                load();
+                sEmbed.addField(`Logging is now `,`ON `);
+                message.channel.send(sEmbed)
+            })
+        }
+        else if (args[0] == 'off' || args[0] ==  'disable'){
+            db.collection('guilds').doc(message.guild.id).update({
+                'log': false
+            }).then(() => {
+                load();
+                sEmbed.addField(`Logging is now`,` OFF `);
+                message.channel.send(sEmbed)
+            })
+        }
+        else if(args[0] == '-v' && args[2] == '-o' || args[0] == 'voice' && args[2] == 'other' ){
             db.collection('guilds').doc(message.guild.id).update({
                 'logchannel': args[1],
-                'voicelogchannel':args[3]
+                'voicelogchannel':args[3],
+                'log': true
             }).then(() => {
                 load();
                 sEmbed.addField(`New Logging channels are : `,stripIndents`
                 log Channel : "${args[1]}"
-                voice log Channel : "${args[3]}" `);
+                voice log Channel : "${args[3]}"
+                Logging Enabled `);
                 message.channel.send(sEmbed)
             })
         }else if (args[0] == '-a' || args[0] == 'all'){
@@ -78,7 +100,6 @@ exports.run = async (client, message, args,db) => {
               
               })
       });
-      console.log("done saving serversettings.json")
     }
 
 }
@@ -87,7 +108,7 @@ exports.conf = {
     enabled: true,
     guildOnly: true,
     aliases: ["setlog","logchannel"],
-    permLevel: "Administrator"
+    permLevel: "User"
   };
   
   exports.help = {

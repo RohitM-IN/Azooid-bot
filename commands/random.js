@@ -27,7 +27,6 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   try {
     if (!api) {
       const resp = await fetch(`http://loremflickr.com/400/300/${args[0]}`);
-      console.log(typeof resp.body);
       return message.channel.send(new Attachment(resp.body, `random${args[0]}.jpg`));
     }
   } catch (e) {

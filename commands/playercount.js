@@ -63,7 +63,7 @@ exports.run = async (client, message, args, level,userID) => { // eslint-disable
                               });
                               res.on("end", () => {
                                 bodyPUBG = JSON.parse(bodyPUBG);
-                                let embed = new Discord.RichEmbed()
+                                let embed = new Discord.MessageEmbed()
                                 .setColor("#1adb3e")
                                 .setTimestamp()
                                 .setAuthor(`Here are some popular steam games ${message.author.tag}`)

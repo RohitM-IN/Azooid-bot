@@ -1,6 +1,6 @@
 
 const moment = require('moment');
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 
 exports.run = async (client ,message ,args) => {
@@ -23,7 +23,7 @@ exports.run = async (client ,message ,args) => {
 			const body = JSON.parse(text);
 			if (!body.results.length) return message.channel.send('Could not find any results.');
 			const data = body.results[0];
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setColor(0xFEFEFE)
 				.setAuthor('iTunes', 'https://i.imgur.com/PR29ow0.jpg', 'https://www.apple.com/itunes/')
 				.setURL(data.trackViewUrl)

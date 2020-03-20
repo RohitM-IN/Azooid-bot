@@ -7,7 +7,6 @@ exports.run = async(client ,message ,args) => {
 		if (!mode) return message.channel.send(`What text would you like to convert to Base64?`)
 
 		let text = args.slice(1).join(" ")
-		console.log(text)
 		const converted = base64(text, mode);
 		if (!converted) return message.channel.send('That is not valid Base64.');
 		if(converted.length > 1900) return message.channel.send("Text too long to send")

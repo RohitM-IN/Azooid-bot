@@ -1,6 +1,6 @@
 <%- include('blocks/header', {bot, user, path}) %>
 <div class="jumbotron">
-  <h1 class="row justify-content-md-center"><%= bot.user.username %> bot Statistics</h1>
+  <h1 class="row justify-content-md-center"><%= bot.user.username %> Stats</h1>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-server" aria-hidden="true"></i> Servers:</div>
           <div class="col-5 text-nowrap"><strong><%= stats.servers %></strong></div>
@@ -27,7 +27,7 @@
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i> Discord.js Version:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.dVersion %></strong></div>
+          <div class="col-5 text-nowrap"><strong>v<%= stats.dVersion %></strong></div>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-cog" aria-hidden="true"></i> Node.js Version:</div>
@@ -76,7 +76,7 @@ function other(){
 }
 
    setInterval(uptime, 1000);
-   setInterval(other, 1000 * 60 * 10);
+   setInterval(other, 1000 * 5);
    
 
     </script>

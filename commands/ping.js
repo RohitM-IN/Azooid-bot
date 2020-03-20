@@ -2,7 +2,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   const msg = await message.channel.send("🏓 Pinging....");
   msg.edit(`🏓 Pong!
   Latency is ${Math.floor((msg.editedTimestamp || msg.createdTimestamp) - (message.editedTimestamp || message.createdTimestamp))}ms
-  API Latency is ${Math.round(client.ping)}ms`);
+  API Latency is ${Math.round(client.ws.ping)}ms`);
 };
 
 exports.conf = {

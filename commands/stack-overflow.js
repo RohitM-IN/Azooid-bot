@@ -1,6 +1,6 @@
 
 const moment = require('moment');
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 const { formatNumber } = require('../util/Util');
 const  STACKOVERFLOW_KEY  = require('../auth.json').api.stackoverflow;
@@ -24,7 +24,7 @@ exports.run = async (client ,message, args) => {
 				});
 			if (!body.items.length) return message.channel.send('Could not find any results.');
 			const data = body.items[0];
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setColor(0xF48023)
 				.setAuthor('Stack Overflow', 'https://i.imgur.com/P2jAgE3.png', 'https://stackoverflow.com/')
 				.setURL(data.link)

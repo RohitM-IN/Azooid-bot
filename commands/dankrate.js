@@ -8,8 +8,8 @@ exports.run = (client, message, args) => {
       const randomnumber = Math.floor(Math.random() * 101);
       const Index = Math.floor(randomnumber / 10);
       const level = `:beer:`.repeat(Index) + `:yum:`.repeat(10 - Index);
-      let embed = new Discord.RichEmbed()
-      .setAuthor(`${message.author.username} says`,message.author.avatarURL)
+      let embed = new Discord.MessageEmbed()
+      .setAuthor(`${message.author.username} says`,message.author.avatarURL())
       .setTitle(`Scanning the drunk rate of ${member.user.username} ...`)
       .setThumbnail(avatarURL)
       .setDescription(`${member.user.username} is ${randomnumber}% dank! :fire::beer:`)
@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
       .setColor(0x2471a3)
       .setTimestamp()
       
-      .setFooter(client.user.username, client.user.displayAvatarURL)
+      .setFooter(client.user.username, client.user.displayAvatarURL())
 
       message.channel.send(embed)
     },

@@ -1,5 +1,5 @@
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 
 exports.run = async (client ,message ,args) => {
@@ -13,7 +13,7 @@ exports.run = async (client ,message ,args) => {
 			const body = JSON.parse(text);
 			if (!body.results.length) return message.channel.send('Could not find any results.');
 			const recipe = body.results[Math.floor(Math.random() * body.results.length)];
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setAuthor('Recipe Puppy', 'https://i.imgur.com/lT94snh.png', 'http://www.recipepuppy.com/')
 				.setColor(0xC20000)
 				.setURL(recipe.href)

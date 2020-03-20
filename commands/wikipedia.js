@@ -1,5 +1,5 @@
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 const { shorten } = require('../util/Util');
 
@@ -23,7 +23,7 @@ exports.run = async(client ,message ,args) => {
 				});
 			const data = body.query.pages[0];
 			if (data.missing) return message.channel.send('Could not find any results.');
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setColor(0xE7E7E7)
 				.setTitle(data.title)
 				.setAuthor('Wikipedia', 'https://i.imgur.com/Z7NJBK2.png', 'https://www.wikipedia.org/')

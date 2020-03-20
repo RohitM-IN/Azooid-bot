@@ -79,13 +79,13 @@ const https = require("https");
                         }
                         asiaLeaderboardString = escapeBackTicks(asiaLeaderboardString);
                         // console.log(americasLeaderboardString)
-                        let embed = new Discord.RichEmbed()
+                        let embed = new Discord.MessageEmbed()
                         .setColor("#1adb3e")
                         .setAuthor(`Here are the top 10 players in each region | ${message.author.tag}`)
                         .setDescription(`**Leaderboards**`)
                         .addField(`**Americas:**`,`${americasLeaderboardString}`,true)
                         .addField(`**Europe:**`,`${europeLeaderboardString}`,true)
-                        .addBlankField()
+                        .addField('\u200b', '\u200b')
                         .addField(`**South East Asia:**`,`${seaLeaderboardString}`,true)
                         .addField(`**China:**`,`${asiaLeaderboardString}`,true)
                         .setTimestamp()

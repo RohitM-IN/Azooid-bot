@@ -40,7 +40,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
                 bodySteam2 = JSON.parse(bodySteam2);
 
                 if (bodySteam2.response.players.length == 0) {
-                  bot.sendMessage({
+                  bot.send({
                     to: channelID,
                     message: "No players found."
 
@@ -153,7 +153,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
                     //matchInfo += "[" + match.match_id + "](https://www.opendota.com/matches/" + match.match_id + ")\nk-d-a: " + match.kills + "-" + match.deaths + "-" + match.assists + "\n" + match.xp_per_min + " xpm and " + match.gold_per_min + " gpm";
                     //console.log(matchInfo);
 
-                    let _embed = new Discord.RichEmbed()
+                    let _embed = new Discord.MessageEmbed()
                       .setColor("RANDOM")
                       .setAuthor(`Dota2 | ${body.profile.personaname}`)
                       .setThumbnail(body.profile.avatarfull)
@@ -174,7 +174,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
                   }
                   if (body.playerstats === undefined && gone != true) {
                       //console.log(matchInfo);
-                      let embed = new Discord.RichEmbed()
+                      let embed = new Discord.MessageEmbed()
                       .setColor("RANDOM")
                       .setAuthor(`Dota 2 • ${body.profile.personaname}`)
                       .setThumbnail(body.profile.avatarfull)
@@ -183,7 +183,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
                       .setDescription("[OpenDota](https://www.opendota.com/players/" + body.profile.account_id + ")")
                       .addField(`**Name:**`,`${body.profile.personaname}`,true)
                       .addField(`**MMR:**${rankString}`,`**Estimated:** ${body.mmr_estimate.estimate}`,true)
-                      .addBlankField()
+                      .addField('\u200b', '\u200b')
                       .addField(`**Wins:**`,`${wins}`,true)
                       .addField(`**Losses:**`,`${loss}`,true)
                       message.channel.send(embed)

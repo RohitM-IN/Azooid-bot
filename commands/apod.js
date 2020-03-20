@@ -1,5 +1,5 @@
 const request = require('node-superfetch');
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { shorten } = require('../util/Util');
 const  GOV_KEY = require('../auth.json').api.apod;
 
@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
 			const { body } = await request
 				.get('https://api.nasa.gov/planetary/apod')
 				.query({ api_key: GOV_KEY });
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setTitle(body.title)
 				.setDescription(shorten(body.explanation))
 				.setColor(0x2E528E)

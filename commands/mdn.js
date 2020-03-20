@@ -1,5 +1,5 @@
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 
 exports.run = async (client ,message ,args) => {
@@ -16,7 +16,7 @@ exports.run = async (client ,message ,args) => {
 				});
 			if (!body.documents.length) return message.channel.send('Could not find any results.');
 			const data = body.documents[0];
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setColor(0x066FAD)
 				.setAuthor('MDN', 'https://i.imgur.com/DFGXabG.png', 'https://developer.mozilla.org/')
 				.setURL(data.url)

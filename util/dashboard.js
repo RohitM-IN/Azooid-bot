@@ -95,7 +95,7 @@ module.exports = async(client) => {
     clientID: client.appInfo.id,
     clientSecret: client.config.dashboard.oauthSecret,
     callbackURL: client.config.dashboard.callbackURL,
-    scope: ["identify", "guilds"]
+    scope: ["identify", "guilds" ,"email"]
   },
   (accessToken, refreshToken, profile, done) => {
     process.nextTick(() => done(null, profile));
@@ -228,10 +228,10 @@ module.exports = async(client) => {
   function haltOnTimedout(req, res, next){
     if (!req.timedout) next();
   }
-  app.get("/profile", (req, res) => {
-    const perms = Discord.EvaluatedPermissions;
-    renderTemplate(res, req, "guild/profile.ejs", {perms});
-  });
+
+  app.get("/profile", checkAuth, async (req, res) => {
+    renderTemplate(res, req, "guild/profile.ejs");
+  })
   app.get("/license", (req, res) => {
     renderTemplate(res, req, "license.ejs");
   });
@@ -239,10 +239,10 @@ module.exports = async(client) => {
   // not in the template, to simplify the page code. Most of it **could** be done on the page.
   app.get("/stats", (req, res) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-    const members = client.guilds.reduce((p, c) => p + c.memberCount, 0);
-    const textChannels = client.channels.filter(c => c.type === "text").size;
-    const voiceChannels = client.channels.filter(c => c.type === "voice").size;
-    const guilds = client.guilds.size;
+    const members = client.guilds.cache.reduce((p, c) => p + c.memberCount, 0);
+    const textChannels = client.channels.cache.filter(c => c.type === "text").size;
+    const voiceChannels = client.channels.cache.filter(c => c.type === "voice").size;
+    const guilds = client.guilds.cache.size;
     renderTemplate(res, req, "stats.ejs", {
       stats: {
         servers: guilds,
@@ -258,10 +258,10 @@ module.exports = async(client) => {
   });
   app.get("/stats/data", (req, res) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-    const members = client.guilds.reduce((p, c) => p + c.memberCount, 0);
-    const textChannels = client.channels.filter(c => c.type === "text").size;
-    const voiceChannels = client.channels.filter(c => c.type === "voice").size;
-    const guilds = client.guilds.size;
+    const members = client.guilds.cache.reduce((p, c) => p + c.memberCount, 0);
+    const textChannels = client.channels.cache.filter(c => c.type === "text").size;
+    const voiceChannels = client.channels.cache.filter(c => c.type === "voice").size;
+    const guilds = client.guilds.cache.size;
     const returnObject = [];
   
     returnObject.push({
@@ -280,7 +280,7 @@ module.exports = async(client) => {
     
   });
   app.get("/dashboard", checkAuth, (req, res) => {
-    const perms = Discord.EvaluatedPermissions;
+    const perms = Discord.Permissions;
     renderTemplate(res, req, "dashboard.ejs", {perms});
   });
   app.get("/troubleshoot", checkAuth, (req, res) => {
@@ -304,7 +304,7 @@ module.exports = async(client) => {
   // Settings page to change the guild configuration. Definitely more fancy than using
   // the `set` command!
   app.get("/dashboard/:guildID/manage", checkAuth, async (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
+    const guild = client.guilds.cache.get(req.params.guildID);
     await db.collection('guilds').doc(req.params.guildID).get().then((q) => {
       if (q.exists) {
           prefix = q.data().prefix || config1.prefix_mention;
@@ -335,7 +335,7 @@ module.exports = async(client) => {
   // When a setting is changed, a POST occurs and this code runs
   // Once settings are saved, it redirects back to the settings page.
   app.post("/dashboard/:guildID/manage", checkAuth, (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
+    const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
@@ -363,11 +363,11 @@ module.exports = async(client) => {
   // Displays the list of members on the guild (paginated).
   // NOTE: to be done, merge with manage and stats in a single UX page.
   app.get("/dashboard/:guildID/members", checkAuth, async (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
+    const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.status(404);
     renderTemplate(res, req, "guild/members.ejs", {
       guild: guild,
-      members: guild.members.array()
+      members: guild.members.cache.array()
     });
   });
 
@@ -376,18 +376,17 @@ module.exports = async(client) => {
   // NOTE: This is the most complex endpoint simply because of this filtering
   // otherwise it would be on the client side and that would be horribly slow.
   app.get("/dashboard/:guildID/members/list", checkAuth, async (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
+    const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.status(404);
     if (req.query.fetch) {
-      await guild.fetchMembers();
+      await guild.members.fetchs();
     }
     const totals = guild.members.size;
     const start = parseInt(req.query.start, 10) || 0;
     const limit = parseInt(req.query.limit, 10) || 50;
-    let members = guild.members;
-    
+    let members = guild.members.cache;
     if (req.query.filter && req.query.filter !== "null") {
-      //if (!req.query.filtervalue) return res.status(400);
+      if (!req.query.filtervalue) return res.status(400);
       members = members.filter(m=> {
         m = req.query.filterUser ? m.user : m;
         return m["displayName"].toLowerCase().includes(req.query.filter.toLowerCase());
@@ -413,10 +412,10 @@ module.exports = async(client) => {
         joinedAt: m.joinedTimestamp,
         createdAt: m.user.createdTimestamp,
         highestRole: {
-          hexColor: m.highestRole.hexColor
+          hexColor: m.roles.highest.hexColor
         },
         memberFor: moment.duration(Date.now() - m.joinedAt).format(" D [days], H [hrs], m [mins], s [secs]"),
-        roles: m.roles.map(r=>({
+        roles: m.roles.cache.map(r=>({
           name: r.name,
           id: r.id,
           hexColor: r.hexColor
@@ -431,7 +430,7 @@ module.exports = async(client) => {
     });
   });
   app.get("/dashboard/:guildID/stats/json", checkAuth, async (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
+    const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.status(404);
     let player = client.music.players.get(req.params.guildID);
     let play, title ,total , volume , repeat ,queue ,rep_queue , vschannel;
@@ -464,7 +463,7 @@ module.exports = async(client) => {
 
   // Displays general guild statistics. 
   app.get("/dashboard/:guildID/stats", checkAuth, (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
+    const guild = client.guilds.cache.get(req.params.guildID);
     let player = client.music.players.get(req.params.guildID);
     let time , play;
     if (player) {play = duration(player.position || '0').toString() || '00:00'}else play = '00:00'
@@ -479,7 +478,7 @@ module.exports = async(client) => {
   // Leaves the guild (this is triggered from the manage page, and only
   // from the modal dialog)
   app.get("/dashboard/:guildID/leave", checkAuth, async (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
+    const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
@@ -490,7 +489,7 @@ module.exports = async(client) => {
 
   // Resets the guild's settings to the defaults, by simply deleting them.
   app.get("/dashboard/:guildID/reset", checkAuth, async (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
+    const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
@@ -509,6 +508,31 @@ module.exports = async(client) => {
     //client.settings.delete(guild.id);
     res.redirect("/dashboard/"+req.params.guildID);
   });
+  app.post("/dashboard/:guildID/set", checkAuth, async (req, res) => {
+    const guild = client.guilds.cache.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+    if (!isManaged && !req.session.isAdmin) res.redirect("/");
+    if(welcomeChannelID !== `<#${(req.body.welcomeChannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) welcomeChannelID = `<#${(req.body.welcomeChannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    if(logchannel !== `<#${(req.body.logchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) logchannel = `<#${(req.body.logchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    if(voicelogchannel !== `<#${(req.body.voicelogchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) voicelogchannel = `<#${(req.body.voicelogchannelID).replace(/[^0-9a-zA-Z_]/g, '') }>`   
+    if(defaultchannelID !== `<#${(req.body.defaultchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`) defaultchannelID = `<#${(req.body.defaultchannelID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    if(guildautorole !== `<@${(req.body.guildautoroleID).replace(/[^0-9a-zA-Z_]/g, '')}>`) guildautorole = `<@${(req.body.guildautoroleID).replace(/[^0-9a-zA-Z_]/g, '')}>`
+    //if(logging == true){logging = true} else logging = false 
+    db.collection('guilds').doc(guild.id).update({
+      'prefix': req.body.prefix,
+      'welcomeChannelID': welcomeChannelID.slice(2,-1) ,
+      'logchannel': logchannel.slice(2,-1),
+      'voicelogchannel': voicelogchannel.slice(2,-1),
+      'guildautorole': guildautorole.slice(2,-1),
+      'defaultchannelID':defaultchannelID.slice(2,-1),
+      'playervolume': req.body.playervolume,
+   
+    })
+    load()
+    res.redirect("/dashboard/"+req.params.guildID);
+  });
+
   let port = client.config.dashboard.port || 5000
   app.set('port',client.config.dashboard.port || 5000);
   app.set('host',client.config.dashboard.domain || 'localhost');

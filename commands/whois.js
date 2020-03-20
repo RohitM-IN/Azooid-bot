@@ -1,10 +1,9 @@
-const { RichEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const { getMember, formatDate } = require("../util/function.js");
 
 exports.run = (client, message, args) => {
         const member = getMember(message, args.join(" "));
-        console.log(member.user.displayAvatarURL)
 
         // Member variables
         const joined = formatDate(member.joinedAt);
@@ -15,9 +14,9 @@ exports.run = (client, message, args) => {
         // User variables
         const created = formatDate(member.user.createdAt);
 
-        const embed = new RichEmbed()
-            .setFooter(member.displayName, member.user.displayAvatarURL)
-            .setThumbnail(member.user.displayAvatarURL)
+        const embed = new MessageEmbed()
+            .setFooter(member.displayName, member.user.displayAvatarURL())
+            .setThumbnail(member.user.displayAvatarURL())
             .setColor(member.displayHexColor === '#000000' ? '#ffffff' : member.displayHexColor)
 
             .addField('Member information:', stripIndents`**> Display name:** ${member.displayName}
@@ -31,8 +30,8 @@ exports.run = (client, message, args) => {
             
             .setTimestamp()
 
-        if (member.user.presence.game) 
-            embed.addField('Currently playing', stripIndents`**> Name:** ${member.user.presence.game.name}`);
+        if (member.user.presence.activities) 
+            embed.addField('Currently playing', stripIndents`**> Name:** ${member.user.presence.activities.name}`);
 
         message.channel.send(embed);
     }

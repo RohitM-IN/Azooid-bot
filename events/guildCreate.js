@@ -17,12 +17,12 @@ module.exports = (client, guild) => {
     'defaultchannelID': "default",
     'playervolume': 100
 })
-client.fetchUser(guild.owner.id, false).then(user => {
+client.users.fetch(guild.owner.id, false).then(user => {
     user.send("Thanks for Inviting me to " + guild.name + " plz use welcome and log command to set the channel \nEX: <prefix>welcome #<channel name> \nEX: <prefix>log -h", )
 })
 load();
-client.users.get(guild.owner.id).send("someMessageThanks for Inviting me to " + guild.name + " plz use welcome and log command to set the channel \nEX: <prefix>welcome #<channel name> \nEX: <prefix>log -h");
-  client.user.setPresence({game: {name: `@Azooid#8892 help | ${client.guilds.size} Servers`, type:0}});
+client.users.get(guild.owner.id).send("Thanks for Inviting me to \`" + guild.name + "\` plz use welcome and log command to set the channel \nEX: @Azooid#8892 welcome #<channel name> \nEX: @Azooid#8892 log -h\nMy Dashboard is avalible on <http://bit.ly/azooidbot>");
+  client.user.setPresence({activities: {name: `@Azooid#8892 help | ${client.guilds.cache.size} Servers`, type:0}});
   client.log("log", `New guild has been joined: ${guild.name} (${guild.id}) with ${guild.memberCount}`, "JOINED");
   load()
 };

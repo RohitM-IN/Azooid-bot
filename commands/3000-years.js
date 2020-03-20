@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
 		let avatar_ = "https://cdn.discordapp.com/avatars/"+member.user.id+"/"+member.user.avatar+".png?size=256"
 		if(member.user.avatar == null) avatar_ = "https://cdn.discordapp.com/embed/avatars/0.png"
         
-		// const avatarURL = user.displayAvatarURL({ format: 'png', size: 256 });
+		// const avatarURL = user.displayAvatarURL()({ format: 'png', size: 256 });
 		try {
 			const base = await loadImage(path.join(__dirname, '..', 'assets', 'images', '3000-years.png'));
 			const { body } = await request.get(avatar_);

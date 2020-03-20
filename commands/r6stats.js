@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { rainbow: {email , password } } = require("../auth.json");
 const { stripIndents } = require("common-tags");
 const R6API = require("r6api.js");
@@ -36,9 +36,9 @@ exports.run = async (client, message, args) => {
         platform = Object.keys(platforms).find((key) => platforms[key] === platform).toUpperCase();
         region = Object.keys(regions).find((key) => regions[key] === region).toUpperCase();
 
-        const embed = new RichEmbed()
+        const embed = new MessageEmbed()
             .setColor("Random")
-            .setAuthor(player.username, client.user.displayAvatarURL)
+            .setAuthor(player.username, client.user.displayAvatarURL())
             .setDescription(`Stats for the **${region}** region on ${platform}.`)
             .setThumbnail(current.image)
             .addField("General:", stripIndents`

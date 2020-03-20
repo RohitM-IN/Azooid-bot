@@ -280,7 +280,7 @@ exports.run = async (client, message, args, level,userID, channelID) => { // esl
               sum += el.value;
               return sum;
               }, 0);
-            let embed = new Discord.RichEmbed()
+            let embed = new Discord.MessageEmbed()
             .setColor("#1adb3e")
             .setAuthor(`Counter-Strike: Global Offensive | ${playerID}`)
             .setThumbnail(profilePic)
@@ -297,7 +297,7 @@ exports.run = async (client, message, args, level,userID, channelID) => { // esl
             .addField(`**Ak47:**`,`${numberWithCommas(_Ak47)}`,true)
             .addField(`**SG 556:**`,`${numberWithCommas(_SG556)}`,true)
             .addField(`**G3SG1:**`,`${numberWithCommas(_G3SG1)}`,true);
-            let embed1 = new Discord.RichEmbed()
+            let embed1 = new Discord.MessageEmbed()
             .setColor("#1adb3e")
             .addField(`**Counter-Terrorist:**`,`:point_down:`)
             .addField(`**P2000 / USP-S:**`,`${numberWithCommas(_P2000)}`,true)
@@ -322,7 +322,7 @@ exports.run = async (client, message, args, level,userID, channelID) => { // esl
             .addField(`**M 249:**`,`${numberWithCommas(_M249)}`,true)
             .addField(`**SSG 08:**`,`${numberWithCommas(_SSG08)}`,true)
             .addField(`**AWP:**`,`${numberWithCommas(_AWP)}`,true)
-            let embed2 = new Discord.RichEmbed()
+            let embed2 = new Discord.MessageEmbed()
             .setColor("#1adb3e")
             .addField(`**Melee weapons:**`,`:point_down:`)
             .addField(`**Knife:**`,`${numberWithCommas(_knifek)}`,true)              

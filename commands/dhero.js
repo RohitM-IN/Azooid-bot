@@ -1,4 +1,4 @@
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 var fs = require("fs");
 var schedule = require('node-schedule');
 const leven = require('leven');
@@ -112,7 +112,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
               projectileSpeed = "";
             }
         
-            let embed = new RichEmbed()
+            let embed = new MessageEmbed()
             .setTitle(bestHero.localized_name)
             .setURL("https://dota2.gamepedia.com/" + bestHero.localized_name.split(' ').join('_'))
             .setThumbnail("http://cdn.dota2.com/apps/dota2/images/heroes/" + bestHero.name.substring(bestHero.name.indexOf("hero_") + 5) + "_lg.png")

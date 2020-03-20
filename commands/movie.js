@@ -1,5 +1,5 @@
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 const { shorten } = require('../util/Util');
 const  TMDB_KEY  = require('../auth.json').api.movie_key;
@@ -23,7 +23,7 @@ exports.run = async (client ,message ,args) => {
 			const { body } = await request
 				.get(`https://api.themoviedb.org/3/movie/${find.id}`)
 				.query({ api_key: TMDB_KEY });
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setColor(0x00D474)
                 .setTitle(body.title)
                 .setTimestamp()

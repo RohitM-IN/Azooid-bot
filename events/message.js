@@ -80,7 +80,7 @@ module.exports = async(client, message) => {
   while (args[0] && args[0][0] === "-") {
     message.flags.push(args.shift().slice(1));
   }
-  if (!message.channel.permissionsFor(client.user).has("SEND_MESSAGES")) return message.author.send(`I cannot send message in ${message.channel.name} in ${message.guild.name} Contact server admin for this issue !`);
+  if (!message.channel.permissionsFor(client.user).has("SEND_MESSAGES")) return; // message.author.send(`I cannot send message in ${message.channel.name} in ${message.guild.name} Contact server admin for this issue !`);
   // If the command exists, **AND** the user has permission, run it.
   client.log("log", `${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "CMD");
   if (cmd) cmd.run(client, message, args, level, db);

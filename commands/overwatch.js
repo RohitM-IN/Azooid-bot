@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const overwatch = require("overwatch-api");
 
@@ -15,7 +15,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 
         if(private) return message.channel.send("This user stats are private and cannot be obtained via this command.");
         
-            const embed = new RichEmbed()
+            const embed = new MessageEmbed()
                 .setColor("Random")
                 .setAuthor(`Blizzard (Overwatch) | ${username}`, portrait)
                 .setThumbnail(portrait)

@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const { api: { fortnite_api } } = require("../auth.json");
 const fortnite = require("simple-fortnite-api") , cli = new fortnite(fortnite_api);
@@ -13,7 +13,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
         const { image, url, username } = data;
         const { scorePerMin, winPercent, kills, score, wins, kd, matches } = data[gametype]
             
-            const embed = new RichEmbed()
+            const embed = new MessageEmbed()
                 .setColor("RANDOM")
                 .setAuthor(`Epic Games (Fortnite)| ${username}`)
                 .setThumbnail(image)

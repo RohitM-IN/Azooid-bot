@@ -9,7 +9,7 @@ exports.getHelp = function(message){
     
     if(cmdSplit.length == 2 && cmdSplit[1] === '-help' || cmdSplit[1] === '-h'){
         
-        var embed = new Discord.RichEmbed()
+        var embed = new Discord.MessageEmbed()
         .setColor('#af1717')
         .addField(':question: **Help center**', 'How to use the command?')
         //.addField(':bar_chart: **Get your stats**', 'To obtain your statistics, you must run the following command: **.pubg <PUBG Nickname> <PUBG Platform> <PUBG Game mode>**. The following platforms are available: steam, psn, xbox and kakao. The following game modes are available: solo, solo-fpp, duo, duo-fpp, squad, squad-fpp')

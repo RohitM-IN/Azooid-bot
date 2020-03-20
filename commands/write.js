@@ -11,7 +11,6 @@ exports.run = async (client, message, args) => {
         }};
         await fs.writeFile("./data/json/message.json", JSON.stringify(msgs,null,4), (err) => {
             if (err) throw err;
-            console.log(err);
             message.channel.send("message saved!")
         });
         

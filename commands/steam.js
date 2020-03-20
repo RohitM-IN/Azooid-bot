@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const fetch = require("node-fetch");
 const dateFormat = require("dateformat")
@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
                 if(!body.players) return message.channel.send("I was unable to find a steam profile with that name");
                 const { NumberOfVACBans, NumberOfGameBans } = body.players[0];
 
-                const embed = new RichEmbed()
+                const embed = new MessageEmbed()
                 .setColor("RANDOM")
                 .setAuthor(`Steam Services | ${personaname}`,avatarfull)
                 .setThumbnail(avatarfull)

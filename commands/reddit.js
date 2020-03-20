@@ -1,5 +1,5 @@
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 const moment = require('moment');
 const { formatNumber } = require('../util/Util');
@@ -12,7 +12,7 @@ exports.run = async(client ,message ,args) => {
 			const { body } = await request.get(`https://www.reddit.com/user/${user}/about.json`);
 			const { data } = body;
 			if (data.hide_from_robots) return message.channel.send('This user is hidden from bots.');
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setColor(0xFF4500)
 				.setAuthor('Reddit', 'https://i.imgur.com/DSBOK0P.png', 'https://www.reddit.com/')
 				.setThumbnail(data.icon_img)

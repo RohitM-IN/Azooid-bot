@@ -26,7 +26,7 @@ exports.getGameStats = function(message){
                         pubgGame.getRosterStats(cmdSplit[3], matchId, userId, (pubgGameError, pubgGameStats) => {
                             if (!pubgGameError) {
 
-                                var embed = new Discord.RichEmbed();
+                                var embed = new Discord.MessageEmbed();
                                 embed.setColor('#f7a838');
                                 embed.addField(':video_game: **' + cmdSplit[2] + '\'s last game stats - #' + pubgGameStats[0].rank + '/' + pubgGameStats[0].nbRosters + '**', pubgGameStats[0].gameMode)
 

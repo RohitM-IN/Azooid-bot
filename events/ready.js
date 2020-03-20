@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js")
+const { MessageEmbed } = require("discord.js")
 const { nodes } = require("../config.json")
 const { ErelaClient, Utils } = require("erela.js");
 const admin = require('firebase-admin');
@@ -33,10 +33,10 @@ module.exports = async client => {
 
   // Set the game as the default help command + guild count.
   // NOTE: This is also set in the guildCreate and guildDelete events!
-  client.user.setPresence({game: {name: `@Azooid#8892 help | ${client.guilds.size} Servers`, type:0}});
+  client.user.setPresence({activities: {name: `@Azooid#8892 help | ${client.guilds.cache.size} Servers`, type:0}});
 
   // Log that we're ready to serve, so we know the bot accepts commands.
-  client.log("log", `${client.user.tag}, ready to serve ${client.users.size} users in ${client.guilds.size} servers.`, "Ready!");
+  client.log("log", `${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.size} servers.`, "Ready!");
 // init music nodes 
 client.music = new ErelaClient(client, nodes)
 .on("nodeError", console.log)
@@ -50,7 +50,7 @@ client.music = new ErelaClient(client, nodes)
 .on("trackStart", async ({textChannel, trackRepeat}, {title, duration , thumbnail ,requester ,uri }) => {
   
   if(trackRepeat === false){
-    let Embed = new RichEmbed()
+    let Embed = new MessageEmbed()
   .setTitle(`:musical_note: Now Playing`)
   .addField(`**Title :** `,`${title} : \`${Utils.formatTime(duration, true)}\``)
   .setThumbnail(thumbnail)
@@ -66,12 +66,13 @@ client.music = new ErelaClient(client, nodes)
 })
 .on("nodeDisconnect", (node, error) => {
   console.log(error)
-  client.user.setPresence({game: {name: `@Azooid#8892 help | ${client.guilds.size} Servers`, type:0},status: "dnd",});
+  client.user.setPresence({activities: {name: `@Azooid#8892 help | ${client.guilds.cache.size} Servers`, type:0},status: "dnd",});
   })
 .on("nodeReconnect", (node) => {
   console.log('Node reconnected ')
   client.user.setPresence({status: "online",});
 })
+
 client.levels = new Map()
 .set("none", 0.0)
 .set("low", 0.10)

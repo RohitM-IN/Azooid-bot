@@ -1,6 +1,6 @@
 
 const request = require('node-superfetch');
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { shorten } = require('../util/Util');
 
 exports.run = async (client ,message ,args) => {
@@ -24,7 +24,7 @@ exports.run = async (client ,message ,args) => {
 			const images = body.collection.items;
 			if (!images.length) return message.channel.send('Could not find any results.');
 			const data = images[Math.floor(Math.random() * images.length)];
-			const embed = new RichEmbed()
+			const embed = new MessageEmbed()
 				.setTitle(shorten(data.data[0].title, 256))
 				.setDescription(shorten(data.data[0].description).replace(/<\/?b>/g, '**').replace(/<\/?i>/g, '*').replace(/<a href="(https?:\/\/[^ ]+)" rel="nofollow">([^<>]+)<\/a>/g, '[$2]($1)'))
                 .setColor(0x2E528E)
