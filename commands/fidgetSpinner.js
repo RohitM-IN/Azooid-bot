@@ -34,8 +34,8 @@ exports.conf = {
   };
 
   exports.help = {
-    name: 'fidgetSpinner',
+    name: 'f-spin',
     description: 'Spins a fidget spinner for you and shows for how long it was spinning.',
-    usage: 'fakeBan [ @USER_MENTION | USER_ID ]',
+    usage: 'fspin',
     category: "Fun",
   };

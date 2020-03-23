@@ -6,6 +6,8 @@ const firebase = require('firebase/app');
 const admin = require('firebase-admin');
 let db = admin.firestore();
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const fs = require('fs')
+const getUrls = require('get-urls');
 
 module.exports = async(client, message) => {
   // It's good practice to ignore other bots. This also makes your bot ignore itself
@@ -19,6 +21,9 @@ module.exports = async(client, message) => {
   // to the message object, so `message.settings` is accessible.
   
   const settings = message.settings = client.getSettings(message.guild);
+  let text = getUrls(message.content)
+  let test = message.content.match(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,'')
+
 
   let prefix
     await db.collection('guilds').doc(message.guild.id).get().then((q) => {
@@ -84,4 +89,5 @@ module.exports = async(client, message) => {
   // If the command exists, **AND** the user has permission, run it.
   client.log("log", `${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "CMD");
   if (cmd) cmd.run(client, message, args, level, db);
+
 };

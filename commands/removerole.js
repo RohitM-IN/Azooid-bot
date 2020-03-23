@@ -29,7 +29,7 @@ exports.run = async (client, message, args) => {
     .addField("Reason:", reason)
     .addField("Date:", message.createdAt.toLocaleString())
     
-        let sChannel = message.guild.channels.find(ch => ch.name.includes('member-log')) || message.guild.channels.find(ch => ch.name.includes('log')) || message.guild.channels.find(ch => ch.name.includes('logs')) ;
+        let sChannel = message.guild.channels.cache.find(ch => ch.name.includes('member-log')) || message.guild.channels.cache.find(ch => ch.name.includes('log')) || message.guild.channels.cache.find(ch => ch.name.includes('logs')) ;
         sChannel.send(embed)
     }   
 

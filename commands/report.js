@@ -11,13 +11,13 @@ exports.run = async (client, message, args) => {
         if (!rMember)
             return message.reply("Couldn't find that person?").then(m =>m.delete({ timeout: 5000 }));
 
-        if (rMember.hasPermission("BAN_MEMBERS") || rMember.user.bot)
+        if (rMember.hasPermission("BAN_MEMBERS"))
             return message.channel.send("Can't report that member").then(m =>m.delete({ timeout: 5000 }));
 
         if (!args[1])
             return message.channel.send("Please provide a reason for the report").then(m =>m.delete({ timeout: 5000 }));
         
-        const channel = message.guild.channels.find(c => c.name === "report") || message.guild.channels.find(c => c.name === "log")
+        const channel = message.guild.channels.cache.find(ch => ch.name.includes('report')) || message.guild.channels.cache.find(ch => ch.name.includes('reports'))||message.guild.channels.cache.find(ch => ch.name.includes('member-log')) || message.guild.channels.cache.find(ch => ch.name.includes('log')) || messageDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
             
         if (!channel)
             return message.channel.send("Couldn't find a `#reports` or `#log` channel").then(m =>m.delete({ timeout: 5000 }));

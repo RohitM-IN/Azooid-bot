@@ -14,7 +14,7 @@ bot.commands.forEach((command) => {
     <br>
     <div class="card-columns">
       <% for (const command of help[category]) { %>
-        <div class="card">
+        <div class="card" style="max-width: 20rem;min-height: 218px;">
           <h3 class="card-header"><%= command.help.name %></h3>
           <div class="card-body">
             <p class="card-text"><%= command.help.description %></p>

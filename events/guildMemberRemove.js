@@ -63,14 +63,12 @@ module.exports = async(client, member) => {
 	ctx.closePath();
 	ctx.clip();
 
-	const avatar = await Canvas.loadImage(member.user.displayAvatarURL());
+	const avatar = await Canvas.loadImage(client.users.cache.get(member.id).displayAvatarURL({format: 'png'}));
 	ctx.drawImage(avatar, 25, 25, 200, 200);
 
 	const attachment = new Discord.Attachment(canvas.toBuffer(), 'leave-image.jpg');
-	if(channelsend !== 'default' || channelsend != undefined) {
-		client.channels.get(channelsend).send(`See you once again, ${member.displayName}!`, attachment);
-	} else{
+
 		log.send(`See you once again, ${member.displayName}!`, attachment);
-	}
+	
   //member.guild.channels.cache.find("name", settings.welcomeChannel).send(welcomeMessage).catch(console.error);
 };

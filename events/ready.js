@@ -33,7 +33,7 @@ module.exports = async client => {
 
   // Set the game as the default help command + guild count.
   // NOTE: This is also set in the guildCreate and guildDelete events!
-  client.user.setPresence({activities: {name: `@Azooid#8892 help | ${client.guilds.cache.size} Servers`, type:0}});
+  client.user.setPresence({activity: {name: `@Azooid#8892 help | ${client.guilds.cache.size} Servers`, type:0}});
 
   // Log that we're ready to serve, so we know the bot accepts commands.
   client.log("log", `${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.size} servers.`, "Ready!");
@@ -66,7 +66,7 @@ client.music = new ErelaClient(client, nodes)
 })
 .on("nodeDisconnect", (node, error) => {
   console.log(error)
-  client.user.setPresence({activities: {name: `@Azooid#8892 help | ${client.guilds.cache.size} Servers`, type:0},status: "dnd",});
+  client.user.setPresence({activity: {name: `@Azooid#8892 help | ${client.guilds.cache.size} Servers`, type:0},status: "online",});
   })
 .on("nodeReconnect", (node) => {
   console.log('Node reconnected ')

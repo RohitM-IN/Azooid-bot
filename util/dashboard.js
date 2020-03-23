@@ -53,6 +53,8 @@ const helmet = require("helmet");
 // Used to parse Markdown from things like ExtendedHelp
 const md = require("marked");
 let {duration} = require('yet-another-duration');
+const { Utils } = require("erela.js")
+const { default: convertSize } = require('convert-size');
 module.exports = async(client) => {
   // It's easier to deal with complex paths. 
   // This resolves to: yourbotdir/dashboard/
@@ -65,7 +67,6 @@ module.exports = async(client) => {
   // The public data directory, which is accessible from the *browser*. 
   // It contains all css, client javascript, and images needed for the site.
   app.use("/public", express.static(path.resolve(`${dataDir}${path.sep}public`)));
-
   // These are... internal things related to passport. Honestly I have no clue either.
   // Just leave 'em there.
   passport.serializeUser((user, done) => {
@@ -95,7 +96,7 @@ module.exports = async(client) => {
     clientID: client.appInfo.id,
     clientSecret: client.config.dashboard.oauthSecret,
     callbackURL: client.config.dashboard.callbackURL,
-    scope: ["identify", "guilds" ,"email"]
+    scope: ["identify", "guilds"]
   },
   (accessToken, refreshToken, profile, done) => {
     process.nextTick(() => done(null, profile));
@@ -158,6 +159,7 @@ module.exports = async(client) => {
 
 
   /** PAGE ACTIONS RELATED TO SESSIONS */
+
   //Site Map generated from a url
   app.get('/sitemap.xml', function(req, res) {
     res.sendFile('public/sitemap.xml');
@@ -243,6 +245,12 @@ module.exports = async(client) => {
     const textChannels = client.channels.cache.filter(c => c.type === "text").size;
     const voiceChannels = client.channels.cache.filter(c => c.type === "voice").size;
     const guilds = client.guilds.cache.size;
+    const player = client.music.nodes.get(1).stats
+    const uptime= Utils.formatTime(player.uptime || 1)
+    const free = convertSize(player.memory.free, "GB" , { stringify: true })
+    const used = convertSize(player.memory.used, "GB" , { stringify: true })
+    const players = player.players
+    const playing = player.playingPlayers
     renderTemplate(res, req, "stats.ejs", {
       stats: {
         servers: guilds,
@@ -252,7 +260,12 @@ module.exports = async(client) => {
         uptime: duration,
         memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
         dVersion: Discord.version,
-        nVersion: process.version
+        nVersion: process.version,
+        time: uptime,
+        free:free,
+        used:used,
+        players:players,
+        playing:playing
       }
     });
   });
@@ -262,6 +275,12 @@ module.exports = async(client) => {
     const textChannels = client.channels.cache.filter(c => c.type === "text").size;
     const voiceChannels = client.channels.cache.filter(c => c.type === "voice").size;
     const guilds = client.guilds.cache.size;
+    const player = client.music.nodes.get(1).stats
+    const uptime= Utils.formatTime(player.uptime || 1)
+    const free = convertSize(player.memory.free, "GB" , { stringify: true })
+    const used = convertSize(player.memory.used, "GB" , { stringify: true })
+    const players = player.players
+    const playing = player.playingPlayers
     const returnObject = [];
   
     returnObject.push({
@@ -271,6 +290,11 @@ module.exports = async(client) => {
       voice: voiceChannels,
       uptime: duration,
       memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
+      time: uptime,
+      free:free,
+      used:used,
+      players:players,
+      playing:playing
     });
   
   res.json({
@@ -532,6 +556,37 @@ module.exports = async(client) => {
     load()
     res.redirect("/dashboard/"+req.params.guildID);
   });
+  app.get("/404", checkAuth, async (req, res) => {
+    renderTemplate(res, req, "404.ejs");
+  })
+  app.get("/error", checkAuth, async (req, res) => {
+    renderTemplate(res, req, "error.ejs");
+  })
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// when status is 404, error handler
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    if( 404 === err.status  ){
+     return renderTemplate(res, req, "404.ejs");
+    }
+
+    // when status is 500, error handler
+    if(500 === err.status) {
+        return renderTemplate(res, req, "error.ejs");
+    }
+});
 
   let port = client.config.dashboard.port || 5000
   app.set('port',client.config.dashboard.port || 5000);

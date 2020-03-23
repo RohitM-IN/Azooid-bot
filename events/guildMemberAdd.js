@@ -23,7 +23,7 @@ module.exports = async(client, member) => {
   const settings = client.getSettings(member.guild);
   
   // If welcome is off, don't proceed (don't welcome the user)
-  if (settings.welcomeEnabled !== "true") return;
+  //if (settings.welcomeEnabled !== "true") return;
 
   // Replace the placeholders in the welcome message with actual data
   const welcomeMessage = settings.welcomeMessage.replace("{{user}}", member.user.tag);
@@ -35,7 +35,7 @@ module.exports = async(client, member) => {
         let channelsend = channelID['guilds'][member.guild.id]['welcomeChannelID'];
         channelsend = channelsend.replace(/[^0-9]/g, '');
         
-        const log =  member.guild.channels.cache.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.cache.find(ch => ch.name.includes('welcome')) || member.guild.channels.cache.find(ch => ch.name.includes('general'));
+        const log =  member.guild.channels.cache.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.cache.find(ch => ch.id == `${channelsend}`)|| member.guild.channels.cache.find(ch => ch.name.includes('welcome')) || member.guild.channels.cache.find(ch => ch.name.includes('general'));
         if (!log) return;
         //var log = member.guild.channels.cache.find(ch => ch.name.includes('member-log')) || member.guild.channels.cache.find(ch => ch.name.includes('log')) || memberDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
         
@@ -63,17 +63,12 @@ module.exports = async(client, member) => {
         ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
         ctx.closePath();
         ctx.clip();
-    
-        const avatar = await Canvas.loadImage(member.user.displayAvatarURL());
+        const avatar = await Canvas.loadImage(client.users.cache.get(member.id).displayAvatarURL({format: 'png'}));
         ctx.drawImage(avatar, 25, 25, 200, 200);
     
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.jpg');
-
-        if(channelsend !== 'default' || channelsend != undefined) {
-            client.channels.get(channelsend).send(`Welcome to the server, ${member.displayName}!`, attachment);
-        } else{
-            if(!log) return;
+        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.jpg');
+        
             log.send(`Welcome to the server, ${member.displayName}!`, attachment);
-        }
+        
   //member.guild.channels.cache.find("name", settings.welcomeChannel).send(welcomeMessage).catch(console.error);
 };

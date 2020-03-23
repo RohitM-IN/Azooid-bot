@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: [ "repeatq","queue-r","repeatqueue" ],
+    aliases: [ "repeatq","queue-r","repeatqueue" ,'loopall'],
     permLevel: "User"
   };
 

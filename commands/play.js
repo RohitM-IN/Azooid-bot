@@ -16,9 +16,9 @@ exports.run = async (client, message, args) => {
         if (!args[0]) return message.channel.send("Please provide a song name or link to search.");
 
         let datas = JSON.parse(fs.readFileSync("./data/json/serversettings.json", "utf8"))
-        let volume = datas['guilds'][message.guild.id]['playervolume'] || 100;
+        let volume = datas['guilds'][message.guild.id]['playervolume'];
 
-        if(volume !== Number) volume = 100;
+        if(!isNaN(volume)) volume = 50;
         const player = client.music.players.spawn({
             guild: message.guild,
             textChannel: message.channel,

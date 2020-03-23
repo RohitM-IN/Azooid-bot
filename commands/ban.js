@@ -3,10 +3,9 @@ const { stripIndents } = require("common-tags");
 const { promptMessage } = require("../util/function.js");
 
 exports.run = async (client, message, args) => {
-        const logChannel = message.guild.channels.find(c => c.name === "logs") || message.channel;
 
         if (message.deletable) message.delete();
-
+    let reason = args.slice(1).join(" ")
         // No args
         if (!args[0]) {
             return message.reply("Please provide a person to ban.")
@@ -15,8 +14,8 @@ exports.run = async (client, message, args) => {
 
         // No reason
         if (!args[1]) {
-            return message.reply("Please provide a reason to ban.")
-                .then(m =>m.delete({ timeout: 5000 }));
+           reason = 'No reason given'
+                
         }
 
         // No author permissions
@@ -58,7 +57,7 @@ exports.run = async (client, message, args) => {
             .setTimestamp()
             .setDescription(stripIndents`**> baned member:** ${toBan} (${toBan.id})
             **> baned by:** ${message.member} (${message.member.id})
-            **> Reason:** ${args.slice(1).join(" ")}`);
+            **> Reason:** ${reason}`);
 
         const promptEmbed = new MessageEmbed()
             .setColor("GREEN")
@@ -79,7 +78,8 @@ exports.run = async (client, message, args) => {
                         if (err) return message.channel.send(`Well.... the ban didn't work out. Here's the error ${err}`)
                     });
 
-                logChannel.send(embed);
+                    let sChannel = message.guild.channels.cache.find(ch => ch.name.includes('report')) || message.guild.channels.cache.find(ch => ch.name.includes('reports'))||message.guild.channels.cache.find(ch => ch.name.includes('member-log')) || message.guild.channels.cache.find(ch => ch.name.includes('log')) || messageDelete.guild.channels.find(ch => ch.name.includes('logs')) ;
+                    sChannel.send(embed)
             } else if (emoji === "❌") {
                 msg.delete();
 
