@@ -1,5 +1,7 @@
 # Azooid Bot
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0e7ed509d62843a0b40e0273b2649b05)](https://app.codacy.com/manual/RootAndroid58/Azooid-bot?utm_source=github.com&utm_medium=referral&utm_content=RootAndroid58/Azooid-bot&utm_campaign=Badge_Grade_Dashboard)
+
 [DONE✅]
 
 ✅ Added Dashboard to the bot
