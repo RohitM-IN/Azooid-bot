@@ -1,42 +1,44 @@
 {
-  "name": "guidebot",
+  "name": "Azooid",
   "version": "2.2.5",
-  "description": "A boilerplate example bot with command handler and reloadable commands. Updated and Maintained by the Idiot's Guide Community",
+  "description": "a discord.js bot with multi commands",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-	"postinstall": "node util/setup.js"
+    "start": "node index.js"
   },
   "engines": {
     "node": ">=8"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/An-Idiots-Guide/guidebot.git"
+    "url": "git+https://github.com/RootAndroid58/Azooid-bot.git"
   },
-  "author": "Evelyne Lachance <eslachance@gmail.com> (http://evie.codes)",
+  "author": "ETHYT",
   "contributors": [
-    "York (http://anidiots.guide)"
+    "MenuDocs,thesourcecode"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/An-Idiots-Guide/guidebot/issues"
+    "url": "https://github.com/RootAndroid58/Azooid-bot/issues"
   },
-  "homepage": "https://github.com/An-Idiots-Guide/guidebot#readme",
+  "homepage": "https://github.com/RootAndroid58/Azooid-bot#readme",
   "dependencies": {
     "apextab-api": "^1.0.5",
     "async": "^3.2.0",
     "axios": "^0.19.2",
     "better-sqlite-pool": "^0.2.2",
+    "better-sqlite3": "^6.0.1",
     "big-integer": "^1.6.48",
     "body-parser": "^1.18.3",
     "canvas": "^2.6.1",
     "chalk": "^2.4.2",
     "common-tags": "^1.8.0",
-    "connect-mongo": "^2.0.3",
+    "connect-mongo": "^3.2.0",
+    "connect-timeout": "^1.9.0",
+    "convert-size": "^1.0.6",
     "custom-translate": "^2.2.8",
     "dateformat": "^3.0.3",
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.0.2",
     "diskusage": "^1.1.3",
     "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
@@ -47,7 +49,9 @@
     "express-session": "^1.15.6",
     "firebase": "^7.11.0",
     "firebase-admin": "^8.10.0",
+    "get-urls": "^9.2.0",
     "got": "^10.6.0",
+    "hastebin-gen": "^2.0.5",
     "helmet": "^3.21.3",
     "https": "^1.0.0",
     "inquirer": "^6.3.1",
@@ -58,20 +62,25 @@
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "net-stat": "^2.0.1",
+    "node-fetch": "^2.6.0",
     "node-schedule": "^1.3.2",
     "node-superfetch": "^0.1.10",
     "opusscript": "0.0.7",
+    "os": "^0.1.1",
     "overwatch-api": "^0.8.2",
     "passport": "^0.4.0",
     "passport-discord": "^0.1.3",
     "play-audio-url": "^1.0.1",
+    "promise": "^8.1.0",
     "r6api.js": "^1.3.0",
     "radio-browser": "^1.5.3",
     "request": "^2.88.2",
     "serve-favicon": "^2.5.0",
     "simple-fortnite-api": "^0.1.9",
     "snekfetch": "^4.0.4",
+    "soundcloud-lookup": "0.0.2",
     "steam-id-convertor": "^1.0.1",
+    "xml": "^1.0.1",
     "yet-another-duration": "^1.7.3"
   }
 }
