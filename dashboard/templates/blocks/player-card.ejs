@@ -1,26 +1,33 @@
 <div class="card" style="width: 256px;">
-    <img class="card-img-top" style="width: 256px;" src="<%= `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256` %>" alt="<%= user.username %>">
+  <img class="card-img-top" style="width: 256px;"
+    src="<%= `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256` %>" alt="<%= user.username %>">
   <div class="card mb-3">
-    <h3 class="card-header"><center><%= user.username %> #<%= user.discriminator%></center></h3>
-      <ul class="list-group list-group-flush" style="width: 100%">
-        
-        <!--% let text , mail;
+    <h3 class="card-header">
+      <center><%= user.username %> #<%= user.discriminator%></center>
+    </h3>
+    <ul class="list-group list-group-flush" style="width: 100%">
+
+      <!--% let text , mail;
         user.verified ? text = 'Verified': text = 'Not Verified'
         user.email ? mail = user.email: mail = 'Not submitted'%-->
-        
+
       <!--li class="list-group-item d-flex justify-content-between align-items-center" style="width: 100%" data-toggle="tooltip" title="Account Verification">
         <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span ><% if(user.verified) { %> <%= text %> <% } else { %> <%= text %> <% }%></span>
       </li-->
-      <li class="list-group-item d-flex justify-content-between align-items-center" style="width: 100%" data-toggle="tooltip" title="User ID">
-        <i class="fa fa-fw fa-id-card-o" aria-hidden="true"></i> <span class="badge badge-primary badge-pill"><%= user.id %></span>
+      <li class="list-group-item d-flex justify-content-between align-items-center" style="width: 100%"
+        data-toggle="tooltip" title="User ID">
+        <i class="fa fa-fw fa-id-card-o" aria-hidden="true"></i> <span
+          class="badge badge-primary badge-pill"><%= user.id %></span>
       </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="No of servers">
-          <i class="fa fa-fw fa-server" aria-hidden="true"></i> <span class="badge badge-primary badge-pill"><%= user.guilds.length %></span>
-        </li>
-        <!--li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="E-Mail">
+      <li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip"
+        title="No of servers">
+        <i class="fa fa-fw fa-server" aria-hidden="true"></i> <span
+          class="badge badge-primary badge-pill"><%= user.guilds.length %></span>
+      </li>
+      <!--li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" title="E-Mail">
           <i class="fa fa-fw fa-envelope-o" aria-hidden="true"></i> <span class="badge badge-primary badge-pill"><% if(user.email) { %> <%= mail %> <% } else { %> <%= mail %> <% }%></span>
         </li-->
-        </ul>
+    </ul>
   </div>
   <script>
 

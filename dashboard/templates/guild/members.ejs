@@ -58,30 +58,36 @@
   };
 
   function hexToRgb(hex) {
-      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? {
-          r: parseInt(result[1], 16),
-          g: parseInt(result[2], 16),
-          b: parseInt(result[3], 16)
-      } : null;
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
   }
-  
+
   function getMembers(start, callback) {
-    $.getJSON(`/dashboard/${guildID}/members/list?start=${start}&limit=${pages.limit}&sortby=${pages.sortby}&filter=${pages.filter}`, function(response) {
-      pages.total = response.pageof;
-      pages.current = response.page;
-      pages.elements = response.total;
-      callback(response);
-    });
+    $.getJSON(
+      `/dashboard/${guildID}/members/list?start=${start}&limit=${pages.limit}&sortby=${pages.sortby}&filter=${pages.filter}`,
+      function (response) {
+        pages.total = response.pageof;
+        pages.current = response.page;
+        pages.elements = response.total;
+        callback(response);
+      });
   }
-  
+
   function updateTable(members) {
     $("table tbody").empty();
-    for(var i = 0; i < members.length; i++) {
+    for (var i = 0; i < members.length; i++) {
       member = members[i];
       var color = member.highestRole.hexColor === "#000000" ? '#FFFFFF' : member.highestRole.hexColor;
-      var roles = member.roles.filter(r=>r.name !== "@everyone").map(r=> {
-        var rc = r.hexColor === "#000000" ? {r:255,g:255,b:255} : hexToRgb(r.hexColor);
+      var roles = member.roles.filter(r => r.name !== "@everyone").map(r => {
+        var rc = r.hexColor === "#000000" ? {
+          r: 255,
+          g: 255,
+          b: 255
+        } : hexToRgb(r.hexColor);
         return `<span class="roleBox" style="color: rgb(${rc.r}, ${rc.g}, ${rc.b}); background-color: rgba(${rc.r}, ${rc.g}, ${rc.b}, 0.0980392); border: 1px solid rgba(${rc.r}, ${rc.g}, ${rc.b}, 0.498039);">${r.name}</span>`;
       }).join(" ");
       var thishtml = snippet
@@ -94,31 +100,32 @@
         .replace("{roles}", roles);
       if (member.bot) {
         thishtml = thishtml.replace("{botimg}", ' <img src="/public/bot.png">');
-      } else { 
+      } else {
         thishtml = thishtml.replace("{botimg}", '');
       }
       $('table > tbody').append(thishtml);
     };
   }
-  
+
   function changePage(page) {
     var start = page * pages.limit;
     pages.current = page;
-    getMembers(start, function(data) {
+    getMembers(start, function (data) {
       updateTable(data.members);
     })
   }
-  
+
   function drawPagination() {
     $('.pagination').empty();
     $('.pagination').append('<li class="page-item active"><a class="page-link" href="#" data-pagenum="1">1</a></li>')
-    for(var i = 1; i < pages.total; i++) {
-      var strItem = '<li class="page-item"><a class="page-link" href="#" data-pagenum="'+(i+1)+'">'+(i+1)+'</a></li>';
+    for (var i = 1; i < pages.total; i++) {
+      var strItem = '<li class="page-item"><a class="page-link" href="#" data-pagenum="' + (i + 1) + '">' + (i + 1) +
+        '</a></li>';
       $('.pagination').append(strItem);
     }
-    $('.page-link').click(function(e) {
+    $('.page-link').click(function (e) {
       e.preventDefault();
-      $( this ).parent().addClass('active');
+      $(this).parent().addClass('active');
       $('.pagination').find('.active').removeClass('active');
       changePage($(this).attr('data-pagenum'));
       return false;
@@ -133,34 +140,34 @@
     </tr>`;
   var roleSnippet = '<span style="color:{color}">{name}</span>';
 
-  $(document).ready( function () {
-    getMembers(0, function(data) {
+  $(document).ready(function () {
+    getMembers(0, function (data) {
       pages.current = data.page;
       updateTable(data.members);
       drawPagination();
     });
   });
-  
-  $( "#show-members" ).change(function() {
+
+  $("#show-members").change(function () {
     pages.limit = this.value;
-    getMembers(0, function(data) {
+    getMembers(0, function (data) {
       updateTable(data.members);
       drawPagination();
     });
   });
-  
-  $( "#sort-by" ).change(function() {
+
+  $("#sort-by").change(function () {
     pages.sortby = this.value;
-    getMembers(pages.current, function(data) {
+    getMembers(pages.current, function (data) {
       updateTable(data.members);
       drawPagination();
     });
   });
 
-  var typingTimer;                //timer identifier
-  var doneTypingInterval = 1000;  //time in ms (5 seconds)
+  var typingTimer; //timer identifier
+  var doneTypingInterval = 1000; //time in ms (5 seconds)
 
-  $('#display-name-search').keyup(function(){
+  $('#display-name-search').keyup(function () {
     clearTimeout(typingTimer);
     if ($('#display-name-search').val()) {
       pages.filter = $('#display-name-search').val();
@@ -170,8 +177,8 @@
     typingTimer = setTimeout(doneTyping, doneTypingInterval);
   });
 
-  function doneTyping () {
-    getMembers(0, function(data) {
+  function doneTyping() {
+    getMembers(0, function (data) {
       updateTable(data.members);
       drawPagination();
     });

@@ -9,7 +9,7 @@ const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const fs = require('fs')
 const getUrls = require('get-urls');
 
-module.exports = async(client, message) => {
+module.exports = async (client, message) => {
   // It's good practice to ignore other bots. This also makes your bot ignore itself
   // and not get into a spam loop (we call that "botception").
   if (message.author.bot) return;
@@ -19,26 +19,26 @@ module.exports = async(client, message) => {
   // If there is no guild, get default conf (DMs)
   // For ease of use in commands and functions, we'll attach the settings
   // to the message object, so `message.settings` is accessible.
-  
+
   const settings = message.settings = client.getSettings(message.guild);
   let text = getUrls(message.content)
-  let test = message.content.match(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,'')
+  let test = message.content.match(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm, '')
 
 
   let prefix
-    await db.collection('guilds').doc(message.guild.id).get().then((q) => {
-        if (q.exists) {
-            prefix = q.data().prefix || config1.prefix_mention;
-        } else {
-            prefix = "." || config1.prefix_mention;
-        }
-    })
-    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
-    if (!prefixRegex.test(message.content)) return;
+  await db.collection('guilds').doc(message.guild.id).get().then((q) => {
+    if (q.exists) {
+      prefix = q.data().prefix || config1.prefix_mention;
+    } else {
+      prefix = "." || config1.prefix_mention;
+    }
+  })
+  const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
+  if (!prefixRegex.test(message.content)) return;
 
-    const [, matchedPrefix] = message.content.match(prefixRegex);
-    const args = message.content.slice(matchedPrefix.length).trim().split(/ +/g);
-  
+  const [, matchedPrefix] = message.content.match(prefixRegex);
+  const args = message.content.slice(matchedPrefix.length).trim().split(/ +/g);
+
   // Also good practice to ignore any message that does not start with our prefix,
   // which is set in the configuration file.
   //if (message.content.indexOf(settings.prefix) !== 0) return;
@@ -56,7 +56,7 @@ module.exports = async(client, message) => {
 
   // Check whether the command, or alias, exist in the collections defined
   // in app.js.
-  let cmd = client.commands.get(command); 
+  let cmd = client.commands.get(command);
   if (!cmd) cmd = client.commands.get(client.aliases.get(command));
   // using this const varName = thing OR otherthign; is a pretty efficient
   // and clean way to grab one of 2 values!
@@ -80,7 +80,7 @@ module.exports = async(client, message) => {
   // To simplify message arguments, the author's level is now put on level (not member so it is supported in DMs)
   // The "level" command module argument will be deprecated in the future.
   message.author.permLevel = level;
-  
+
   message.flags = [];
   while (args[0] && args[0][0] === "-") {
     message.flags.push(args.shift().slice(1));

@@ -1,9 +1,13 @@
-const { get : fetch } = require("snekfetch");
-const { Attachment } = require("discord.js");
+const {
+  get: fetch
+} = require("snekfetch");
+const {
+  Attachment
+} = require("discord.js");
 
 const animals = {
   "cat": {
-    fetch: async () => fetch ("http://random.cat/meow"),
+    fetch: async () => fetch("http://random.cat/meow"),
     get: async (resp) => resp.body.file
   },
   "dog": {
@@ -35,7 +39,9 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 
   const response = await api.fetch(args);
   const image = await api.get(response);
-  message.channel.send({files: [image]});
+  message.channel.send({
+    files: [image]
+  });
 };
 
 exports.conf = {

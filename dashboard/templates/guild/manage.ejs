@@ -1,5 +1,3 @@
-
-
 <%- include('../blocks/header', {bot, user, path}) %>
 <div class="row" style="min-width: 400px;">
   <div class="col col-3">
@@ -7,127 +5,130 @@
   </div>
   <div class="col" style="min-width: 400px;">
     <form action="/dashboard/:guildID/set" method="POST">
-    <div class="card text-white mb-3" >
-      <%- include('../blocks/guild-nav', {active: "manage", guild}) %>
-      <table class="table table-hover">
-        <div class="bg-info">
-          <div class="card-body" width="100%">
-            <p class="card-text">Refresh the page in 5 sec after saving data get see results here <br />* very improtant</p>
+      <div class="card text-white mb-3">
+        <%- include('../blocks/guild-nav', {active: "manage", guild}) %>
+        <table class="table table-hover">
+          <div class="bg-info">
+            <div class="card-body" width="100%">
+              <p class="card-text">Refresh the page in 5 sec after saving data get see results here <br />* very
+                improtant</p>
+            </div>
           </div>
-        </div>
-        <thead>
-          <tr>
-            <th scope="col">Setting Name</th>
+          <thead>
+            <tr>
+              <th scope="col">Setting Name</th>
               <th scope="col">Current Setting</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% const settings = bot.getSettings(guild);
+            </tr>
+          </thead>
+          <tbody>
+            <% const settings = bot.getSettings(guild);
             const defaults = bot.config.defaultSettings;%>
 
-          <tr>
-            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
-              data-toggle="tooltip" title="prefix"> Prefix<font color="red">*</font> </th>
+            <tr>
+              <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+                data-toggle="tooltip" title="prefix"> Prefix<font color="red">*</font>
+              </th>
               <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
-                name="Prefix" id="Prefix" value="<%= prefix %>" placeholder="Enter prefix "></td>
-          </tr>
-          <tr>
-            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
-              data-toggle="tooltip" title="welcomeChannelID"> welcomeChannelID </th>
+                  name="Prefix" id="Prefix" value="<%= prefix %>" placeholder="Enter prefix "></td>
+            </tr>
+            <tr>
+              <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+                data-toggle="tooltip" title="welcomeChannelID"> welcomeChannelID </th>
               <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
-                name="welcomeChannelID" id="welcomeChannelID" value="<%= welcomeChannelID %>"
-                placeholder="Enter welcomeChannelID "></td>
-          </tr>
-          <tr>
-            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
-              data-toggle="tooltip" title="logchannelID"> logchannelID </th>
+                  name="welcomeChannelID" id="welcomeChannelID" value="<%= welcomeChannelID %>"
+                  placeholder="Enter welcomeChannelID "></td>
+            </tr>
+            <tr>
+              <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+                data-toggle="tooltip" title="logchannelID"> logchannelID </th>
               <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
-                name="logchannelID" id="logchannelID" value="<%= logchannel %>" placeholder="Enter logchannelID ">
-          </tr>
-          <tr>
-            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
-              data-toggle="tooltip" title="voicelogchannelID"> voicelogchannelID </th>
+                  name="logchannelID" id="logchannelID" value="<%= logchannel %>" placeholder="Enter logchannelID ">
+            </tr>
+            <tr>
+              <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+                data-toggle="tooltip" title="voicelogchannelID"> voicelogchannelID </th>
               <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
-                name="voicelogchannelID" id="voicelogchannelID" value="<%= voicelogchannel %>"
-                placeholder="Enter voicelogchannelID "></td>
-          </tr>
-          <tr>
-            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
-              data-toggle="tooltip" title="defaultchannelID"> defaultchannelID</th>
+                  name="voicelogchannelID" id="voicelogchannelID" value="<%= voicelogchannel %>"
+                  placeholder="Enter voicelogchannelID "></td>
+            </tr>
+            <tr>
+              <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+                data-toggle="tooltip" title="defaultchannelID"> defaultchannelID</th>
               <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
-                name="defaultchannelID" id="defaultchannelID" value="<%= defaultchannelID %>"
-                placeholder="Enter defaultchannelID "></td>
-          </tr>
-          <tr>
-            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
-              data-toggle="tooltip" title="guildautoroleIDt"> guildautoroleID</th>
+                  name="defaultchannelID" id="defaultchannelID" value="<%= defaultchannelID %>"
+                  placeholder="Enter defaultchannelID "></td>
+            </tr>
+            <tr>
+              <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+                data-toggle="tooltip" title="guildautoroleIDt"> guildautoroleID</th>
               <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
-                name="guildautoroleID" id="guildautoroleID" value="<%= guildautorole %>"
-                placeholder="Enter guildautoroleID "></td>
-          </tr>
-          <tr>
-            <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
-              data-toggle="tooltip" title="playervolume"> playervolume</th>
+                  name="guildautoroleID" id="guildautoroleID" value="<%= guildautorole %>"
+                  placeholder="Enter guildautoroleID "></td>
+            </tr>
+            <tr>
+              <th scope="row" class="list-group-item d-flex justify-content-between align-items-center"
+                data-toggle="tooltip" title="playervolume"> playervolume</th>
               <td width="80%"><input type="text" class="form-control form-control-sm" style="text-align: left;"
-                name="playervolume" id="playervolume" value="<%= playervolume %>" placeholder="Enter playervolume ">
-          </tr>
+                  name="playervolume" id="playervolume" value="<%= playervolume %>" placeholder="Enter playervolume ">
+            </tr>
             %>
             %>
-        </tbody>
-      
-      </table>
-      <div style="width: 100%; text-align: right; margin-top: 20px;">
-        <a class="btn btn-danger" data-toggle="modal" data-target="#settingsResetModal" role="button">Reset Defaults
-          <i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
-        <button type="submit" class="btn btn-primary" role="button">Save Changes <i class="fa fa-fw fa-save"
-            aria-hidden="true"></i></button>
-      </div>
+          </tbody>
+
+        </table>
+        <div style="width: 100%; text-align: right; margin-top: 20px;">
+          <a class="btn btn-danger" data-toggle="modal" data-target="#settingsResetModal" role="button">Reset Defaults
+            <i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
+          <button type="submit" class="btn btn-primary" role="button">Save Changes <i class="fa fa-fw fa-save"
+              aria-hidden="true"></i></button>
+        </div>
     </form>
-    </div>
   </div>
+</div>
 </div>
 <% include ../blocks/guild-modals %>
 <script type="text/javascript">
   var ts = parseInt($('#guildCreate').text());
   $('#guildCreate').html(`${moment(ts).format('MMMM Do YYYY')}`);
   var guildID = "<%= guild.id %>";
-  function getdata(){
+
+  function getdata() {
     return {
-    prefix: $('#Prefix').val(),
-    welcomeChannelID: $('#welcomeChannelID').val(),
-    logchannelID: $('#logchannelID').val(),
-    voicelogchannelID: $('#voicelogchannelID').val(),
-    defaultchannelID: $('#defaultchannelID').val(),
-    guildautoroleID: $('#guildautoroleID').val(),
-    playervolume: $('#guildautoroleID').val(),
+      prefix: $('#Prefix').val(),
+      welcomeChannelID: $('#welcomeChannelID').val(),
+      logchannelID: $('#logchannelID').val(),
+      voicelogchannelID: $('#voicelogchannelID').val(),
+      defaultchannelID: $('#defaultchannelID').val(),
+      guildautoroleID: $('#guildautoroleID').val(),
+      playervolume: $('#guildautoroleID').val(),
     }
   }
-  $('.btn-primary.btn').click(function() {
-            $.ajax({
-                url: `/dashboard/${guildID}/set`,
-                type: "POST",
-                dataType: "json",
-                data: JSON.stringify(getdata()),
-                contentType: "application/json",
-                cache: false,
-                timeout: 5000,
-                complete: function() {
-                  //called when complete
-                  console.log('process complete');
-                  location.reload()
-                  exit;
-                },
+  $('.btn-primary.btn').click(function () {
+    $.ajax({
+      url: `/dashboard/${guildID}/set`,
+      type: "POST",
+      dataType: "json",
+      data: JSON.stringify(getdata()),
+      contentType: "application/json",
+      cache: false,
+      timeout: 5000,
+      complete: function () {
+        //called when complete
+        console.log('process complete');
+        location.reload()
+        exit;
+      },
 
-                success: function(data) {
-                  console.log('process sucess');
-                  exit;
-               },
+      success: function (data) {
+        console.log('process sucess');
+        exit;
+      },
 
-                error: function(e) {
-                  console.log(e)
-                  console.log('process error');
-                },
-              });
-        })
+      error: function (e) {
+        console.log(e)
+        console.log('process error');
+      },
+    });
+  })
 </script>
 <% include ../blocks/footer %>

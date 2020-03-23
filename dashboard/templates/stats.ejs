@@ -1,137 +1,163 @@
 <%- include('blocks/header', {bot, user, path}) %>
 <div class="jumbotron">
   <h1 class="row justify-content-md-center"><%= bot.user.username %> Stats</h1>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-server" aria-hidden="true"></i> Servers:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.servers %></strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> Uptime:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.uptime %></strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Members:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.members %></strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> Memory:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.memoryUsage %> MB</strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-hashtag" aria-hidden="true"></i> Text Channels:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.text %></strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-microphone" aria-hidden="true"></i> Voice Channels:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.voice %></strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i> Discord.js Version:</div>
-          <div class="col-5 text-nowrap"><strong>v<%= stats.dVersion %></strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-cog" aria-hidden="true"></i> Node.js Version:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.nVersion %></strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> Music Lavalink Uptime:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.time %></strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-music" aria-hidden="true"></i> Music Players connected:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.players %> connected</strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-headphones" aria-hidden="true"></i> Music Players playing:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.playing %> playing</strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> Music Memory used:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.used %> used</strong></div>
-        </div>
-        <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> Music Memory free:</div>
-          <div class="col-5 text-nowrap"><strong><%= stats.free %> free</strong></div>
-        </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-server" aria-hidden="true"></i> Servers:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.servers %></strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> Uptime:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.uptime %></strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Members:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.members %></strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> Memory:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.memoryUsage %> MB</strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-hashtag" aria-hidden="true"></i> Text Channels:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.text %></strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-microphone" aria-hidden="true"></i> Voice Channels:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.voice %></strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i> Discord.js Version:</div>
+    <div class="col-5 text-nowrap"><strong>v<%= stats.dVersion %></strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-cog" aria-hidden="true"></i> Node.js Version:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.nVersion %></strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> Music Lavalink Uptime:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.time %></strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-music" aria-hidden="true"></i> Music Players connected:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.players %> connected</strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-headphones" aria-hidden="true"></i> Music Players playing:
     </div>
-    <script type="text/javascript">
-    let datas , usage ,servers ,members , text , voice ;
-  function uptime(){
-      // Pass some identifier to use for your database
-      $.ajax({
-    url: "/stats/data",
-    type: 'GET',
-    success: function(res) {
-      datas = res.data[0].uptime
-      
-      $('div.justify-content-md-center.row:nth-of-type(2) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(2) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(datas)
+    <div class="col-5 text-nowrap"><strong><%= stats.playing %> playing</strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> Music Memory used:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.used %> used</strong></div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> Music Memory free:</div>
+    <div class="col-5 text-nowrap"><strong><%= stats.free %> free</strong></div>
+  </div>
+</div>
+<script type="text/javascript">
+  let datas, usage, servers, members, text, voice;
 
-    }
-  });
-}  
-function other(){
-      // Pass some identifier to use for your database
-      $.ajax({
-    url: "/stats/data",
-    type: 'GET',
-    success: function(res) {
-      console.log(res.data)
-      servers = res.data[0].servers
-      members = res.data[0].members
-      text = res.data[0].text
-      voice = res.data[0].voice
-      usage = `${res.data[0].memoryUsage} MB`
-      time = res.data[0].time
+  function uptime() {
+    // Pass some identifier to use for your database
+    $.ajax({
+      url: "/stats/data",
+      type: 'GET',
+      success: function (res) {
+        datas = res.data[0].uptime
 
-      $('div.justify-content-md-center.row:nth-of-type(1) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(1) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(servers)
-     $('div.justify-content-md-center.row:nth-of-type(3) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(3) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(members)
-     $('div.justify-content-md-center.row:nth-of-type(5) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(5) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(text)
-     $('div.justify-content-md-center.row:nth-of-type(6) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(6) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(voice)
-     $('div.justify-content-md-center.row:nth-of-type(4) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(4) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(usage)
-     $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(time)
-     
-    }
-  });
-}
-function Music(){
-      // Pass some identifier to use for your database
-      $.ajax({
-    url: "/stats/data",
-    type: 'GET',
-    success: function(res) {
-      let time = res.data[0].time
-      let used = `${res.data[0].used} used`
-      let free =  `${res.data[0].free} free`
-      let players = `${res.data[0].players} connected`
-      let playing = `${res.data[0].playing} playing`
+        $('div.justify-content-md-center.row:nth-of-type(2) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(2) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(datas)
 
-     $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(time)
-     $('div.justify-content-md-center.row:nth-of-type(10) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(10) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(players)
-     $('div.justify-content-md-center.row:nth-of-type(11) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(11) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(playing)
-     $('div.justify-content-md-center.row:nth-of-type(12) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(12) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(used)
-     $('div.justify-content-md-center.row:nth-of-type(13) > div.text-nowrap.col-5:nth-of-type(2) > strong').empty()
-     $('div.justify-content-md-center.row:nth-of-type(13) > div.text-nowrap.col-5:nth-of-type(2) > strong').append(free)
-     
-    }
-  });
-}
+      }
+    });
+  }
+
+  function other() {
+    // Pass some identifier to use for your database
+    $.ajax({
+      url: "/stats/data",
+      type: 'GET',
+      success: function (res) {
+        console.log(res.data)
+        servers = res.data[0].servers
+        members = res.data[0].members
+        text = res.data[0].text
+        voice = res.data[0].voice
+        usage = `${res.data[0].memoryUsage} MB`
+        time = res.data[0].time
+
+        $('div.justify-content-md-center.row:nth-of-type(1) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(1) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(servers)
+        $('div.justify-content-md-center.row:nth-of-type(3) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(3) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(members)
+        $('div.justify-content-md-center.row:nth-of-type(5) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(5) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(text)
+        $('div.justify-content-md-center.row:nth-of-type(6) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(6) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(voice)
+        $('div.justify-content-md-center.row:nth-of-type(4) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(4) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(usage)
+        $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(time)
+
+      }
+    });
+  }
+
+  function Music() {
+    // Pass some identifier to use for your database
+    $.ajax({
+      url: "/stats/data",
+      type: 'GET',
+      success: function (res) {
+        let time = res.data[0].time
+        let used = `${res.data[0].used} used`
+        let free = `${res.data[0].free} free`
+        let players = `${res.data[0].players} connected`
+        let playing = `${res.data[0].playing} playing`
+
+        $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(time)
+        $('div.justify-content-md-center.row:nth-of-type(10) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(10) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(players)
+        $('div.justify-content-md-center.row:nth-of-type(11) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(11) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(playing)
+        $('div.justify-content-md-center.row:nth-of-type(12) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(12) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(used)
+        $('div.justify-content-md-center.row:nth-of-type(13) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .empty()
+        $('div.justify-content-md-center.row:nth-of-type(13) > div.text-nowrap.col-5:nth-of-type(2) > strong')
+          .append(free)
+
+      }
+    });
+  }
 
 
-   setInterval(uptime, 1000);
-   setInterval(other, 1000 * 5);
-   setInterval(Music, 1000 * 10);
-   
-
-    </script>
-    <% include ./blocks/footer %>
+  setInterval(uptime, 1000);
+  setInterval(other, 1000 * 5);
+  setInterval(Music, 1000 * 10);
+</script>
+<% include ./blocks/footer %>

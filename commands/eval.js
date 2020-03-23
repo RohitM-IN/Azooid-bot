@@ -11,10 +11,17 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   try {
     const evaled = eval(code);
     const clean = await client.clean(client, evaled);
-    if(clean.length > 1950) return message.channel.send(`\`\`\`js\n${clean}\n\`\`\``,{split:"\n" , code:'js'});
-    message.channel.send(`\`\`\`js\n${clean}\n\`\`\``,{split:"\n"});
+    if (clean.length > 1950) return message.channel.send(`\`\`\`js\n${clean}\n\`\`\``, {
+      split: "\n",
+      code: 'js'
+    });
+    message.channel.send(`\`\`\`js\n${clean}\n\`\`\``, {
+      split: "\n"
+    });
   } catch (err) {
-    message.channel.send(`\`ERROR\` \`\`\`xl\n${await client.clean(client, err)}\n\`\`\``,{split:"\n"});
+    message.channel.send(`\`ERROR\` \`\`\`xl\n${await client.clean(client, err)}\n\`\`\``, {
+      split: "\n"
+    });
   }
 };
 

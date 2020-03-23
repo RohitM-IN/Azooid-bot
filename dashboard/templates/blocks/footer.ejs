@@ -1,35 +1,44 @@
       <footer id="footer">
         <div class="row">
           <div class="col-lg-12">
-            <a class="scroll" aria-hidden="true" href="#top" id="scroll" style="display: none;" onclick="event.preventDefault();"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
-            <p>Bot developed by <a href="https://www.youtube.com/c/rootandroidandethicalhacker" target="_blank">Root Android and Ethical Hacker</a>.<br />
-              Donate <font color="#3385ff"><i class="fa fa-paypal" aria-hidden="true"></i></font> <a href="https://www.paypal.me/ethicalhacker58" target="_blank"> buy me a coffee</a>.<br/>
+            <a class="scroll" aria-hidden="true" href="#top" id="scroll" style="display: none;"
+              onclick="event.preventDefault();"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+            <p>Bot developed by <a href="https://www.youtube.com/c/rootandroidandethicalhacker" target="_blank">Root
+                Android and Ethical Hacker</a>.<br />
+              Donate <font color="#3385ff"><i class="fa fa-paypal" aria-hidden="true"></i></font> <a
+                href="https://www.paypal.me/ethicalhacker58" target="_blank"> buy me a coffee</a>.<br />
               Send us<a href="https://forms.gle/s2aGRe9R5bMvxin7A" target="_blank"> a Feedback</a>.<br />
-              Contact us <i class="fa fa-facebook-official" aria-hidden="true"></i> <a href="https://fb.me/azooidbot" target="_blank"> on Facebook </a>.<br /> 
+              Contact us <i class="fa fa-facebook-official" aria-hidden="true"></i> <a href="https://fb.me/azooidbot"
+                target="_blank"> on Facebook </a>.<br />
             </p>
           </div>
         </div>
-        <p class="text-center"><centre>© 2020 Copyright: <a href="/license/#" >Azooid Discord Bot</a></centre></p>
+        <p class="text-center">
+          <centre>© 2020 Copyright: <a href="/license/#">Azooid Discord Bot</a></centre>
+        </p>
       </footer>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
       <script>
-      jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
           var offset = 220;
           var duration = 500;
-          jQuery(window).scroll(function() {
+          jQuery(window).scroll(function () {
             if (jQuery(this).scrollTop() > offset) {
               jQuery('.scroll').fadeIn(duration);
             } else {
               jQuery('.scroll').fadeOut(duration);
             }
           });
-      
-          jQuery('.scroll').click(function(event) {
+
+          jQuery('.scroll').click(function (event) {
             event.preventDefault();
-            jQuery('html, body').animate({scrollTop: 0}, duration);
+            jQuery('html, body').animate({
+              scrollTop: 0
+            }, duration);
             return false;
           })
         });
       </script>
-  </body>
-</html>
+      </body>
+
+      </html>

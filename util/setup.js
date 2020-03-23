@@ -15,18 +15,17 @@ const defaultSettings = {
   "welcomeEnabled": "false"
 };
 
-const settings = new Enmap({ 
+const settings = new Enmap({
   name: "settings",
   cloneLevel: 'deep',
   ensureProps: true
 });
 
 
-let prompts = [
-  {
-    type: "list", 
-    name: "resetDefaults", 
-    message: "Do you want to reset default settings?", 
+let prompts = [{
+    type: "list",
+    name: "resetDefaults",
+    message: "Do you want to reset default settings?",
     choices: ["Yes", "No"]
   },
   {
@@ -61,7 +60,7 @@ let prompts = [
   }
 ];
 
-(async function() {
+(async function () {
   console.log("Setting Up GuideBot Configuration...");
   await settings.defer;
   if (!settings.has("default")) {
@@ -69,7 +68,12 @@ let prompts = [
     console.log("First Start! Inserting default guild settings in the database...");
     await settings.set("default", defaultSettings);
   }
-  const isGlitch = await inquirer.prompt([{type: "confirm", name: "glitch", message: "Are you hosted on Glitch.com?", default: false}]);
+  const isGlitch = await inquirer.prompt([{
+    type: "confirm",
+    name: "glitch",
+    message: "Are you hosted on Glitch.com?",
+    default: false
+  }]);
 
   if (isGlitch.glitch) {
     baseConfig = baseConfig
@@ -81,7 +85,10 @@ let prompts = [
       .replace("{{sessionSecret}}", "process.env.SESSION_SECRET")
       .replace("{{mongoconfig}}", "process.env.MONGO_CONNECTION")
     console.log("REMEMBER TO PLACE THE MONGO_CONNECTION, TOKEN, SECRET AND SESSION_SECRET IN YOUR .ENV FILE!!!");
-    const ownerID = await inquirer.prompt([{name: "data", message: "Please enter your User ID for the bot's Owner."}]);
+    const ownerID = await inquirer.prompt([{
+      name: "data",
+      message: "Please enter your User ID for the bot's Owner."
+    }]);
     baseConfig = baseConfig.replace("{{ownerID}}", ownerID.data);
     fs.writeFileSync("./config.js", baseConfig);
     console.log("Configuration has been written, enjoy!");
@@ -106,7 +113,7 @@ let prompts = [
     .replace("{{oauthSecret}}", `"${answers.oauthSecret}"`)
     .replace("{{sessionSecret}}", `"${answers.saltyKey}"`)
     .replace("{{mongoconfig}}", `${answers.mongoConnection}`)
-  
+
   fs.writeFileSync("./config.js", baseConfig);
   console.log("REMEMBER TO NEVER SHARE YOUR TOKEN WITH ANYONE!");
   console.log("Configuration has been written, enjoy!");
