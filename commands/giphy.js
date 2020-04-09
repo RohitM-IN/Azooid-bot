@@ -4,6 +4,7 @@ const GIPHY_KEY = require('../auth.json').api.giphy_key;
 exports.run = async (client, message, args) => {
 	let query = args.join(" ")
 	if (!query) return message.channel.send(`What GIF would you like to search for?`)
+	if (!message.channel.nsfw) return message.reply("🔞 Cannot display NSFW content in a SFW channel.");
 	try {
 		const {
 			body

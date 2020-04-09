@@ -19,8 +19,9 @@ exports.run = async (client, message, args) => {
     'playervolume': args[0]
   }).then(() => {
     message.channel.send(`Successfully set volume to: ${args[0]}`);
+    load();
   })
-  load();
+  
 
   function load() {
     let query = db.collection('guilds')
@@ -45,6 +46,7 @@ exports.run = async (client, message, args) => {
 
       })
     });
+    //console.log('done saving serversettings.json')
   }
 
 

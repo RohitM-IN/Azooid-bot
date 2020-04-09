@@ -14,10 +14,11 @@ exports.run = async (client, message, args) => {
     if (!voiceChannel || voiceChannelID !== player.voiceChannel.id) return message.channel.send("You need to be in a voice channel to use the seek command.");
     if (!args[0]) return message.channel.send(msg);
     const {
-        duration
+        duration,
+        isSeekable
     } = player.queue[0];
     let time = 0;
-
+    if (!isSeekable) return message.channel.send('Cannot Seek this Song')
     function seek() {
         return new Promise(resolve => {
             args.forEach(arg => {

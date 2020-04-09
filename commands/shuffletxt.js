@@ -19,5 +19,5 @@ exports.help = {
 	name: 'shuffletxt',
 	description: 'Shuffles text.',
 	category: "text-edit",
-	usage: "youtube <query>",
+	usage: "shuffletxt <query>",
 };

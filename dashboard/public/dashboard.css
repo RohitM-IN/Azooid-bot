@@ -63,3 +63,7 @@ body {
   text-align: center;
   cursor: pointer;
 }
+
+#admin-col li {
+  width: 50%;
+}

@@ -70,7 +70,7 @@
           .empty()
         $('div.justify-content-md-center.row:nth-of-type(2) > div.text-nowrap.col-5:nth-of-type(2) > strong')
           .append(datas)
-
+          clearconsole();
       }
     });
   }
@@ -81,7 +81,6 @@
       url: "/stats/data",
       type: 'GET',
       success: function (res) {
-        console.log(res.data)
         servers = res.data[0].servers
         members = res.data[0].members
         text = res.data[0].text
@@ -113,7 +112,7 @@
           .empty()
         $('div.justify-content-md-center.row:nth-of-type(9) > div.text-nowrap.col-5:nth-of-type(2) > strong')
           .append(time)
-
+          clearconsole();
       }
     });
   }
@@ -150,12 +149,18 @@
           .empty()
         $('div.justify-content-md-center.row:nth-of-type(13) > div.text-nowrap.col-5:nth-of-type(2) > strong')
           .append(free)
-
+          clearconsole();
       }
     });
   }
 
-
+  function clearconsole() { 
+  console.log(window.console);
+  if(window.console || window.console.firebug) {
+   console.clear();
+  }
+}
+  setInterval(clearconsole, 1010);
   setInterval(uptime, 1000);
   setInterval(other, 1000 * 5);
   setInterval(Music, 1000 * 10);

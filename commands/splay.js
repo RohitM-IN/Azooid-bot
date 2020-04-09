@@ -6,7 +6,6 @@ const {
 } = require("discord.js")
 const opusscript = require("opusscript");
 const fs = require("fs");
-
 exports.run = async (client, message, args) => {
     const voiceChannel = message.member.voice.channel;
     if (!voiceChannel) return message.channel.send("You need to be in a voice channel to play music.");
@@ -24,8 +23,13 @@ exports.run = async (client, message, args) => {
         textChannel: message.channel,
         voiceChannel
     });
+    let searchQuery 
+    searchQuery = {
+        source: "soundcloud",
+        query: args.join(" ")
+    };
 
-    client.music.search(args.join(" "), message.author).then(async res => {
+    client.music.search(searchQuery, message.author).then(async res => {
         switch (res.loadType) {
             case "TRACK_LOADED":
                 player.queue.add(res.tracks[0]);
@@ -101,13 +105,13 @@ exports.run = async (client, message, args) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ["p"],
+    aliases: ["sp","soundcloud","sc","scplay"],
     permLevel: "User"
 };
 
 exports.help = {
-    name: "play",
-    description: "plays audio",
-    usage: ".play <name of station>",
+    name: "splay",
+    description: "plays audio from soundcloud",
+    usage: "splay <name of song>",
     category: "Music",
 };

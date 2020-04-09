@@ -87,7 +87,32 @@ module.exports = async (client, message) => {
   }
   if (!message.channel.permissionsFor(client.user).has("SEND_MESSAGES")) return; // message.author.send(`I cannot send message in ${message.channel.name} in ${message.guild.name} Contact server admin for this issue !`);
   // If the command exists, **AND** the user has permission, run it.
-  client.log("log", `${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "CMD");
-  if (cmd) cmd.run(client, message, args, level, db);
+  // client.log("log", `${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "CMD");
+  const dataFile = "./data.json";
+  let data = JSON.parse(fs.readFileSync(dataFile));
+  let promise
+  const serverData = data[message.guild.id] || {};
+  if (cmd) promise = cmd.run(client, message, args, level, db, serverData);
+  let arr = ['watch','unwatch','upcoming','watching','cleanani']
+  if (contains(arr , cmd.help.name)){
+    promise.then(ret => {
+      if (ret) {
+        data[message.guild.id] = ret;
+        fs.writeFileSync(dataFile, JSON.stringify(ret));
+      }
+    });
 
+  }
 };
+
+
+
+function contains(a, obj) {
+  var i = a.length;
+  while (i--) {
+     if (a[i] === obj) {
+         return true;
+     }
+  }
+  return false;
+}

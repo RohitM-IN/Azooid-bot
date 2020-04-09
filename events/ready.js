@@ -12,6 +12,9 @@ const admin = require('firebase-admin');
 let db = admin.firestore();
 var fs = require("fs");
 const https = require("https");
+const { getAnnouncementEmbed ,query  } = require('../util/Util.js')
+const requireText = require("require-text");
+const {flatten }= require("array-flatten");
 module.exports = async client => {
   // Why await here? Because the ready event isn't actually ready, sometimes
   // guild information will come in *after* ready. 1s is plenty, generally,
@@ -49,6 +52,20 @@ module.exports = async client => {
 
   // Log that we're ready to serve, so we know the bot accepts commands.
   client.log("log", `${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.size} servers.`, "Ready!");
+  
+  const dataFile = "./data.json";
+  let data = {};
+ 
+
+  if (fs.existsSync(dataFile)) {
+    data = JSON.parse(fs.readFileSync(dataFile));
+    cleanupLists();
+  } else {
+    fs.writeFileSync(dataFile, JSON.stringify({}));
+  }
+  client.data = data;
+  handleSchedules(Math.round(getFromNextDays().getTime() / 1000)); // Initial run
+    setInterval(() => handleSchedules(Math.round(getFromNextDays().getTime() / 1000)), 1000 * 60 * 60 * 24); // Schedule future runs every 24 hours
   // init music nodes 
   client.music = new ErelaClient(client, nodes)
     .on("nodeError", console.log)
@@ -110,7 +127,71 @@ module.exports = async client => {
 
   dbload();
   refreshDotaData();
-
+  function cleanupLists() {
+    Object.values(data).forEach(serverData => {
+      Object.entries(serverData).forEach(([channelId, channelData]) => {
+        if (!channelData.shows || channelData.shows.length === 0)
+          return;
+  
+        channelData.shows = channelData.shows.filter(e => e !== null);
+      });
+    });
+  
+    fs.writeFileSync(dataFile, JSON.stringify(data));
+  }
+  function handleSchedules(time, page) {
+    query(requireText("../query/Schedule.graphql", require), { page: page, watched: getAllWatched(), nextDay: time }).then(res => {
+      if (res.errors) {
+        console.log(JSON.stringify(res.errors));
+        return;
+      }
+  
+      res.data.Page.airingSchedules.forEach(e => {
+        const date = new Date(e.airingAt * 1000);
+        if (queuedNotifications.includes(e.id))
+          return;
+  
+        console.log(`Scheduling announcement for ${e.media.title.romaji} on ${date}`);
+        queuedNotifications.push(e.id);
+        setTimeout(() => makeAnnouncement(e, date), e.timeUntilAiring * 1000);
+      });
+  
+      // Gather any other pages
+      if (res.data.Page.pageInfo.hasNextPage)
+        handleSchedules(time, res.data.Page.pageInfo.currentPage + 1);
+    });
+  }
+  
+  function getAllWatched() {
+    const watched = [];
+    Object.values(data).forEach(server => {
+      Object.values(server).filter(c => c.shows).forEach(c => c.shows.forEach(s => watched.push(s)));
+    });
+    return [...flatten(watched)];
+  }
+  
+  function makeAnnouncement(entry, date, upNext = false) {
+    queuedNotifications = queuedNotifications.filter(q => q !== entry.id);
+    const embed = getAnnouncementEmbed(entry, date, upNext);
+  
+    Object.values(data).forEach(serverData => {
+      Object.entries(serverData).forEach(([channelId, channelData]) => {
+        if (!channelData.shows || channelData.shows.length === 0)
+          return;
+  
+        if (channelData.shows.includes(entry.media.id)) {
+          const channel = client.channels.find(v => v.id === channelId);
+          if (channel) {
+            console.log(`Announcing episode ${entry.media.title.romaji} to ${channel.guild.name}@${channel.id}`);
+            channel.send({embed});
+          }
+        }
+      });
+    });
+  }
+  function getFromNextDays (days = 1) {
+		return new Date(new Date().getTime() + (24 * 60 * 60 * 1000 * days));
+	}
 
 };
 
@@ -232,3 +313,5 @@ function fileData(savPath, newData) {
   });
 
 }
+
+

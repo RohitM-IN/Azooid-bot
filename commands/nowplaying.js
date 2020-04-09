@@ -36,7 +36,8 @@ exports.run = async (client, message, args) => {
       author,
       duration,
       thumbnail,
-      requester
+      requester,
+      uri
     } = player.queue[0];
     if (duration == 0) duration = 1;
     let volume = player.volume;
@@ -48,6 +49,22 @@ exports.run = async (client, message, args) => {
     } else if (volume > 0 && volume <= 45) {
       volemoji = `🔈`;
     }
+    let url, domain;
+    if (uri.indexOf('://') > -1) {
+    url = uri.split('/')[2];
+    } else if (uri.indexOf('//') === 0) {
+        url = uri.split('/')[2];
+    } else {
+        url = uri.split('/')[0];
+    }
+    if (url === 'soundcloud.com') {
+      domain = 'Source: Soundcloud';
+    } else if (url === 'www.youtube.com') {
+      domain = 'Source: Youtube';
+    } else {
+      domain = 'Source: Other';
+    }
+
     let amount;
     if (player.position != 0) {
       amount = `00:${Utils.formatTime(player.position, true)}`
@@ -58,7 +75,7 @@ exports.run = async (client, message, args) => {
     const part = Math.floor((player.position / duration) * 10);
     const giveEmbed = new MessageEmbed()
       .setColor("AQUA")
-      .setFooter(`${client.user.username}`)
+      .setFooter(`${client.user.username} | ${domain}`)
       .setDescription(`${player.playing ? "▶️" : "⏸️"} Currently Playing ${title}\n${volemoji} ${"▬".repeat(part) + "🔘" + "▬".repeat(10 - part)}[${amount} / ${Utils.formatTime(duration, true)}]\nRequested By: ${requester.tag}`)
 
     message.channel.send({
