@@ -4,7 +4,8 @@
   "description": "a discord.js bot with multi commands",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "npm install"
   },
   "engines": {
     "node": ">=8"
