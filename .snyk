@@ -14,6 +14,10 @@ patch:
         patched: '2021-05-04T06:41:38.556Z'
     - overwatch-api > request-promise > request-promise-core > lodash:
         patched: '2021-05-04T06:41:38.556Z'
+    - snyk > snyk-nodejs-lockfile-parser > @yarnpkg/core > lodash:
+        patched: '2021-05-04T06:42:41.544Z'
+    - snyk > snyk-docker-plugin > snyk-nodejs-lockfile-parser > @yarnpkg/core > lodash:
+        patched: '2021-05-04T06:42:41.544Z'
   'npm:lodash:20180130':
     - superfetch > lodash:
         patched: '2021-05-04T06:41:38.556Z'
