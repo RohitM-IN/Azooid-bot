@@ -1,0 +1,19 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - better-sqlite-pool > lodash:
+        patched: '2021-05-04T06:41:38.556Z'
+    - enmap > lodash:
+        patched: '2021-05-04T06:41:38.556Z'
+    - erela.js > lodash:
+        patched: '2021-05-04T06:41:38.556Z'
+    - inquirer > lodash:
+        patched: '2021-05-04T06:41:38.556Z'
+    - overwatch-api > request-promise > request-promise-core > lodash:
+        patched: '2021-05-04T06:41:38.556Z'
+  'npm:lodash:20180130':
+    - superfetch > lodash:
+        patched: '2021-05-04T06:41:38.556Z'
