@@ -63,7 +63,7 @@
     "leven": "^3.1.0",
     "marked": "^1.1.1",
     "mem-stat": "^1.0.5",
-    "moment": "^2.24.0",
+    "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
     "net-stat": "^2.0.1",
     "node-fetch": "^2.6.1",
