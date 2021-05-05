@@ -51,7 +51,7 @@
     "express": "^4.16.4",
     "express-passport": "^0.1.0",
     "express-session": "^1.15.6",
-    "firebase": "^8.0.1",
+    "firebase": "^8.4.1",
     "firebase-admin": "^9.4.2",
     "get-urls": "^9.2.0",
     "got": "^10.6.0",
